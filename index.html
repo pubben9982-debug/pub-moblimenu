@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102217">
+  <title>Central Irish Pub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">CENTRAL IRISH PUB</div>
+        <h1 id="title">Hvad har du lyst til?</h1>
+      </div>
+      <select id="language" aria-label="Sprog">
+        <option value="da">Dansk</option>
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="no">Norsk</option>
+      </select>
+    </header>
+
+    <section class="welcome-card">
+      <div>
+        <div class="small-label" id="deviceLabel">Din enhed</div>
+        <div class="device-id" id="deviceId">----</div>
+      </div>
+      <button class="ghost" id="showIdBtn" type="button">Vis QR / ID</button>
+    </section>
+
+    <section class="menu-grid" aria-label="Pubmenu">
+      <a class="menu-card drinks" href="drinks.html">
+        <span class="icon">🍹</span>
+        <strong id="drinksTitle">Drinkskort</strong>
+        <span id="drinksText">Se drinks, øl og priser</span>
+      </a>
+
+      <button class="menu-card jukebox" id="jukeboxBtn" type="button">
+        <span class="icon">🎵</span>
+        <strong id="jukeboxTitle">Jukebox</strong>
+        <span id="jukeboxText">Ønsk musik fra din telefon</span>
+      </button>
+
+      <a class="menu-card games" href="games.html">
+        <span class="icon">🎮</span>
+        <strong id="gamesTitle">Mobilspil</strong>
+        <span id="gamesText">Spil sammen ved bordet</span>
+      </a>
+
+      <a class="menu-card card" href="klippekort.html">
+        <span class="icon">🎟️</span>
+        <strong id="cardTitle">Klippekort</strong>
+        <span id="cardText">Se klip og præmier</span>
+      </a>
+    </section>
+
+    <section class="wifi-card">
+      <div>
+        <div class="small-label" id="wifiHelp">Lokale funktioner kræver pubbens Wi‑Fi</div>
+        <h2>pubben gæst</h2>
+        <p><span id="passwordLabel">Kode</span>: <strong>pubben9982</strong></p>
+      </div>
+      <button id="copyWifi" class="copy-btn" type="button">Kopiér kode</button>
+    </section>
+
+    <footer>
+      <span id="footerText">Samme QR-kode kan bruges næste gang</span>
+    </footer>
+  </main>
+
+  <div class="modal hidden" id="wifiModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <button class="close" id="closeModal" aria-label="Luk">×</button>
+      <h2 id="modalTitle">Forbind til pubbens Wi‑Fi</h2>
+      <ol>
+        <li><span id="step1">Åbn Wi‑Fi på telefonen</span></li>
+        <li><span id="step2">Vælg</span> <strong>pubben gæst</strong></li>
+        <li><span id="step3">Skriv koden</span> <strong>pubben9982</strong></li>
+      </ol>
+      <button class="primary" id="continueBtn" type="button">Jeg er på Wi‑Fi – åbn</button>
+      <p class="hint" id="modalHint">Virker knappen ikke, er telefonen sandsynligvis ikke på pubbens netværk endnu.</p>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="idModal" role="dialog" aria-modal="true" aria-labelledby="idModalTitle">
+    <div class="modal-card compact">
+      <button class="close" id="closeIdModal" aria-label="Luk">×</button>
+      <h2 id="idModalTitle">Dit pub-ID</h2>
+      <div class="big-id" id="bigDeviceId">----</div>
+      <div id="qrBox" class="qr-placeholder">ID</div>
+      <p id="idHint">Vis dette nummer til bartenderen. Det gemmes kun i denne browser.</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
