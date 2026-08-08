@@ -206,7 +206,9 @@ if (el("drinksBtn")) {
 
 if (el("jukeboxBtn")) {
   el("jukeboxBtn").onclick = () =>
-    openLocal(`${CONFIG.jukeboxUrl}?id=${encodeURIComponent(deviceId)}`);
+    openLocal(
+      `${CONFIG.jukeboxUrl}?id=${encodeURIComponent(deviceId)}&v=6`
+    );
 }
 
 if (el("gamesBtn")) {
