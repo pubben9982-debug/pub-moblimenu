@@ -6,7 +6,7 @@
 
   <title>Pubmenu</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 
 <body>
@@ -14,7 +14,6 @@
   <main class="shell">
 
     <header class="topbar">
-
       <div>
         <div class="eyebrow">CENTRAL IRISH PUB</div>
         <h1 id="title">Hvad har du lyst til?</h1>
@@ -26,83 +25,48 @@
         <option value="de">Deutsch</option>
         <option value="no">Norsk</option>
       </select>
-
     </header>
 
 
     <section class="welcome-card">
-
       <div>
-        <div class="small-label" id="deviceLabel">
-          Din enhed
-        </div>
-
-        <div class="device-id" id="deviceId">
-          ----
-        </div>
+        <div class="small-label" id="deviceLabel">Din enhed</div>
+        <div class="device-id" id="deviceId">----</div>
       </div>
 
-      <button
-        class="ghost"
-        id="showIdBtn"
-        type="button"
-      >
+      <button class="ghost" id="showIdBtn" type="button">
         Vis QR / ID
       </button>
-
     </section>
 
 
     <section class="menu-grid" aria-label="Pubmenu">
 
-      <button
-        class="menu-card drinks"
-        id="drinksBtn"
-        type="button"
-      >
+      <button class="menu-card drinks" id="drinksBtn" type="button">
         <span class="icon">🍹</span>
         <strong id="drinksTitle">Drinkskort</strong>
         <span id="drinksText">Se drinks, øl og priser</span>
       </button>
 
-
-      <button
-        class="menu-card jukebox"
-        id="jukeboxBtn"
-        type="button"
-      >
+      <button class="menu-card jukebox" id="jukeboxBtn" type="button">
         <span class="icon">🎵</span>
         <strong id="jukeboxTitle">Jukebox</strong>
         <span id="jukeboxText">Ønsk musik fra din telefon</span>
       </button>
 
-
-      <button
-        class="menu-card games"
-        id="gamesBtn"
-        type="button"
-      >
+      <button class="menu-card games" id="gamesBtn" type="button">
         <span class="icon">🎮</span>
         <strong id="gamesTitle">Mobilspil</strong>
         <span id="gamesText">Spil sammen ved bordet</span>
       </button>
 
-
-      <button
-        class="menu-card pizza"
-        id="pizzaBtn"
-        type="button"
-      >
+      <button class="menu-card pizza" id="pizzaBtn" type="button">
         <span class="icon">🍕</span>
         <strong id="pizzaTitle">Pizza</strong>
         <span id="pizzaText">Se pizza-menu og bestil</span>
       </button>
 
-
-      <a
-        class="menu-card card"
-        href="klippekort.html"
-      >
+      <a class="menu-card card" href="klippekort.html">
         <span class="icon">🎟️</span>
         <strong id="cardTitle">Klippekort</strong>
         <span id="cardText">Se klip og præmier</span>
@@ -112,13 +76,8 @@
 
 
     <section class="wifi-card">
-
       <div>
-
-        <div
-          class="small-label"
-          id="wifiHelp"
-        >
+        <div class="small-label" id="wifiHelp">
           Lokale funktioner kræver pubbens Wi-Fi
         </div>
 
@@ -128,17 +87,11 @@
           <span id="passwordLabel">Kode</span>:
           <strong>pubben9982</strong>
         </p>
-
       </div>
 
-      <button
-        id="copyWifi"
-        class="copy-btn"
-        type="button"
-      >
+      <button id="copyWifi" class="copy-btn" type="button">
         Kopiér kode
       </button>
-
     </section>
 
 
@@ -153,10 +106,7 @@
 
   <!-- Wi-Fi popup -->
 
-  <div
-    id="wifiModal"
-    class="modal hidden"
-  >
+  <div id="wifiModal" class="modal hidden">
 
     <div class="modal-card">
 
@@ -169,14 +119,11 @@
         ×
       </button>
 
-
       <h2 id="modalTitle">
         Forbind til pubbens Wi-Fi
       </h2>
 
-
       <ol>
-
         <li id="step1">
           Åbn Wi-Fi på telefonen
         </li>
@@ -190,9 +137,7 @@
           <span id="step3">Skriv koden</span>
           <strong>pubben9982</strong>
         </li>
-
       </ol>
-
 
       <button
         id="continueBtn"
@@ -202,11 +147,7 @@
         Jeg er på Wi-Fi – åbn
       </button>
 
-
-      <p
-        id="modalHint"
-        class="hint"
-      >
+      <p id="modalHint" class="hint">
         Virker knappen ikke, er telefonen sandsynligvis ikke på pubbens netværk endnu.
       </p>
 
@@ -217,10 +158,7 @@
 
   <!-- Pub-ID popup -->
 
-  <div
-    id="idModal"
-    class="modal hidden"
-  >
+  <div id="idModal" class="modal hidden">
 
     <div class="modal-card compact">
 
@@ -233,24 +171,15 @@
         ×
       </button>
 
-
       <h2 id="idModalTitle">
         Dit pub-ID
       </h2>
 
-
-      <div
-        class="big-id"
-        id="bigDeviceId"
-      >
+      <div class="big-id" id="bigDeviceId">
         ----
       </div>
 
-
-      <p
-        id="idHint"
-        class="hint"
-      >
+      <p id="idHint" class="hint">
         Vis dette nummer til bartenderen. Det gemmes kun i denne browser.
       </p>
 
@@ -259,7 +188,7 @@
   </div>
 
 
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 
 </body>
 </html>
