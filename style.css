@@ -65,13 +65,8 @@ select{
   justify-content:space-between;
   align-items:center;
   gap:16px;
-
-  background:
-    rgba(255,255,255,.07);
-
-  border:
-    1px solid rgba(255,255,255,.11);
-
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.11);
   border-radius:18px;
   padding:16px 18px;
   margin-bottom:18px;
@@ -101,8 +96,7 @@ select{
 
 .menu-grid{
   display:grid;
-  grid-template-columns:
-    1fr 1fr;
+  grid-template-columns:1fr 1fr;
   gap:14px;
 }
 
@@ -111,21 +105,17 @@ select{
   border:0;
   border-radius:22px;
   padding:20px;
-
   display:flex;
   flex-direction:column;
   align-items:flex-start;
-
   text-align:left;
   color:#fff;
   text-decoration:none;
-
-  box-shadow:
-    0 12px 30px
-    rgba(0,0,0,.22);
-
+  box-shadow:0 12px 30px rgba(0,0,0,.22);
   cursor:pointer;
 }
+
+/* Vigtigt: Poker er virkelig skjult når hidden er sat */
 
 .menu-card[hidden]{
   display:none !important;
@@ -142,55 +132,28 @@ select{
 }
 
 .menu-card span:last-child{
-  color:
-    rgba(255,255,255,.82);
-
+  color:rgba(255,255,255,.82);
   font-size:15px;
 }
 
 .drinks{
-  background:
-    linear-gradient(
-      145deg,
-      #9a4e1d,
-      #d47a31
-    );
+  background:linear-gradient(145deg,#9a4e1d,#d47a31);
 }
 
 .jukebox{
-  background:
-    linear-gradient(
-      145deg,
-      #6d2b85,
-      #a443bf
-    );
+  background:linear-gradient(145deg,#6d2b85,#a443bf);
 }
 
 .games{
-  background:
-    linear-gradient(
-      145deg,
-      #155c73,
-      #198aaa
-    );
+  background:linear-gradient(145deg,#155c73,#198aaa);
 }
 
 .pizza{
-  background:
-    linear-gradient(
-      145deg,
-      #8d2f22,
-      #c84a2d
-    );
+  background:linear-gradient(145deg,#8d2f22,#c84a2d);
 }
 
 .card{
-  background:
-    linear-gradient(
-      145deg,
-      #315a23,
-      #5b8f37
-    );
+  background:linear-gradient(145deg,#315a23,#5b8f37);
 }
 
 .wifi-card{
@@ -214,18 +177,12 @@ footer{
   margin-top:20px;
 }
 
-/* Popup baggrund */
-
 .modal{
   position:fixed;
   inset:0;
-
-  background:
-    rgba(0,0,0,.72);
-
+  background:rgba(0,0,0,.72);
   display:grid;
   place-items:center;
-
   padding:18px;
   z-index:20;
 }
@@ -234,23 +191,14 @@ footer{
   display:none;
 }
 
-/* Popup kort */
-
 .modal-card{
   position:relative;
-
-  width:
-    min(520px,100%);
-
+  width:min(520px,100%);
   background:#f8f5eb;
   color:#172118;
-
   border-radius:24px;
   padding:28px;
-
-  box-shadow:
-    0 24px 70px
-    rgba(0,0,0,.45);
+  box-shadow:0 24px 70px rgba(0,0,0,.45);
 }
 
 .modal-card h2{
@@ -267,28 +215,21 @@ footer{
   position:absolute;
   right:14px;
   top:10px;
-
   border:0;
   background:none;
-
   font-size:36px;
   cursor:pointer;
 }
 
 .primary{
   width:100%;
-
   border:0;
   border-radius:14px;
-
   background:#1c6b3a;
   color:#fff;
-
   padding:15px;
-
   font-weight:900;
   font-size:17px;
-
   cursor:pointer;
 }
 
@@ -308,24 +249,17 @@ footer{
   text-align:center;
 }
 
-/* Ældre kompatibilitet */
+/* Kompatibilitet */
 
 .modal-box,
 .modal-card{
   position:relative;
-
-  width:
-    min(520px,100%);
-
+  width:min(520px,100%);
   background:#f8f5eb;
   color:#172118;
-
   border-radius:24px;
   padding:28px;
-
-  box-shadow:
-    0 24px 70px
-    rgba(0,0,0,.45);
+  box-shadow:0 24px 70px rgba(0,0,0,.45);
 }
 
 .modal-box h2,
@@ -345,10 +279,8 @@ footer{
   position:absolute;
   right:14px;
   top:10px;
-
   border:0;
   background:none;
-
   font-size:36px;
   cursor:pointer;
 }
@@ -356,18 +288,13 @@ footer{
 .primary-btn,
 .primary{
   width:100%;
-
   border:0;
   border-radius:14px;
-
   background:#1c6b3a;
   color:#fff;
-
   padding:15px;
-
   font-weight:900;
   font-size:17px;
-
   cursor:pointer;
 }
 
@@ -386,13 +313,10 @@ footer{
   text-align:center;
 }
 
-/* Mobil */
-
 @media(max-width:560px){
 
   .menu-grid{
-    grid-template-columns:
-      1fr;
+    grid-template-columns:1fr;
   }
 
   .menu-card{
@@ -409,5 +333,4 @@ footer{
   .ghost{
     width:100%;
   }
-
 }
