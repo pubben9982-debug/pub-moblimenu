@@ -264,7 +264,9 @@ function openLocal(url) {
 }
 
 
-/* Drinkskort */
+/* -------------------------------------------------
+   DRINKSKORT
+------------------------------------------------- */
 
 if (el("drinksBtn")) {
 
@@ -279,7 +281,9 @@ if (el("drinksBtn")) {
 }
 
 
-/* Jukebox */
+/* -------------------------------------------------
+   JUKEBOX
+------------------------------------------------- */
 
 if (el("jukeboxBtn")) {
 
@@ -298,7 +302,9 @@ if (el("jukeboxBtn")) {
 }
 
 
-/* Poker */
+/* -------------------------------------------------
+   POKER
+------------------------------------------------- */
 
 if (el("gamesBtn")) {
 
@@ -316,7 +322,9 @@ if (el("gamesBtn")) {
 }
 
 
-/* Pizza */
+/* -------------------------------------------------
+   PIZZA
+------------------------------------------------- */
 
 if (el("pizzaBtn")) {
 
@@ -331,9 +339,13 @@ if (el("pizzaBtn")) {
 }
 
 
-/* KLIPPEKORT
-   Sender samme Pub-ID som Jukebox og Poker
-*/
+/* -------------------------------------------------
+   KLIPPEKORT
+
+   VIGTIGT:
+   Klippekort går DIREKTE til den lokale side.
+   Vi ved allerede, at den direkte IP-adresse virker.
+------------------------------------------------- */
 
 if (el("cardBtn")) {
 
@@ -342,9 +354,10 @@ if (el("cardBtn")) {
     const url =
       CONFIG.clipsUrl +
       "?id=" +
-      encodeURIComponent(deviceId);
+      encodeURIComponent(deviceId) +
+      "&v=2";
 
-    openLocal(url);
+    window.location.href = url;
 
   };
 
@@ -360,7 +373,7 @@ if (el("continueBtn")) {
   el("continueBtn").onclick = function () {
 
     if (pendingUrl) {
-      location.href = pendingUrl;
+      window.location.href = pendingUrl;
     }
 
   };
