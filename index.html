@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1710">
 
-  <title>Pubmenu</title>
+  <title>Central Irish Pub</title>
 
   <link rel="stylesheet" href="style.css?v=2">
 </head>
@@ -31,7 +32,7 @@
   <section class="welcome-card">
     <div>
       <div class="small-label" id="deviceLabel">
-        Din enhed
+        Dit Pub-ID
       </div>
 
       <div class="device-id" id="deviceId">
@@ -44,7 +45,7 @@
       id="showIdBtn"
       type="button"
     >
-      Vis QR / ID
+      Vis ID
     </button>
   </section>
 
@@ -57,7 +58,11 @@
       type="button"
     >
       <span class="icon">🍹</span>
-      <strong id="drinksTitle">Drinkskort</strong>
+
+      <strong id="drinksTitle">
+        Drinkskort
+      </strong>
+
       <span id="drinksText">
         Se drinks, øl og priser
       </span>
@@ -70,27 +75,13 @@
       type="button"
     >
       <span class="icon">🎵</span>
-      <strong id="jukeboxTitle">Jukebox</strong>
+
+      <strong id="jukeboxTitle">
+        Jukebox
+      </strong>
+
       <span id="jukeboxText">
         Ønsk musik fra din telefon
-      </span>
-    </button>
-
-
-    <!--
-      Poker beholdes i filen, men skjules i den almindelige mobilmenu.
-      Bordets Poker-QR kan stadig åbne Poker direkte på port 5050.
-    -->
-    <button
-      class="menu-card games"
-      id="gamesBtn"
-      type="button"
-      hidden
-    >
-      <span class="icon">🎮</span>
-      <strong id="gamesTitle">Poker</strong>
-      <span id="gamesText">
-        Spil poker fra din telefon
       </span>
     </button>
 
@@ -101,9 +92,13 @@
       type="button"
     >
       <span class="icon">🍕</span>
-      <strong id="pizzaTitle">Pizza</strong>
+
+      <strong id="pizzaTitle">
+        Pizza
+      </strong>
+
       <span id="pizzaText">
-        Se pizza-menu og bestil
+        Se pizza-menu
       </span>
     </button>
 
@@ -114,7 +109,11 @@
       type="button"
     >
       <span class="icon">🎟️</span>
-      <strong id="cardTitle">Klippekort</strong>
+
+      <strong id="cardTitle">
+        Klippekort
+      </strong>
+
       <span id="cardText">
         Se saldo og brug klip
       </span>
@@ -126,15 +125,23 @@
   <section class="wifi-card">
 
     <div>
-      <div class="small-label" id="wifiHelp">
-        Lokale funktioner kræver pubbens Wi-Fi
+      <div
+        class="small-label"
+        id="wifiHelp"
+      >
+        De lokale funktioner kræver pubbens Wi-Fi
       </div>
 
       <h2>pubben gæst</h2>
 
       <p>
-        <span id="passwordLabel">Kode</span>:
-        <strong>pubben9982</strong>
+        <span id="passwordLabel">
+          Kode
+        </span>:
+
+        <strong>
+          pubben9982
+        </strong>
       </p>
     </div>
 
@@ -151,70 +158,19 @@
 
   <footer>
     <span id="footerText">
-      Samme QR-kode kan bruges næste gang
+      Mobilmenuen kan også åbnes uden pubbens Wi-Fi
     </span>
   </footer>
 
 </main>
 
 
-<!-- WIFI POPUP -->
-
-<div id="wifiModal" class="modal hidden">
-
-  <div class="modal-card">
-
-    <button
-      id="closeModal"
-      class="close"
-      type="button"
-      aria-label="Luk"
-    >
-      ×
-    </button>
-
-    <h2 id="modalTitle">
-      Forbind til pubbens Wi-Fi
-    </h2>
-
-    <ol>
-      <li id="step1">
-        Åbn Wi-Fi på telefonen
-      </li>
-
-      <li>
-        <span id="step2">Vælg</span>
-        <strong>pubben gæst</strong>
-      </li>
-
-      <li>
-        <span id="step3">Skriv koden</span>
-        <strong>pubben9982</strong>
-      </li>
-    </ol>
-
-    <button
-      id="continueBtn"
-      class="primary"
-      type="button"
-    >
-      Jeg er på Wi-Fi – åbn
-    </button>
-
-    <p id="modalHint" class="hint">
-      Virker knappen ikke, er telefonen sandsynligvis
-      ikke på pubbens netværk endnu.
-    </p>
-
-  </div>
-
-</div>
-
-
 <!-- PUB-ID POPUP -->
 
-<div id="idModal" class="modal hidden">
-
+<div
+  id="idModal"
+  class="modal hidden"
+>
   <div class="modal-card compact">
 
     <button
@@ -230,21 +186,26 @@
       Dit Pub-ID
     </h2>
 
-    <div class="big-id" id="bigDeviceId">
+    <div
+      class="big-id"
+      id="bigDeviceId"
+    >
       ----
     </div>
 
-    <p id="idHint" class="hint">
-      Vis dette nummer til bartenderen.
-      Det gemmes kun i denne browser.
+    <p
+      id="idHint"
+      class="hint"
+    >
+      Dette ID bruges til din fælles saldo,
+      Jukebox og Klippekort.
     </p>
 
   </div>
-
 </div>
 
 
-<script src="app.js?v=7"></script>
+<script src="app.js?v=10"></script>
 
 </body>
 </html>
