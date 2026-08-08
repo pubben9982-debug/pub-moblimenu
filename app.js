@@ -3,14 +3,18 @@ const CONFIG = {
   jukeboxUrl: "http://192.168.0.50:5055/",
   gamesUrl: "http://192.168.0.50:5050/",
   pizzaUrl: "http://192.168.0.50:8091/pizza",
+  clipsUrl: "http://192.168.0.50:8080/klippekort.html",
 
   wifiName: "pubben gæst",
   wifiPassword: "pubben9982"
 };
 
+
 const T = {
+
   da: {
     title: "Hvad har du lyst til?",
+
     deviceLabel: "Din enhed",
     showId: "Vis QR / ID",
 
@@ -27,9 +31,10 @@ const T = {
     pizzaText: "Se pizza-menu og bestil",
 
     cardTitle: "Klippekort",
-    cardText: "Se klip og præmier",
+    cardText: "Se saldo og brug klip",
 
     wifiHelp: "Lokale funktioner kræver pubbens Wi-Fi",
+
     password: "Kode",
     copy: "Kopiér kode",
     copied: "Kopieret",
@@ -37,18 +42,26 @@ const T = {
     footer: "Samme QR-kode kan bruges næste gang",
 
     modalTitle: "Forbind til pubbens Wi-Fi",
+
     step1: "Åbn Wi-Fi på telefonen",
     step2: "Vælg",
     step3: "Skriv koden",
-    continue: "Jeg er på Wi-Fi – åbn",
-    hint: "Virker knappen ikke, er telefonen sandsynligvis ikke på pubbens netværk endnu.",
 
-    idTitle: "Dit pub-ID",
-    idHint: "Vis dette nummer til bartenderen. Det gemmes kun i denne browser."
+    continue: "Jeg er på Wi-Fi – åbn",
+
+    hint:
+      "Virker knappen ikke, er telefonen sandsynligvis ikke på pubbens netværk endnu.",
+
+    idTitle: "Dit Pub-ID",
+
+    idHint:
+      "Vis dette nummer til bartenderen. Det gemmes kun i denne browser."
   },
+
 
   en: {
     title: "What would you like?",
+
     deviceLabel: "Your device",
     showId: "Show QR / ID",
 
@@ -65,9 +78,10 @@ const T = {
     pizzaText: "See the pizza menu and order",
 
     cardTitle: "Punch card",
-    cardText: "See punches and rewards",
+    cardText: "See balance and use punches",
 
     wifiHelp: "Local features require the pub Wi-Fi",
+
     password: "Password",
     copy: "Copy password",
     copied: "Copied",
@@ -75,18 +89,26 @@ const T = {
     footer: "Use the same QR code next time",
 
     modalTitle: "Connect to the pub Wi-Fi",
+
     step1: "Open Wi-Fi settings on your phone",
     step2: "Choose",
     step3: "Enter the password",
-    continue: "I am on Wi-Fi – open",
-    hint: "If the button does not work, your phone is probably not connected to the pub network yet.",
 
-    idTitle: "Your pub ID",
-    idHint: "Show this number to the bartender. It is stored only in this browser."
+    continue: "I am on Wi-Fi – open",
+
+    hint:
+      "If the button does not work, your phone is probably not connected to the pub network yet.",
+
+    idTitle: "Your Pub ID",
+
+    idHint:
+      "Show this number to the bartender. It is stored only in this browser."
   },
+
 
   de: {
     title: "Was möchten Sie?",
+
     deviceLabel: "Ihr Gerät",
     showId: "QR / ID anzeigen",
 
@@ -103,9 +125,10 @@ const T = {
     pizzaText: "Pizzakarte ansehen und bestellen",
 
     cardTitle: "Stempelkarte",
-    cardText: "Stempel und Prämien ansehen",
+    cardText: "Guthaben ansehen und Stempel verwenden",
 
     wifiHelp: "Lokale Funktionen benötigen das Pub-WLAN",
+
     password: "Passwort",
     copy: "Passwort kopieren",
     copied: "Kopiert",
@@ -113,18 +136,26 @@ const T = {
     footer: "Derselbe QR-Code funktioniert beim nächsten Besuch",
 
     modalTitle: "Mit dem Pub-WLAN verbinden",
+
     step1: "WLAN-Einstellungen am Handy öffnen",
     step2: "Auswählen",
     step3: "Passwort eingeben",
+
     continue: "Ich bin im WLAN – öffnen",
-    hint: "Wenn die Schaltfläche nicht funktioniert, ist das Handy wahrscheinlich noch nicht mit dem Pub-Netzwerk verbunden.",
+
+    hint:
+      "Wenn die Schaltfläche nicht funktioniert, ist das Handy wahrscheinlich noch nicht mit dem Pub-Netzwerk verbunden.",
 
     idTitle: "Ihre Pub-ID",
-    idHint: "Zeigen Sie diese Nummer dem Barkeeper. Sie wird nur in diesem Browser gespeichert."
+
+    idHint:
+      "Zeigen Sie diese Nummer dem Barkeeper. Sie wird nur in diesem Browser gespeichert."
   },
+
 
   no: {
     title: "Hva har du lyst på?",
+
     deviceLabel: "Din enhet",
     showId: "Vis QR / ID",
 
@@ -141,9 +172,10 @@ const T = {
     pizzaText: "Se pizzamenyen og bestill",
 
     cardTitle: "Klippekort",
-    cardText: "Se klipp og premier",
+    cardText: "Se saldo og bruk klipp",
 
     wifiHelp: "Lokale funksjoner krever pubens Wi-Fi",
+
     password: "Passord",
     copy: "Kopier passord",
     copied: "Kopiert",
@@ -151,58 +183,79 @@ const T = {
     footer: "Den samme QR-koden kan brukes neste gang",
 
     modalTitle: "Koble til pubens Wi-Fi",
+
     step1: "Åpne Wi-Fi på telefonen",
     step2: "Velg",
     step3: "Skriv passordet",
-    continue: "Jeg er på Wi-Fi – åpne",
-    hint: "Hvis knappen ikke virker, er telefonen sannsynligvis ikke koblet til pubens nettverk ennå.",
 
-    idTitle: "Din pub-ID",
-    idHint: "Vis dette nummeret til bartenderen. Det lagres bare i denne nettleseren."
+    continue: "Jeg er på Wi-Fi – åpne",
+
+    hint:
+      "Hvis knappen ikke virker, er telefonen sannsynligvis ikke koblet til pubens nettverk ennå.",
+
+    idTitle: "Din Pub-ID",
+
+    idHint:
+      "Vis dette nummeret til bartenderen. Det lagres bare i denne nettleseren."
   }
+
 };
+
 
 function el(id) {
   return document.getElementById(id);
 }
 
+
+/* -------------------------------------------------
+   PUB-ID
+------------------------------------------------- */
+
 function makeId() {
+
   let id = localStorage.getItem("cip_device_id");
 
   if (!id) {
-    const n = crypto.getRandomValues(new Uint32Array(1))[0] % 10000;
-    id = String(n).padStart(4, "0");
 
-    localStorage.setItem("cip_device_id", id);
+    const values = new Uint32Array(1);
+    crypto.getRandomValues(values);
+
+    const number = values[0] % 10000;
+
+    id = String(number).padStart(4, "0");
+
+    localStorage.setItem(
+      "cip_device_id",
+      id
+    );
   }
 
   return id;
 }
 
+
 const deviceId = makeId();
+
 
 if (el("deviceId")) {
   el("deviceId").textContent = deviceId;
 }
 
+
 if (el("bigDeviceId")) {
   el("bigDeviceId").textContent = deviceId;
 }
 
-/* Poker vises kun fra bordets QR */
 
-const pageParams = new URLSearchParams(window.location.search);
-const showPoker = pageParams.get("showPoker") === "1";
-
-if (el("gamesBtn")) {
-  el("gamesBtn").hidden = !showPoker;
-}
-
-/* Lokal navigation */
+/* -------------------------------------------------
+   LOKALE LINKS / WIFI POPUP
+------------------------------------------------- */
 
 let pendingUrl = null;
 
+
 function openLocal(url) {
+
   pendingUrl = url;
 
   if (el("wifiModal")) {
@@ -210,100 +263,219 @@ function openLocal(url) {
   }
 }
 
+
 /* Drinkskort */
 
 if (el("drinksBtn")) {
-  el("drinksBtn").onclick = () =>
-    openLocal(CONFIG.drinksUrl);
+
+  el("drinksBtn").onclick = function () {
+
+    openLocal(
+      CONFIG.drinksUrl
+    );
+
+  };
+
 }
+
 
 /* Jukebox */
 
 if (el("jukeboxBtn")) {
-  el("jukeboxBtn").onclick = () =>
-    openLocal(
-      `${CONFIG.jukeboxUrl}?id=${encodeURIComponent(deviceId)}&v=6`
-    );
+
+  el("jukeboxBtn").onclick = function () {
+
+    const url =
+      CONFIG.jukeboxUrl +
+      "?id=" +
+      encodeURIComponent(deviceId) +
+      "&v=7";
+
+    openLocal(url);
+
+  };
+
 }
+
 
 /* Poker */
 
 if (el("gamesBtn")) {
-  el("gamesBtn").onclick = () =>
-    openLocal(
-      `${CONFIG.gamesUrl}?id=${encodeURIComponent(deviceId)}`
-    );
+
+  el("gamesBtn").onclick = function () {
+
+    const url =
+      CONFIG.gamesUrl +
+      "?id=" +
+      encodeURIComponent(deviceId);
+
+    openLocal(url);
+
+  };
+
 }
+
 
 /* Pizza */
 
 if (el("pizzaBtn")) {
-  el("pizzaBtn").onclick = () =>
-    openLocal(CONFIG.pizzaUrl);
+
+  el("pizzaBtn").onclick = function () {
+
+    openLocal(
+      CONFIG.pizzaUrl
+    );
+
+  };
+
 }
 
-/* Wi-Fi popup */
+
+/* KLIPPEKORT
+   Sender samme Pub-ID som Jukebox og Poker
+*/
+
+if (el("cardBtn")) {
+
+  el("cardBtn").onclick = function () {
+
+    const url =
+      CONFIG.clipsUrl +
+      "?id=" +
+      encodeURIComponent(deviceId);
+
+    openLocal(url);
+
+  };
+
+}
+
+
+/* -------------------------------------------------
+   WIFI POPUP
+------------------------------------------------- */
 
 if (el("continueBtn")) {
-  el("continueBtn").onclick = () => {
+
+  el("continueBtn").onclick = function () {
+
     if (pendingUrl) {
       location.href = pendingUrl;
     }
+
   };
+
 }
+
 
 if (el("closeModal")) {
-  el("closeModal").onclick = () => {
+
+  el("closeModal").onclick = function () {
+
     el("wifiModal").classList.add("hidden");
+
+    pendingUrl = null;
+
   };
+
 }
 
-/* Pub-ID popup */
+
+/* -------------------------------------------------
+   PUB-ID POPUP
+------------------------------------------------- */
 
 if (el("showIdBtn")) {
-  el("showIdBtn").onclick = () => {
+
+  el("showIdBtn").onclick = function () {
+
     el("idModal").classList.remove("hidden");
+
   };
+
 }
+
 
 if (el("closeIdModal")) {
-  el("closeIdModal").onclick = () => {
+
+  el("closeIdModal").onclick = function () {
+
     el("idModal").classList.add("hidden");
+
   };
+
 }
 
-/* Kopier Wi-Fi kode */
+
+/* -------------------------------------------------
+   KOPIER WIFI-KODE
+------------------------------------------------- */
 
 if (el("copyWifi")) {
-  el("copyWifi").onclick = async () => {
+
+  el("copyWifi").onclick = async function () {
+
     try {
-      await navigator.clipboard.writeText(CONFIG.wifiPassword);
-    } catch (e) {}
 
-    const language = el("language")
-      ? el("language").value
-      : "da";
+      await navigator.clipboard.writeText(
+        CONFIG.wifiPassword
+      );
 
-    const text = T[language] || T.da;
+    } catch (error) {
+      // Telefonen kan blokere clipboard.
+    }
 
-    el("copyWifi").textContent = text.copied;
 
-    setTimeout(() => {
-      el("copyWifi").textContent = text.copy;
+    const language =
+      el("language")
+        ? el("language").value
+        : "da";
+
+
+    const text =
+      T[language] || T.da;
+
+
+    el("copyWifi").textContent =
+      text.copied;
+
+
+    setTimeout(function () {
+
+      el("copyWifi").textContent =
+        text.copy;
+
     }, 1500);
+
   };
+
 }
 
-/* Sprog */
+
+/* -------------------------------------------------
+   SPROG
+------------------------------------------------- */
 
 function applyLanguage(lang) {
-  const t = T[lang] || T.da;
 
-  localStorage.setItem("cip_lang", lang);
-  document.documentElement.lang = lang;
+  const t =
+    T[lang] || T.da;
+
+
+  localStorage.setItem(
+    "cip_lang",
+    lang
+  );
+
+
+  document.documentElement.lang =
+    lang;
+
 
   const map = {
+
     title: "title",
+
     deviceLabel: "deviceLabel",
     showId: "showIdBtn",
 
@@ -323,44 +495,91 @@ function applyLanguage(lang) {
     cardText: "cardText",
 
     wifiHelp: "wifiHelp",
+
     password: "passwordLabel",
+
     copy: "copyWifi",
 
     footer: "footerText",
 
     modalTitle: "modalTitle",
+
     step1: "step1",
     step2: "step2",
     step3: "step3",
+
     continue: "continueBtn",
+
     hint: "modalHint",
 
     idTitle: "idModalTitle",
     idHint: "idHint"
+
   };
 
-  for (const [key, elementId] of Object.entries(map)) {
-    const element = el(elementId);
 
-    if (element && t[key] !== undefined) {
-      element.textContent = t[key];
+  for (
+    const [key, elementId]
+    of Object.entries(map)
+  ) {
+
+    const element =
+      el(elementId);
+
+
+    if (
+      element &&
+      t[key] !== undefined
+    ) {
+
+      element.textContent =
+        t[key];
+
     }
+
   }
+
 }
+
+
+/* -------------------------------------------------
+   STARTSPROG
+------------------------------------------------- */
 
 const browserLang =
-  (navigator.language || "da").slice(0, 2);
+  (navigator.language || "da")
+    .slice(0, 2);
+
+
+const savedLanguage =
+  localStorage.getItem("cip_lang");
+
 
 const startLang =
-  localStorage.getItem("cip_lang") ||
-  (T[browserLang] ? browserLang : "da");
+  savedLanguage ||
+  (
+    T[browserLang]
+      ? browserLang
+      : "da"
+  );
+
 
 if (el("language")) {
-  el("language").value = startLang;
 
-  el("language").onchange = (event) => {
-    applyLanguage(event.target.value);
-  };
+  el("language").value =
+    startLang;
+
+
+  el("language").onchange =
+    function (event) {
+
+      applyLanguage(
+        event.target.value
+      );
+
+    };
+
 }
+
 
 applyLanguage(startLang);
