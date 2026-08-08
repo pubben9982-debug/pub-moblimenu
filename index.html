@@ -52,6 +52,10 @@
         <span id="jukeboxText">Ønsk musik fra din telefon</span>
       </button>
 
+      <!--
+        Poker er skjult som standard.
+        app.js viser kun knappen, når URL'en indeholder ?showPoker=1
+      -->
       <button
         class="menu-card games"
         id="gamesBtn"
@@ -78,6 +82,7 @@
     </section>
 
     <section class="wifi-card">
+
       <div>
         <div class="small-label" id="wifiHelp">
           Lokale funktioner kræver pubbens Wi-Fi
@@ -94,6 +99,7 @@
       <button id="copyWifi" class="copy-btn" type="button">
         Kopiér kode
       </button>
+
     </section>
 
     <footer>
@@ -104,7 +110,11 @@
 
   </main>
 
+
+  <!-- Wi-Fi popup -->
+
   <div id="wifiModal" class="modal hidden">
+
     <div class="modal-card">
 
       <button
@@ -121,6 +131,7 @@
       </h2>
 
       <ol>
+
         <li id="step1">
           Åbn Wi-Fi på telefonen
         </li>
@@ -134,6 +145,7 @@
           <span id="step3">Skriv koden</span>
           <strong>pubben9982</strong>
         </li>
+
       </ol>
 
       <button
@@ -149,9 +161,14 @@
       </p>
 
     </div>
+
   </div>
 
+
+  <!-- Pub-ID popup -->
+
   <div id="idModal" class="modal hidden">
+
     <div class="modal-card compact">
 
       <button
@@ -176,7 +193,11 @@
       </p>
 
     </div>
+
   </div>
+
+
+  <!-- Ny cache-version -->
 
   <script src="app.js?v=8"></script>
 
