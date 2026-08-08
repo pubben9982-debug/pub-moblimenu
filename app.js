@@ -1,7 +1,6 @@
 const CONFIG = {
   drinksUrl: "http://192.168.0.50:8080/drinkskort/",
   jukeboxUrl: "http://192.168.0.50:5055/",
-  gamesUrl: "http://192.168.0.50:5050/",
   pizzaUrl: "http://192.168.0.50:8091/pizza",
   clipsUrl: "http://192.168.0.50:8080/klippekort.html",
 
@@ -23,9 +22,6 @@ const T = {
 
     jukeboxTitle: "Jukebox",
     jukeboxText: "Ønsk musik fra din telefon",
-
-    gamesTitle: "Poker",
-    gamesText: "Spil poker fra din telefon",
 
     pizzaTitle: "Pizza",
     pizzaText: "Se pizza-menu og bestil",
@@ -71,9 +67,6 @@ const T = {
     jukeboxTitle: "Jukebox",
     jukeboxText: "Request music from your phone",
 
-    gamesTitle: "Poker",
-    gamesText: "Play poker from your phone",
-
     pizzaTitle: "Pizza",
     pizzaText: "See the pizza menu and order",
 
@@ -118,9 +111,6 @@ const T = {
     jukeboxTitle: "Jukebox",
     jukeboxText: "Musik mit dem Handy wünschen",
 
-    gamesTitle: "Poker",
-    gamesText: "Poker mit dem Handy spielen",
-
     pizzaTitle: "Pizza",
     pizzaText: "Pizzakarte ansehen und bestellen",
 
@@ -164,9 +154,6 @@ const T = {
 
     jukeboxTitle: "Jukebox",
     jukeboxText: "Ønsk musikk fra telefonen",
-
-    gamesTitle: "Poker",
-    gamesText: "Spill poker fra telefonen",
 
     pizzaTitle: "Pizza",
     pizzaText: "Se pizzamenyen og bestill",
@@ -218,32 +205,43 @@ function makeId() {
   if (!id) {
 
     const values = new Uint32Array(1);
+
     crypto.getRandomValues(values);
 
-    const number = values[0] % 10000;
+    const number =
+      values[0] % 10000;
 
-    id = String(number).padStart(4, "0");
+    id =
+      String(number).padStart(4, "0");
 
     localStorage.setItem(
       "cip_device_id",
       id
     );
+
   }
 
   return id;
 }
 
 
-const deviceId = makeId();
+const deviceId =
+  makeId();
 
 
 if (el("deviceId")) {
-  el("deviceId").textContent = deviceId;
+
+  el("deviceId").textContent =
+    deviceId;
+
 }
 
 
 if (el("bigDeviceId")) {
-  el("bigDeviceId").textContent = deviceId;
+
+  el("bigDeviceId").textContent =
+    deviceId;
+
 }
 
 
@@ -259,8 +257,13 @@ function openLocal(url) {
   pendingUrl = url;
 
   if (el("wifiModal")) {
-    el("wifiModal").classList.remove("hidden");
+
+    el("wifiModal")
+      .classList
+      .remove("hidden");
+
   }
+
 }
 
 
@@ -270,13 +273,14 @@ function openLocal(url) {
 
 if (el("drinksBtn")) {
 
-  el("drinksBtn").onclick = function () {
+  el("drinksBtn").onclick =
+    function () {
 
-    openLocal(
-      CONFIG.drinksUrl
-    );
+      openLocal(
+        CONFIG.drinksUrl
+      );
 
-  };
+    };
 
 }
 
@@ -287,37 +291,18 @@ if (el("drinksBtn")) {
 
 if (el("jukeboxBtn")) {
 
-  el("jukeboxBtn").onclick = function () {
+  el("jukeboxBtn").onclick =
+    function () {
 
-    const url =
-      CONFIG.jukeboxUrl +
-      "?id=" +
-      encodeURIComponent(deviceId) +
-      "&v=7";
+      const url =
+        CONFIG.jukeboxUrl +
+        "?id=" +
+        encodeURIComponent(deviceId) +
+        "&v=7";
 
-    openLocal(url);
+      openLocal(url);
 
-  };
-
-}
-
-
-/* -------------------------------------------------
-   POKER
-------------------------------------------------- */
-
-if (el("gamesBtn")) {
-
-  el("gamesBtn").onclick = function () {
-
-    const url =
-      CONFIG.gamesUrl +
-      "?id=" +
-      encodeURIComponent(deviceId);
-
-    openLocal(url);
-
-  };
+    };
 
 }
 
@@ -328,13 +313,14 @@ if (el("gamesBtn")) {
 
 if (el("pizzaBtn")) {
 
-  el("pizzaBtn").onclick = function () {
+  el("pizzaBtn").onclick =
+    function () {
 
-    openLocal(
-      CONFIG.pizzaUrl
-    );
+      openLocal(
+        CONFIG.pizzaUrl
+      );
 
-  };
+    };
 
 }
 
@@ -342,24 +328,24 @@ if (el("pizzaBtn")) {
 /* -------------------------------------------------
    KLIPPEKORT
 
-   VIGTIGT:
-   Klippekort går DIREKTE til den lokale side.
-   Vi ved allerede, at den direkte IP-adresse virker.
+   Sender samme Pub-ID som Jukebox.
 ------------------------------------------------- */
 
 if (el("cardBtn")) {
 
-  el("cardBtn").onclick = function () {
+  el("cardBtn").onclick =
+    function () {
 
-    const url =
-      CONFIG.clipsUrl +
-      "?id=" +
-      encodeURIComponent(deviceId) +
-      "&v=2";
+      const url =
+        CONFIG.clipsUrl +
+        "?id=" +
+        encodeURIComponent(deviceId) +
+        "&v=3";
 
-    window.location.href = url;
+      window.location.href =
+        url;
 
-  };
+    };
 
 }
 
@@ -370,26 +356,33 @@ if (el("cardBtn")) {
 
 if (el("continueBtn")) {
 
-  el("continueBtn").onclick = function () {
+  el("continueBtn").onclick =
+    function () {
 
-    if (pendingUrl) {
-      window.location.href = pendingUrl;
-    }
+      if (pendingUrl) {
 
-  };
+        window.location.href =
+          pendingUrl;
+
+      }
+
+    };
 
 }
 
 
 if (el("closeModal")) {
 
-  el("closeModal").onclick = function () {
+  el("closeModal").onclick =
+    function () {
 
-    el("wifiModal").classList.add("hidden");
+      el("wifiModal")
+        .classList
+        .add("hidden");
 
-    pendingUrl = null;
+      pendingUrl = null;
 
-  };
+    };
 
 }
 
@@ -400,22 +393,28 @@ if (el("closeModal")) {
 
 if (el("showIdBtn")) {
 
-  el("showIdBtn").onclick = function () {
+  el("showIdBtn").onclick =
+    function () {
 
-    el("idModal").classList.remove("hidden");
+      el("idModal")
+        .classList
+        .remove("hidden");
 
-  };
+    };
 
 }
 
 
 if (el("closeIdModal")) {
 
-  el("closeIdModal").onclick = function () {
+  el("closeIdModal").onclick =
+    function () {
 
-    el("idModal").classList.add("hidden");
+      el("idModal")
+        .classList
+        .add("hidden");
 
-  };
+    };
 
 }
 
@@ -426,41 +425,45 @@ if (el("closeIdModal")) {
 
 if (el("copyWifi")) {
 
-  el("copyWifi").onclick = async function () {
+  el("copyWifi").onclick =
+    async function () {
 
-    try {
+      try {
 
-      await navigator.clipboard.writeText(
-        CONFIG.wifiPassword
-      );
+        await navigator.clipboard.writeText(
+          CONFIG.wifiPassword
+        );
 
-    } catch (error) {
-      // Telefonen kan blokere clipboard.
-    }
-
-
-    const language =
-      el("language")
-        ? el("language").value
-        : "da";
+      } catch (error) {
+        // Nogle telefoner blokerer clipboard.
+      }
 
 
-    const text =
-      T[language] || T.da;
+      const language =
+        el("language")
+          ? el("language").value
+          : "da";
 
 
-    el("copyWifi").textContent =
-      text.copied;
+      const text =
+        T[language] || T.da;
 
-
-    setTimeout(function () {
 
       el("copyWifi").textContent =
-        text.copy;
+        text.copied;
 
-    }, 1500);
 
-  };
+      setTimeout(
+        function () {
+
+          el("copyWifi").textContent =
+            text.copy;
+
+        },
+        1500
+      );
+
+    };
 
 }
 
@@ -497,9 +500,6 @@ function applyLanguage(lang) {
 
     jukeboxTitle: "jukeboxTitle",
     jukeboxText: "jukeboxText",
-
-    gamesTitle: "gamesTitle",
-    gamesText: "gamesText",
 
     pizzaTitle: "pizzaTitle",
     pizzaText: "pizzaText",
@@ -565,7 +565,9 @@ const browserLang =
 
 
 const savedLanguage =
-  localStorage.getItem("cip_lang");
+  localStorage.getItem(
+    "cip_lang"
+  );
 
 
 const startLang =
