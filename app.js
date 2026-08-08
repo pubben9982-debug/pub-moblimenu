@@ -1,7 +1,7 @@
 const CONFIG = {
   drinksUrl: "http://192.168.0.50:8080/drinkskort/",
   jukeboxUrl: "http://192.168.0.50:5055/",
-  gamesUrl: "http://192.168.0.50:8080/",
+  gamesUrl: "http://192.168.0.50:5050/",
   pizzaUrl: "http://192.168.0.50:8091/pizza",
 
   wifiName: "pubben gæst",
@@ -20,8 +20,8 @@ const T = {
     jukeboxTitle: "Jukebox",
     jukeboxText: "Ønsk musik fra din telefon",
 
-    gamesTitle: "Mobilspil",
-    gamesText: "Spil sammen ved bordet",
+    gamesTitle: "Poker",
+    gamesText: "Spil poker fra din telefon",
 
     pizzaTitle: "Pizza",
     pizzaText: "Se pizza-menu og bestil",
@@ -58,8 +58,8 @@ const T = {
     jukeboxTitle: "Jukebox",
     jukeboxText: "Request music from your phone",
 
-    gamesTitle: "Mobile games",
-    gamesText: "Play together at the table",
+    gamesTitle: "Poker",
+    gamesText: "Play poker from your phone",
 
     pizzaTitle: "Pizza",
     pizzaText: "See the pizza menu and order",
@@ -96,8 +96,8 @@ const T = {
     jukeboxTitle: "Jukebox",
     jukeboxText: "Musik mit dem Handy wünschen",
 
-    gamesTitle: "Handyspiele",
-    gamesText: "Gemeinsam am Tisch spielen",
+    gamesTitle: "Poker",
+    gamesText: "Poker mit dem Handy spielen",
 
     pizzaTitle: "Pizza",
     pizzaText: "Pizzakarte ansehen und bestellen",
@@ -134,8 +134,8 @@ const T = {
     jukeboxTitle: "Jukebox",
     jukeboxText: "Ønsk musikk fra telefonen",
 
-    gamesTitle: "Mobilspill",
-    gamesText: "Spill sammen ved bordet",
+    gamesTitle: "Poker",
+    gamesText: "Spill poker fra telefonen",
 
     pizzaTitle: "Pizza",
     pizzaText: "Se pizzamenyen og bestill",
@@ -212,7 +212,10 @@ if (el("jukeboxBtn")) {
 }
 
 if (el("gamesBtn")) {
-  el("gamesBtn").onclick = () => openLocal(CONFIG.gamesUrl);
+  el("gamesBtn").onclick = () =>
+    openLocal(
+      `${CONFIG.gamesUrl}?id=${encodeURIComponent(deviceId)}`
+    );
 }
 
 if (el("pizzaBtn")) {
@@ -255,9 +258,7 @@ if (el("copyWifi")) {
   el("copyWifi").onclick = async () => {
     try {
       await navigator.clipboard.writeText(CONFIG.wifiPassword);
-    } catch (e) {
-      // Clipboard virker ikke i alle browsere.
-    }
+    } catch (e) {}
 
     const language = el("language") ? el("language").value : "da";
     const text = T[language] || T.da;
