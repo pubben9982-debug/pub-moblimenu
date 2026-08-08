@@ -1,302 +1,157 @@
 "use strict";
 
 
-/* =========================================================
-   CENTRAL IRISH PUB - MOBILMENU
-   ========================================================= */
-
-
-/* ---------------------------------------------------------
-   INDSTILLINGER
---------------------------------------------------------- */
-
 const CONFIG = {
-  drinksUrl:
-    "http://192.168.0.50:8080/drinkskort/",
+  drinksUrl: "http://192.168.0.50:8080/drinkskort/",
+  jukeboxUrl: "http://192.168.0.50:5055/",
+  pizzaUrl: "http://192.168.0.50:8091/pizza",
+  clipsUrl: "http://192.168.0.50:8080/klippekort.html",
 
-  jukeboxUrl:
-    "http://192.168.0.50:5055/",
-
-  pizzaUrl:
-    "http://192.168.0.50:8091/pizza",
-
-  clipsUrl:
-    "http://192.168.0.50:8080/klippekort.html",
-
-  wifiName:
-    "pubben gæst",
-
-  wifiPassword:
-    "pubben9982"
+  wifiName: "pubben gæst",
+  wifiPassword: "pubben9982"
 };
 
-
-/* ---------------------------------------------------------
-   SPROG
---------------------------------------------------------- */
 
 const TEXT = {
 
   da: {
-    title:
-      "Hvad har du lyst til?",
+    title: "Hvad har du lyst til?",
+    deviceLabel: "Dit Pub-ID",
+    showId: "Vis ID",
 
-    deviceLabel:
-      "Dit Pub-ID",
+    drinksTitle: "Drinkskort",
+    drinksText: "Se drinks, øl og priser",
 
-    showId:
-      "Vis ID",
+    jukeboxTitle: "Jukebox",
+    jukeboxText: "Ønsk musik fra din telefon",
 
-    drinksTitle:
-      "Drinkskort",
+    pizzaTitle: "Pizza",
+    pizzaText: "Se pizza-menu",
 
-    drinksText:
-      "Se drinks, øl og priser",
+    cardTitle: "Klippekort",
+    cardText: "Se saldo og brug klip",
 
-    jukeboxTitle:
-      "Jukebox",
+    wifiHelp: "De lokale funktioner kræver pubbens Wi-Fi",
+    password: "Kode",
+    copy: "Kopiér kode",
+    copied: "Kopieret",
 
-    jukeboxText:
-      "Ønsk musik fra din telefon",
+    footer: "Mobilmenuen kan også åbnes uden pubbens Wi-Fi",
 
-    pizzaTitle:
-      "Pizza",
-
-    pizzaText:
-      "Se pizza-menu",
-
-    cardTitle:
-      "Klippekort",
-
-    cardText:
-      "Se saldo og brug klip",
-
-    wifiHelp:
-      "De lokale funktioner kræver pubbens Wi-Fi",
-
-    password:
-      "Kode",
-
-    copy:
-      "Kopiér kode",
-
-    copied:
-      "Kopieret",
-
-    footer:
-      "Mobilmenuen kan også åbnes uden pubbens Wi-Fi",
-
-    idTitle:
-      "Dit Pub-ID",
-
-    idHint:
-      "Dette ID bruges til din fælles saldo, Jukebox og Klippekort."
+    idTitle: "Dit Pub-ID",
+    idHint: "Dette ID bruges til din fælles saldo, Jukebox og Klippekort."
   },
 
 
   en: {
-    title:
-      "What would you like?",
+    title: "What would you like?",
+    deviceLabel: "Your Pub ID",
+    showId: "Show ID",
 
-    deviceLabel:
-      "Your Pub ID",
+    drinksTitle: "Drinks menu",
+    drinksText: "See drinks, beer and prices",
 
-    showId:
-      "Show ID",
+    jukeboxTitle: "Jukebox",
+    jukeboxText: "Request music from your phone",
 
-    drinksTitle:
-      "Drinks menu",
+    pizzaTitle: "Pizza",
+    pizzaText: "See the pizza menu",
 
-    drinksText:
-      "See drinks, beer and prices",
+    cardTitle: "Punch card",
+    cardText: "See balance and use punches",
 
-    jukeboxTitle:
-      "Jukebox",
+    wifiHelp: "Local features require the pub Wi-Fi",
+    password: "Password",
+    copy: "Copy password",
+    copied: "Copied",
 
-    jukeboxText:
-      "Request music from your phone",
+    footer: "The mobile menu also works without the pub Wi-Fi",
 
-    pizzaTitle:
-      "Pizza",
-
-    pizzaText:
-      "See the pizza menu",
-
-    cardTitle:
-      "Punch card",
-
-    cardText:
-      "See balance and use punches",
-
-    wifiHelp:
-      "Local features require the pub Wi-Fi",
-
-    password:
-      "Password",
-
-    copy:
-      "Copy password",
-
-    copied:
-      "Copied",
-
-    footer:
-      "The mobile menu also works without the pub Wi-Fi",
-
-    idTitle:
-      "Your Pub ID",
-
-    idHint:
-      "This ID is used for your shared balance, Jukebox and punch card."
+    idTitle: "Your Pub ID",
+    idHint: "This ID is used for your shared balance, Jukebox and punch card."
   },
 
 
   de: {
-    title:
-      "Was möchten Sie?",
+    title: "Was möchten Sie?",
+    deviceLabel: "Ihre Pub-ID",
+    showId: "ID anzeigen",
 
-    deviceLabel:
-      "Ihre Pub-ID",
+    drinksTitle: "Getränkekarte",
+    drinksText: "Drinks, Bier und Preise",
 
-    showId:
-      "ID anzeigen",
+    jukeboxTitle: "Jukebox",
+    jukeboxText: "Musik mit dem Handy wünschen",
 
-    drinksTitle:
-      "Getränkekarte",
+    pizzaTitle: "Pizza",
+    pizzaText: "Pizzakarte ansehen",
 
-    drinksText:
-      "Drinks, Bier und Preise",
+    cardTitle: "Stempelkarte",
+    cardText: "Guthaben ansehen und Stempel verwenden",
 
-    jukeboxTitle:
-      "Jukebox",
+    wifiHelp: "Lokale Funktionen benötigen das Pub-WLAN",
+    password: "Passwort",
+    copy: "Passwort kopieren",
+    copied: "Kopiert",
 
-    jukeboxText:
-      "Musik mit dem Handy wünschen",
+    footer: "Die Mobilkarte funktioniert auch ohne Pub-WLAN",
 
-    pizzaTitle:
-      "Pizza",
-
-    pizzaText:
-      "Pizzakarte ansehen",
-
-    cardTitle:
-      "Stempelkarte",
-
-    cardText:
-      "Guthaben ansehen und Stempel verwenden",
-
-    wifiHelp:
-      "Lokale Funktionen benötigen das Pub-WLAN",
-
-    password:
-      "Passwort",
-
-    copy:
-      "Passwort kopieren",
-
-    copied:
-      "Kopiert",
-
-    footer:
-      "Die Mobilkarte funktioniert auch ohne Pub-WLAN",
-
-    idTitle:
-      "Ihre Pub-ID",
-
-    idHint:
-      "Diese ID wird für Guthaben, Jukebox und Stempelkarte verwendet."
+    idTitle: "Ihre Pub-ID",
+    idHint: "Diese ID wird für Guthaben, Jukebox und Stempelkarte verwendet."
   },
 
 
   no: {
-    title:
-      "Hva har du lyst på?",
+    title: "Hva har du lyst på?",
+    deviceLabel: "Din Pub-ID",
+    showId: "Vis ID",
 
-    deviceLabel:
-      "Din Pub-ID",
+    drinksTitle: "Drinkmeny",
+    drinksText: "Se drinker, øl og priser",
 
-    showId:
-      "Vis ID",
+    jukeboxTitle: "Jukebox",
+    jukeboxText: "Ønsk musikk fra telefonen",
 
-    drinksTitle:
-      "Drinkmeny",
+    pizzaTitle: "Pizza",
+    pizzaText: "Se pizzamenyen",
 
-    drinksText:
-      "Se drinker, øl og priser",
+    cardTitle: "Klippekort",
+    cardText: "Se saldo og bruk klipp",
 
-    jukeboxTitle:
-      "Jukebox",
+    wifiHelp: "Lokale funksjoner krever pubens Wi-Fi",
+    password: "Passord",
+    copy: "Kopier passord",
+    copied: "Kopiert",
 
-    jukeboxText:
-      "Ønsk musikk fra telefonen",
+    footer: "Mobilmenyen fungerer også uten pubens Wi-Fi",
 
-    pizzaTitle:
-      "Pizza",
-
-    pizzaText:
-      "Se pizzamenyen",
-
-    cardTitle:
-      "Klippekort",
-
-    cardText:
-      "Se saldo og bruk klipp",
-
-    wifiHelp:
-      "Lokale funksjoner krever pubens Wi-Fi",
-
-    password:
-      "Passord",
-
-    copy:
-      "Kopier passord",
-
-    copied:
-      "Kopiert",
-
-    footer:
-      "Mobilmenyen fungerer også uten pubens Wi-Fi",
-
-    idTitle:
-      "Din Pub-ID",
-
-    idHint:
-      "Denne ID-en brukes til saldo, Jukebox og klippekort."
+    idTitle: "Din Pub-ID",
+    idHint: "Denne ID-en brukes til saldo, Jukebox og klippekort."
   }
 
 };
 
-
-/* ---------------------------------------------------------
-   HJÆLPEFUNKTION
---------------------------------------------------------- */
 
 function el(id) {
   return document.getElementById(id);
 }
 
 
-/* ---------------------------------------------------------
-   PUB-ID
---------------------------------------------------------- */
+function getPubId() {
 
-function createPubId() {
-
-  const oldId =
-    localStorage.getItem(
-      "cip_device_id"
-    );
+  let id =
+    localStorage.getItem("cip_device_id");
 
 
   if (
-    oldId &&
-    /^\d{4}$/.test(oldId)
+    id &&
+    /^\d{4}$/.test(id)
   ) {
-    return oldId;
+    return id;
   }
 
 
-  let number;
+  let number = 0;
 
 
   try {
@@ -304,9 +159,7 @@ function createPubId() {
     const values =
       new Uint32Array(1);
 
-    crypto.getRandomValues(
-      values
-    );
+    crypto.getRandomValues(values);
 
     number =
       values[0] % 10000;
@@ -321,23 +174,22 @@ function createPubId() {
   }
 
 
-  const newId =
-    String(number)
-      .padStart(4, "0");
+  id =
+    String(number).padStart(4, "0");
 
 
   localStorage.setItem(
     "cip_device_id",
-    newId
+    id
   );
 
 
-  return newId;
+  return id;
 }
 
 
 const pubId =
-  createPubId();
+  getPubId();
 
 
 if (el("deviceId")) {
@@ -352,26 +204,12 @@ if (el("bigDeviceId")) {
 }
 
 
-/* ---------------------------------------------------------
-   ÅBN LOKAL SIDE
-
-   Vi bruger almindelig top-level navigation.
-   Telefonen skal være på pubbens Wi-Fi for at nå
-   192.168.0.50.
---------------------------------------------------------- */
-
 function openPage(url) {
-
-  window.location.assign(
-    url
-  );
-
+  window.location.assign(url);
 }
 
 
-/* ---------------------------------------------------------
-   DRINKSKORT
---------------------------------------------------------- */
+/* DRINKSKORT */
 
 if (el("drinksBtn")) {
 
@@ -390,11 +228,7 @@ if (el("drinksBtn")) {
 }
 
 
-/* ---------------------------------------------------------
-   JUKEBOX
-
-   Samme Pub-ID sendes til Jukebox.
---------------------------------------------------------- */
+/* JUKEBOX */
 
 if (el("jukeboxBtn")) {
 
@@ -407,7 +241,7 @@ if (el("jukeboxBtn")) {
           CONFIG.jukeboxUrl +
           "?id=" +
           encodeURIComponent(pubId) +
-          "&v=10";
+          "&v=12";
 
 
         openPage(url);
@@ -418,9 +252,7 @@ if (el("jukeboxBtn")) {
 }
 
 
-/* ---------------------------------------------------------
-   PIZZA
---------------------------------------------------------- */
+/* PIZZA */
 
 if (el("pizzaBtn")) {
 
@@ -439,11 +271,7 @@ if (el("pizzaBtn")) {
 }
 
 
-/* ---------------------------------------------------------
-   KLIPPEKORT
-
-   Samme Pub-ID som Jukebox.
---------------------------------------------------------- */
+/* KLIPPEKORT */
 
 if (el("cardBtn")) {
 
@@ -456,7 +284,7 @@ if (el("cardBtn")) {
           CONFIG.clipsUrl +
           "?id=" +
           encodeURIComponent(pubId) +
-          "&v=10";
+          "&v=12";
 
 
         openPage(url);
@@ -467,9 +295,7 @@ if (el("cardBtn")) {
 }
 
 
-/* ---------------------------------------------------------
-   PUB-ID POPUP
---------------------------------------------------------- */
+/* PUB-ID POPUP */
 
 if (
   el("showIdBtn") &&
@@ -511,8 +337,6 @@ if (
 }
 
 
-/* Klik uden for boksen lukker popup */
-
 if (el("idModal")) {
 
   el("idModal")
@@ -537,9 +361,7 @@ if (el("idModal")) {
 }
 
 
-/* ---------------------------------------------------------
-   KOPIER WIFI-KODE
---------------------------------------------------------- */
+/* KOPIER WIFI-KODE */
 
 if (el("copyWifi")) {
 
@@ -557,10 +379,7 @@ if (el("copyWifi")) {
             );
 
         } catch (error) {
-
-          /* Clipboard kan være blokeret.
-             Koden står stadig synligt på siden. */
-
+          // Koden står synligt på siden.
         }
 
 
@@ -575,16 +394,14 @@ if (el("copyWifi")) {
           TEXT.da;
 
 
-        el("copyWifi")
-          .textContent =
+        el("copyWifi").textContent =
           t.copied;
 
 
         setTimeout(
           function () {
 
-            el("copyWifi")
-              .textContent =
+            el("copyWifi").textContent =
               t.copy;
 
           },
@@ -597,21 +414,13 @@ if (el("copyWifi")) {
 }
 
 
-/* ---------------------------------------------------------
-   SPROG
---------------------------------------------------------- */
+/* SPROG */
 
-function applyLanguage(
-  language
-) {
+function applyLanguage(language) {
 
   const t =
     TEXT[language] ||
     TEXT.da;
-
-
-  document.documentElement.lang =
-    language;
 
 
   localStorage.setItem(
@@ -620,65 +429,46 @@ function applyLanguage(
   );
 
 
-  const elements = {
+  document.documentElement.lang =
+    language;
 
-    title:
-      "title",
 
-    deviceLabel:
-      "deviceLabel",
+  const map = {
 
-    showId:
-      "showIdBtn",
+    title: "title",
 
-    drinksTitle:
-      "drinksTitle",
+    deviceLabel: "deviceLabel",
+    showId: "showIdBtn",
 
-    drinksText:
-      "drinksText",
+    drinksTitle: "drinksTitle",
+    drinksText: "drinksText",
 
-    jukeboxTitle:
-      "jukeboxTitle",
+    jukeboxTitle: "jukeboxTitle",
+    jukeboxText: "jukeboxText",
 
-    jukeboxText:
-      "jukeboxText",
+    pizzaTitle: "pizzaTitle",
+    pizzaText: "pizzaText",
 
-    pizzaTitle:
-      "pizzaTitle",
+    cardTitle: "cardTitle",
+    cardText: "cardText",
 
-    pizzaText:
-      "pizzaText",
+    wifiHelp: "wifiHelp",
 
-    cardTitle:
-      "cardTitle",
+    password: "passwordLabel",
 
-    cardText:
-      "cardText",
+    copy: "copyWifi",
 
-    wifiHelp:
-      "wifiHelp",
+    footer: "footerText",
 
-    password:
-      "passwordLabel",
-
-    copy:
-      "copyWifi",
-
-    footer:
-      "footerText",
-
-    idTitle:
-      "idModalTitle",
-
-    idHint:
-      "idHint"
+    idTitle: "idModalTitle",
+    idHint: "idHint"
 
   };
 
 
   for (
     const [textKey, elementId]
-    of Object.entries(elements)
+    of Object.entries(map)
   ) {
 
     const element =
@@ -705,10 +495,6 @@ function applyLanguage(
 
 }
 
-
-/* ---------------------------------------------------------
-   STARTSPROG
---------------------------------------------------------- */
 
 const browserLanguage =
   (
@@ -752,6 +538,4 @@ if (el("language")) {
 }
 
 
-applyLanguage(
-  startLanguage
-);
+applyLanguage(startLanguage);
