@@ -166,12 +166,15 @@ function el(id) {
   return document.getElementById(id);
 }
 
+/* Fælles Pub-ID */
+
 function makeId() {
   let id = localStorage.getItem("cip_device_id");
 
   if (!id) {
     const n = crypto.getRandomValues(new Uint32Array(1))[0] % 10000;
     id = String(n).padStart(4, "0");
+
     localStorage.setItem("cip_device_id", id);
   }
 
@@ -188,6 +191,19 @@ if (el("bigDeviceId")) {
   el("bigDeviceId").textContent = deviceId;
 }
 
+/* Skal Poker vises? */
+
+const pageParams = new URLSearchParams(window.location.search);
+
+const showPoker =
+  pageParams.get("showPoker") === "1";
+
+if (el("gamesBtn")) {
+  el("gamesBtn").hidden = !showPoker;
+}
+
+/* Wi-Fi popup / lokal navigation */
+
 let pendingUrl = null;
 
 function openLocal(url) {
@@ -198,11 +214,14 @@ function openLocal(url) {
   }
 }
 
-/* Lokale funktioner */
+/* Drinkskort */
 
 if (el("drinksBtn")) {
-  el("drinksBtn").onclick = () => openLocal(CONFIG.drinksUrl);
+  el("drinksBtn").onclick = () =>
+    openLocal(CONFIG.drinksUrl);
 }
+
+/* Jukebox - fælles Pub-ID */
 
 if (el("jukeboxBtn")) {
   el("jukeboxBtn").onclick = () =>
@@ -211,6 +230,8 @@ if (el("jukeboxBtn")) {
     );
 }
 
+/* Poker - fælles Pub-ID */
+
 if (el("gamesBtn")) {
   el("gamesBtn").onclick = () =>
     openLocal(
@@ -218,8 +239,11 @@ if (el("gamesBtn")) {
     );
 }
 
+/* Pizza */
+
 if (el("pizzaBtn")) {
-  el("pizzaBtn").onclick = () => openLocal(CONFIG.pizzaUrl);
+  el("pizzaBtn").onclick = () =>
+    openLocal(CONFIG.pizzaUrl);
 }
 
 /* Wi-Fi popup */
@@ -257,16 +281,26 @@ if (el("closeIdModal")) {
 if (el("copyWifi")) {
   el("copyWifi").onclick = async () => {
     try {
-      await navigator.clipboard.writeText(CONFIG.wifiPassword);
-    } catch (e) {}
+      await navigator.clipboard.writeText(
+        CONFIG.wifiPassword
+      );
+    } catch (e) {
+      // Clipboard virker ikke i alle browsere.
+    }
 
-    const language = el("language") ? el("language").value : "da";
+    const language =
+      el("language")
+        ? el("language").value
+        : "da";
+
     const text = T[language] || T.da;
 
-    el("copyWifi").textContent = text.copied;
+    el("copyWifi").textContent =
+      text.copied;
 
     setTimeout(() => {
-      el("copyWifi").textContent = text.copy;
+      el("copyWifi").textContent =
+        text.copy;
     }, 1500);
   };
 }
@@ -276,8 +310,13 @@ if (el("copyWifi")) {
 function applyLanguage(lang) {
   const t = T[lang] || T.da;
 
-  localStorage.setItem("cip_lang", lang);
-  document.documentElement.lang = lang;
+  localStorage.setItem(
+    "cip_lang",
+    lang
+  );
+
+  document.documentElement.lang =
+    lang;
 
   const map = {
     title: "title",
@@ -316,27 +355,44 @@ function applyLanguage(lang) {
     idHint: "idHint"
   };
 
-  for (const [key, elementId] of Object.entries(map)) {
+  for (
+    const [key, elementId]
+    of Object.entries(map)
+  ) {
     const element = el(elementId);
 
-    if (element && t[key] !== undefined) {
-      element.textContent = t[key];
+    if (
+      element &&
+      t[key] !== undefined
+    ) {
+      element.textContent =
+        t[key];
     }
   }
 }
 
-const browserLang = (navigator.language || "da").slice(0, 2);
+const browserLang =
+  (navigator.language || "da")
+    .slice(0, 2);
 
 const startLang =
   localStorage.getItem("cip_lang") ||
-  (T[browserLang] ? browserLang : "da");
+  (
+    T[browserLang]
+      ? browserLang
+      : "da"
+  );
 
 if (el("language")) {
-  el("language").value = startLang;
+  el("language").value =
+    startLang;
 
-  el("language").onchange = (event) => {
-    applyLanguage(event.target.value);
-  };
+  el("language").onchange =
+    (event) => {
+      applyLanguage(
+        event.target.value
+      );
+    };
 }
 
 applyLanguage(startLang);
