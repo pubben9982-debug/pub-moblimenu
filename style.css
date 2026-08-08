@@ -1,15 +1,6 @@
-:root{
-  font-family:Inter,Arial,sans-serif;
-  color:#fff;
-  background:#0c1710;
-  --panel:#16261b;
-  --muted:#b8c8bc;
-  --gold:#f2c66d
-}
+:root{font-family:Inter,Arial,sans-serif;color:#fff;background:#0c1710;--panel:#16261b;--muted:#b8c8bc;--gold:#f2c66d}
 
-*{
-  box-sizing:border-box
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -18,7 +9,7 @@ body{
   color:#fff
 }
 
-main{
+.shell{
   width:min(760px,100%);
   margin:auto;
   padding:24px 18px 34px
@@ -31,16 +22,17 @@ main{
   gap:16px
 }
 
+.eyebrow{
+  font-size:13px;
+  letter-spacing:.14em;
+  color:var(--gold);
+  font-weight:800
+}
+
 h1{
   font-size:clamp(32px,8vw,54px);
   line-height:1;
   margin:8px 0 20px
-}
-
-.language-box{
-  display:flex;
-  align-items:center;
-  gap:8px
 }
 
 select{
@@ -83,8 +75,7 @@ select{
   border:1px solid #6d8973;
   border-radius:12px;
   padding:10px 13px;
-  font-weight:800;
-  cursor:pointer
+  font-weight:800
 }
 
 .menu-grid{
@@ -178,7 +169,7 @@ footer{
   display:none
 }
 
-.modal-box{
+.modal-card{
   position:relative;
   width:min(520px,100%);
   background:#f8f5eb;
@@ -188,27 +179,26 @@ footer{
   box-shadow:0 24px 70px rgba(0,0,0,.45)
 }
 
-.modal-box h2{
+.modal-card h2{
   margin-top:0;
   font-size:28px
 }
 
-.modal-box ol{
+.modal-card ol{
   padding-left:22px;
   line-height:1.8
 }
 
-.close-btn{
+.close{
   position:absolute;
   right:14px;
   top:10px;
   border:0;
   background:none;
-  font-size:36px;
-  cursor:pointer
+  font-size:36px
 }
 
-.primary-btn{
+.primary{
   width:100%;
   border:0;
   border-radius:14px;
@@ -216,20 +206,35 @@ footer{
   color:#fff;
   padding:15px;
   font-weight:900;
-  font-size:17px;
-  cursor:pointer
+  font-size:17px
 }
 
-#modalHint,
-#idHint{
+.hint{
   font-size:13px;
   color:#59655b
 }
 
-#bigDeviceId{
+.compact{
+  text-align:center
+}
+
+.big-id{
   font-size:42px;
-  text-align:center;
-  margin:20px 0
+  font-weight:900;
+  letter-spacing:.15em
+}
+
+.qr-placeholder{
+  width:170px;
+  height:170px;
+  margin:18px auto;
+  background:repeating-linear-gradient(45deg,#111 0 8px,#fff 8px 16px);
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-weight:900;
+  border:12px solid #fff;
+  box-shadow:0 0 0 2px #111
 }
 
 .back-link{
@@ -280,13 +285,5 @@ footer{
   .copy-btn,
   .ghost{
     width:100%
-  }
-
-  .topbar{
-    align-items:center
-  }
-
-  h1{
-    margin-bottom:14px
   }
 }
