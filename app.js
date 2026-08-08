@@ -198,14 +198,15 @@ function openLocal(url) {
   }
 }
 
-/* Lokale funktioner - alle bruger samme Wi-Fi-guide */
+/* Lokale funktioner */
 
 if (el("drinksBtn")) {
   el("drinksBtn").onclick = () => openLocal(CONFIG.drinksUrl);
 }
 
 if (el("jukeboxBtn")) {
-  el("jukeboxBtn").onclick = () => openLocal(CONFIG.jukeboxUrl);
+  el("jukeboxBtn").onclick = () =>
+    openLocal(`${CONFIG.jukeboxUrl}?id=${encodeURIComponent(deviceId)}`);
 }
 
 if (el("gamesBtn")) {
