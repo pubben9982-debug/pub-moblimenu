@@ -6,7 +6,7 @@
 
   <title>Pubmenu</title>
 
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 
 <body>
@@ -52,10 +52,15 @@
         <span id="jukeboxText">Ønsk musik fra din telefon</span>
       </button>
 
-      <button class="menu-card games" id="gamesBtn" type="button">
-        <span class="icon">🎮</span>
-        <strong id="gamesTitle">Mobilspil</strong>
-        <span id="gamesText">Spil sammen ved bordet</span>
+      <button
+        class="menu-card games"
+        id="gamesBtn"
+        type="button"
+        hidden
+      >
+        <span class="icon">♠️</span>
+        <strong id="gamesTitle">Poker</strong>
+        <span id="gamesText">Spil poker fra din telefon</span>
       </button>
 
       <button class="menu-card pizza" id="pizzaBtn" type="button">
@@ -99,6 +104,7 @@
 
   </main>
 
+  <!-- Wi-Fi popup -->
   <div id="wifiModal" class="modal hidden">
     <div class="modal-card">
 
@@ -146,6 +152,7 @@
     </div>
   </div>
 
+  <!-- Pub-ID popup -->
   <div id="idModal" class="modal hidden">
     <div class="modal-card compact">
 
@@ -173,7 +180,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=7"></script>
 
 </body>
 </html>
