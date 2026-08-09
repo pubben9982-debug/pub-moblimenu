@@ -2,14 +2,23 @@
 <html lang="da">
 <head>
   <meta charset="utf-8">
+
   <meta
     name="viewport"
     content="width=device-width,initial-scale=1,viewport-fit=cover"
   >
-  <meta name="theme-color" content="#0c1710">
+
+  <meta
+    name="theme-color"
+    content="#0c1710"
+  >
+
   <title>Central Irish Pub</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 </head>
 
 <body>
@@ -28,22 +37,37 @@
         </h1>
       </div>
 
+
       <select
         id="language"
         aria-label="Sprog"
       >
-        <option value="da">Dansk</option>
-        <option value="en">English</option>
-        <option value="de">Deutsch</option>
-        <option value="no">Norsk</option>
+        <option value="da">
+          Dansk
+        </option>
+
+        <option value="en">
+          English
+        </option>
+
+        <option value="de">
+          Deutsch
+        </option>
+
+        <option value="no">
+          Norsk
+        </option>
       </select>
 
     </div>
 
 
+    <!-- PUB-ID -->
+
     <section class="welcome-card">
 
       <div>
+
         <div
           class="small-label"
           id="deviceLabel"
@@ -57,7 +81,9 @@
         >
           ----
         </div>
+
       </div>
+
 
       <button
         class="ghost"
@@ -70,6 +96,8 @@
     </section>
 
 
+    <!-- MENU -->
+
     <section class="menu-grid">
 
       <button
@@ -77,7 +105,10 @@
         id="drinksBtn"
         type="button"
       >
-        <span class="icon">🍹</span>
+
+        <span class="icon">
+          🍹
+        </span>
 
         <strong id="drinksTitle">
           Drinkskort
@@ -86,6 +117,7 @@
         <span id="drinksText">
           Se drinks, øl og priser
         </span>
+
       </button>
 
 
@@ -94,7 +126,10 @@
         id="jukeboxBtn"
         type="button"
       >
-        <span class="icon">🎵</span>
+
+        <span class="icon">
+          🎵
+        </span>
 
         <strong id="jukeboxTitle">
           Jukebox
@@ -103,6 +138,7 @@
         <span id="jukeboxText">
           Ønsk musik fra din telefon
         </span>
+
       </button>
 
 
@@ -111,7 +147,10 @@
         id="pizzaBtn"
         type="button"
       >
-        <span class="icon">🍕</span>
+
+        <span class="icon">
+          🍕
+        </span>
 
         <strong id="pizzaTitle">
           Pizza
@@ -120,6 +159,7 @@
         <span id="pizzaText">
           Se pizza-menu
         </span>
+
       </button>
 
 
@@ -128,7 +168,10 @@
         id="cardBtn"
         type="button"
       >
-        <span class="icon">🎟️</span>
+
+        <span class="icon">
+          🎟️
+        </span>
 
         <strong id="cardTitle">
           Klippekort
@@ -137,14 +180,18 @@
         <span id="cardText">
           Se saldo og brug klip
         </span>
+
       </button>
 
     </section>
 
 
+    <!-- WIFI INFO -->
+
     <section class="wifi-card">
 
       <div>
+
         <div
           class="small-label"
           id="wifiHelp"
@@ -160,11 +207,14 @@
           <span id="passwordLabel">
             Kode
           </span>:
+
           <strong>
             pubben9982
           </strong>
         </p>
+
       </div>
+
 
       <button
         id="copyWifi"
@@ -184,7 +234,9 @@
   </main>
 
 
-  <!-- WIFI POPUP -->
+  <!-- =====================================================
+       WIFI POPUP
+       ===================================================== -->
 
   <div
     id="wifiModal"
@@ -202,27 +254,33 @@
         ×
       </button>
 
+
       <h2 id="wifiModalTitle">
         Er du på pubbens Wi-Fi?
       </h2>
+
 
       <p id="wifiModalText">
         Denne funktion virker kun på pubbens lokale netværk.
       </p>
 
+
       <ol>
-        <li>
+
+        <li id="wifiStep1">
           Åbn Wi-Fi på telefonen
         </li>
 
-        <li>
-          Vælg <strong>pubben gæst</strong>
+        <li id="wifiStep2">
+          Vælg pubben gæst
         </li>
 
-        <li>
-          Brug koden <strong>pubben9982</strong>
+        <li id="wifiStep3">
+          Brug koden pubben9982
         </li>
+
       </ol>
+
 
       <button
         id="continueLocalBtn"
@@ -232,7 +290,11 @@
         JEG ER PÅ WI-FI – FORTSÆT
       </button>
 
-      <p class="hint">
+
+      <p
+        id="wifiModalHint"
+        class="hint"
+      >
         Hvis siden ikke åbner bagefter,
         er telefonen sandsynligvis ikke på pubbens netværk.
       </p>
@@ -242,7 +304,9 @@
   </div>
 
 
-  <!-- PUB-ID POPUP -->
+  <!-- =====================================================
+       PUB-ID POPUP
+       ===================================================== -->
 
   <div
     id="idModal"
@@ -260,9 +324,11 @@
         ×
       </button>
 
+
       <h2 id="idModalTitle">
         Dit Pub-ID
       </h2>
+
 
       <div
         class="big-id"
@@ -270,6 +336,7 @@
       >
         ----
       </div>
+
 
       <p
         id="idHint"
@@ -284,7 +351,9 @@
   </div>
 
 
-  <script src="app.js?v=14"></script>
+  <!-- v=16 tvinger telefonen til at hente den nye JavaScript-fil -->
+
+  <script src="app.js?v=16"></script>
 
 </body>
 </html>
