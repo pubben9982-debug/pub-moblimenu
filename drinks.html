@@ -1,1 +1,23 @@
-<!doctype html><html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><title>Drinkskort</title></head><body><main class="shell"><a href="index.html" style="color:#fff">← Tilbage</a><h1>Drinkskort</h1><section class="welcome-card"><div><strong>Første version</strong><p>Her kan vi lægge drinks, øl, billeder og priser ind.</p></div></section></main></body></html>
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Drinkskort</title>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const pubId = String(params.get("id") || "").trim();
+
+    let url = "http://192.168.0.50:8080/drinkskort/";
+
+    if (/^\d{4}$/.test(pubId)) {
+      url += "?id=" + encodeURIComponent(pubId);
+    }
+
+    location.replace(url);
+  </script>
+</head>
+<body>
+  <p>Åbner drinkskort…</p>
+</body>
+</html>
