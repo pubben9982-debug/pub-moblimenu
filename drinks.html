@@ -4,20 +4,101 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Drinkskort</title>
+
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background:#0b1711;
+      color:white;
+      font-family:Arial,sans-serif;
+    }
+
+    .box{
+      width:min(420px,calc(100% - 40px));
+      background:#173126;
+      padding:28px;
+      border-radius:20px;
+      text-align:center;
+    }
+
+    h1{
+      margin-top:0;
+    }
+
+    button{
+      width:100%;
+      padding:16px;
+      margin-top:12px;
+      border:0;
+      border-radius:14px;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .open{
+      background:#d8b64c;
+      color:#211900;
+    }
+
+    .back{
+      background:#33473e;
+      color:white;
+    }
+
+    small{
+      display:block;
+      margin-top:18px;
+      opacity:.8;
+      line-height:1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h1>🍹 Drinkskort</h1>
+
+    <p>
+      Drinkskortet virker på pubbens lokale netværk.
+    </p>
+
+    <p>
+      Sørg for at din telefon er forbundet til
+      <strong>pubben gæst</strong>.
+    </p>
+
+    <button class="open" id="openDrink">
+      JEG ER PÅ WI-FI – ÅBN DRINKSKORT
+    </button>
+
+    <button class="back" onclick="location.href='index.html'">
+      ← TILBAGE
+    </button>
+
+    <small>
+      Hvis siden ikke åbner, skal du kontrollere Wi-Fi og prøve igen.
+    </small>
+  </div>
+
   <script>
     const params = new URLSearchParams(location.search);
     const pubId = String(params.get("id") || "").trim();
 
-    let url = "http://192.168.0.50:8080/drinkskort/";
+    document.getElementById("openDrink").onclick = function () {
+      let url = "http://192.168.0.50:8080/drinkskort/";
 
-    if (/^\d{4}$/.test(pubId)) {
-      url += "?id=" + encodeURIComponent(pubId);
-    }
+      if (/^\d{4}$/.test(pubId)) {
+        url += "?id=" + encodeURIComponent(pubId);
+      }
 
-    location.replace(url);
+      location.href = url;
+    };
   </script>
-</head>
-<body>
-  <p>Åbner drinkskort…</p>
+
 </body>
 </html>
