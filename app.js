@@ -42,7 +42,11 @@ const TEXT = {
 
     wifiModalTitle: "Er du på pubbens Wi-Fi?",
     wifiModalText: "Denne funktion virker kun på pubbens lokale netværk.",
-    wifiContinue: "JEG ER PÅ WI-FI – FORTSÆT"
+    wifiStep1: "Åbn Wi-Fi på telefonen",
+    wifiStep2: "Vælg pubben gæst",
+    wifiStep3: "Brug koden pubben9982",
+    wifiContinue: "JEG ER PÅ WI-FI – FORTSÆT",
+    wifiHint: "Hvis siden ikke åbner bagefter, er telefonen sandsynligvis ikke på pubbens netværk."
   },
 
 
@@ -75,7 +79,11 @@ const TEXT = {
 
     wifiModalTitle: "Are you on the pub Wi-Fi?",
     wifiModalText: "This feature only works on the pub's local network.",
-    wifiContinue: "I AM ON WI-FI – CONTINUE"
+    wifiStep1: "Open Wi-Fi on your phone",
+    wifiStep2: "Choose pubben gæst",
+    wifiStep3: "Use the password pubben9982",
+    wifiContinue: "I AM ON WI-FI – CONTINUE",
+    wifiHint: "If the page does not open afterwards, your phone is probably not connected to the pub network."
   },
 
 
@@ -108,7 +116,11 @@ const TEXT = {
 
     wifiModalTitle: "Sind Sie mit dem Pub-WLAN verbunden?",
     wifiModalText: "Diese Funktion funktioniert nur im lokalen Netzwerk des Pubs.",
-    wifiContinue: "ICH BIN IM WLAN – WEITER"
+    wifiStep1: "Öffnen Sie das WLAN auf Ihrem Telefon",
+    wifiStep2: "Wählen Sie pubben gæst",
+    wifiStep3: "Verwenden Sie das Passwort pubben9982",
+    wifiContinue: "ICH BIN IM WLAN – WEITER",
+    wifiHint: "Wenn die Seite danach nicht geöffnet wird, ist Ihr Telefon wahrscheinlich nicht mit dem Pub-Netzwerk verbunden."
   },
 
 
@@ -141,7 +153,11 @@ const TEXT = {
 
     wifiModalTitle: "Er du på pubens Wi-Fi?",
     wifiModalText: "Denne funksjonen virker bare på pubens lokale nettverk.",
-    wifiContinue: "JEG ER PÅ WI-FI – FORTSETT"
+    wifiStep1: "Åpne Wi-Fi på telefonen",
+    wifiStep2: "Velg pubben gæst",
+    wifiStep3: "Bruk passordet pubben9982",
+    wifiContinue: "JEG ER PÅ WI-FI – FORTSETT",
+    wifiHint: "Hvis siden ikke åpnes etterpå, er telefonen sannsynligvis ikke koblet til pubens nettverk."
   }
 
 };
@@ -154,68 +170,43 @@ function el(id) {
 
 function getPubId() {
 
-  let id =
-    localStorage.getItem("cip_device_id");
+  let id = localStorage.getItem("cip_device_id");
 
-
-  if (
-    id &&
-    /^\d{4}$/.test(id)
-  ) {
+  if (id && /^\d{4}$/.test(id)) {
     return id;
   }
 
-
   let number = 0;
 
-
   try {
-
-    const values =
-      new Uint32Array(1);
-
+    const values = new Uint32Array(1);
     crypto.getRandomValues(values);
-
-    number =
-      values[0] % 10000;
-
+    number = values[0] % 10000;
   } catch (error) {
-
-    number =
-      Math.floor(
-        Math.random() * 10000
-      );
-
+    number = Math.floor(Math.random() * 10000);
   }
 
-
-  id =
-    String(number).padStart(4, "0");
-
+  id = String(number).padStart(4, "0");
 
   localStorage.setItem(
     "cip_device_id",
     id
   );
 
-
   return id;
 }
 
 
-const pubId =
-  getPubId();
+const pubId = getPubId();
 
 
 if (el("deviceId")) {
-  el("deviceId").textContent =
-    pubId;
+  el("deviceId").textContent = pubId;
 }
 
 
 if (el("bigDeviceId")) {
-  el("bigDeviceId").textContent =
-    pubId;
+  el("bigDeviceId").textContent = pubId;
 }
 
 
@@ -229,45 +220,37 @@ function openPage(url) {
    ========================================================= */
 
 function buildDrinksUrl() {
-
   return (
     CONFIG.drinksUrl +
     "?id=" +
     encodeURIComponent(pubId) +
-    "&v=14"
+    "&v=15"
   );
-
 }
 
 
 function buildJukeboxUrl() {
-
   return (
     CONFIG.jukeboxUrl +
     "?id=" +
     encodeURIComponent(pubId) +
-    "&v=14"
+    "&v=15"
   );
-
 }
 
 
 function buildPizzaUrl() {
-
   return CONFIG.pizzaUrl;
-
 }
 
 
 function buildClipsUrl() {
-
   return (
     CONFIG.clipsUrl +
     "?id=" +
     encodeURIComponent(pubId) +
-    "&v=14"
+    "&v=15"
   );
-
 }
 
 
@@ -280,8 +263,7 @@ let pendingLocalUrl = "";
 
 function showWifiModal(url) {
 
-  pendingLocalUrl =
-    String(url || "");
+  pendingLocalUrl = String(url || "");
 
   if (!el("wifiModal")) {
     openPage(pendingLocalUrl);
@@ -291,22 +273,18 @@ function showWifiModal(url) {
   el("wifiModal")
     .classList
     .remove("hidden");
-
 }
 
 
 function closeWifiModal() {
 
   if (el("wifiModal")) {
-
     el("wifiModal")
       .classList
       .add("hidden");
-
   }
 
   pendingLocalUrl = "";
-
 }
 
 
@@ -317,8 +295,7 @@ if (el("continueLocalBtn")) {
       "click",
       function () {
 
-        const url =
-          pendingLocalUrl;
+        const url = pendingLocalUrl;
 
         if (!url) {
           closeWifiModal();
@@ -327,15 +304,15 @@ if (el("continueLocalBtn")) {
 
         pendingLocalUrl = "";
 
-        el("wifiModal")
-          ?.classList
-          .add("hidden");
+        if (el("wifiModal")) {
+          el("wifiModal")
+            .classList
+            .add("hidden");
+        }
 
         openPage(url);
-
       }
     );
-
 }
 
 
@@ -349,7 +326,6 @@ if (
       "click",
       closeWifiModal
     );
-
 }
 
 
@@ -360,18 +336,11 @@ if (el("wifiModal")) {
       "click",
       function (event) {
 
-        if (
-          event.target ===
-          el("wifiModal")
-        ) {
-
+        if (event.target === el("wifiModal")) {
           closeWifiModal();
-
         }
-
       }
     );
-
 }
 
 
@@ -385,14 +354,9 @@ if (el("drinksBtn")) {
     .addEventListener(
       "click",
       function () {
-
-        showWifiModal(
-          buildDrinksUrl()
-        );
-
+        showWifiModal(buildDrinksUrl());
       }
     );
-
 }
 
 
@@ -406,14 +370,9 @@ if (el("jukeboxBtn")) {
     .addEventListener(
       "click",
       function () {
-
-        showWifiModal(
-          buildJukeboxUrl()
-        );
-
+        showWifiModal(buildJukeboxUrl());
       }
     );
-
 }
 
 
@@ -427,14 +386,9 @@ if (el("pizzaBtn")) {
     .addEventListener(
       "click",
       function () {
-
-        showWifiModal(
-          buildPizzaUrl()
-        );
-
+        showWifiModal(buildPizzaUrl());
       }
     );
-
 }
 
 
@@ -448,14 +402,9 @@ if (el("cardBtn")) {
     .addEventListener(
       "click",
       function () {
-
-        showWifiModal(
-          buildClipsUrl()
-        );
-
+        showWifiModal(buildClipsUrl());
       }
     );
-
 }
 
 
@@ -472,14 +421,11 @@ if (
     .addEventListener(
       "click",
       function () {
-
         el("idModal")
           .classList
           .remove("hidden");
-
       }
     );
-
 }
 
 
@@ -492,14 +438,11 @@ if (
     .addEventListener(
       "click",
       function () {
-
         el("idModal")
           .classList
           .add("hidden");
-
       }
     );
-
 }
 
 
@@ -510,20 +453,13 @@ if (el("idModal")) {
       "click",
       function (event) {
 
-        if (
-          event.target ===
-          el("idModal")
-        ) {
-
+        if (event.target === el("idModal")) {
           el("idModal")
             .classList
             .add("hidden");
-
         }
-
       }
     );
-
 }
 
 
@@ -539,46 +475,34 @@ if (el("copyWifi")) {
       async function () {
 
         try {
-
-          await navigator
-            .clipboard
-            .writeText(
-              CONFIG.wifiPassword
-            );
-
+          await navigator.clipboard.writeText(
+            CONFIG.wifiPassword
+          );
         } catch (error) {
           // Koden står synligt på siden.
         }
-
 
         const language =
           el("language")
             ? el("language").value
             : "da";
 
-
         const t =
           TEXT[language] ||
           TEXT.da;
 
-
         el("copyWifi").textContent =
           t.copied;
 
-
         setTimeout(
           function () {
-
             el("copyWifi").textContent =
               t.copy;
-
           },
           1500
         );
-
       }
     );
-
 }
 
 
@@ -592,19 +516,15 @@ function applyLanguage(language) {
     TEXT[language] ||
     TEXT.da;
 
-
   localStorage.setItem(
     "cip_lang",
     language
   );
 
-
   document.documentElement.lang =
     language;
 
-
   const map = {
-
     title: "title",
 
     deviceLabel: "deviceLabel",
@@ -623,9 +543,7 @@ function applyLanguage(language) {
     cardText: "cardText",
 
     wifiHelp: "wifiHelp",
-
     password: "passwordLabel",
-
     copy: "copyWifi",
 
     footer: "footerText",
@@ -635,40 +553,33 @@ function applyLanguage(language) {
 
     wifiModalTitle: "wifiModalTitle",
     wifiModalText: "wifiModalText",
-    wifiContinue: "continueLocalBtn"
-
+    wifiStep1: "wifiStep1",
+    wifiStep2: "wifiStep2",
+    wifiStep3: "wifiStep3",
+    wifiContinue: "continueLocalBtn",
+    wifiHint: "wifiModalHint"
   };
-
 
   for (
     const [textKey, elementId]
     of Object.entries(map)
   ) {
 
-    const element =
-      el(elementId);
-
+    const element = el(elementId);
 
     if (
       element &&
       t[textKey] !== undefined
     ) {
-
       element.textContent =
         t[textKey];
-
     }
-
   }
-
 
   if (el("language")) {
-
     el("language").value =
       language;
-
   }
-
 }
 
 
@@ -707,10 +618,8 @@ if (el("language")) {
         applyLanguage(
           el("language").value
         );
-
       }
     );
-
 }
 
 
