@@ -1,6 +1,5 @@
 "use strict";
 
-
 const CONFIG = {
   drinksUrl: "http://192.168.0.50:8080/drinkskort/",
   jukeboxUrl: "http://192.168.0.50:5055/",
@@ -39,7 +38,11 @@ const TEXT = {
     footer: "Mobilmenuen kan også åbnes uden pubbens Wi-Fi",
 
     idTitle: "Dit Pub-ID",
-    idHint: "Dette ID bruges til din fælles saldo, Jukebox og Klippekort."
+    idHint: "Dette ID bruges til din fælles saldo, Jukebox, Drinkskort og Klippekort.",
+
+    wifiModalTitle: "Er du på pubbens Wi-Fi?",
+    wifiModalText: "Denne funktion virker kun på pubbens lokale netværk.",
+    wifiContinue: "JEG ER PÅ WI-FI – FORTSÆT"
   },
 
 
@@ -68,7 +71,11 @@ const TEXT = {
     footer: "The mobile menu also works without the pub Wi-Fi",
 
     idTitle: "Your Pub ID",
-    idHint: "This ID is used for your shared balance, Jukebox and punch card."
+    idHint: "This ID is used for your shared balance, Jukebox, Drinks menu and punch card.",
+
+    wifiModalTitle: "Are you on the pub Wi-Fi?",
+    wifiModalText: "This feature only works on the pub's local network.",
+    wifiContinue: "I AM ON WI-FI – CONTINUE"
   },
 
 
@@ -97,7 +104,11 @@ const TEXT = {
     footer: "Die Mobilkarte funktioniert auch ohne Pub-WLAN",
 
     idTitle: "Ihre Pub-ID",
-    idHint: "Diese ID wird für Guthaben, Jukebox und Stempelkarte verwendet."
+    idHint: "Diese ID wird für Guthaben, Jukebox, Getränkekarte und Stempelkarte verwendet.",
+
+    wifiModalTitle: "Sind Sie mit dem Pub-WLAN verbunden?",
+    wifiModalText: "Diese Funktion funktioniert nur im lokalen Netzwerk des Pubs.",
+    wifiContinue: "ICH BIN IM WLAN – WEITER"
   },
 
 
@@ -126,7 +137,11 @@ const TEXT = {
     footer: "Mobilmenyen fungerer også uten pubens Wi-Fi",
 
     idTitle: "Din Pub-ID",
-    idHint: "Denne ID-en brukes til saldo, Jukebox og klippekort."
+    idHint: "Denne ID-en brukes til saldo, Jukebox, drinkmeny og klippekort.",
+
+    wifiModalTitle: "Er du på pubens Wi-Fi?",
+    wifiModalText: "Denne funksjonen virker bare på pubens lokale nettverk.",
+    wifiContinue: "JEG ER PÅ WI-FI – FORTSETT"
   }
 
 };
@@ -209,7 +224,160 @@ function openPage(url) {
 }
 
 
-/* DRINKSKORT */
+/* =========================================================
+   LOKALE LINKS
+   ========================================================= */
+
+function buildDrinksUrl() {
+
+  return (
+    CONFIG.drinksUrl +
+    "?id=" +
+    encodeURIComponent(pubId) +
+    "&v=14"
+  );
+
+}
+
+
+function buildJukeboxUrl() {
+
+  return (
+    CONFIG.jukeboxUrl +
+    "?id=" +
+    encodeURIComponent(pubId) +
+    "&v=14"
+  );
+
+}
+
+
+function buildPizzaUrl() {
+
+  return CONFIG.pizzaUrl;
+
+}
+
+
+function buildClipsUrl() {
+
+  return (
+    CONFIG.clipsUrl +
+    "?id=" +
+    encodeURIComponent(pubId) +
+    "&v=14"
+  );
+
+}
+
+
+/* =========================================================
+   WIFI POPUP
+   ========================================================= */
+
+let pendingLocalUrl = "";
+
+
+function showWifiModal(url) {
+
+  pendingLocalUrl =
+    String(url || "");
+
+  if (!el("wifiModal")) {
+    openPage(pendingLocalUrl);
+    return;
+  }
+
+  el("wifiModal")
+    .classList
+    .remove("hidden");
+
+}
+
+
+function closeWifiModal() {
+
+  if (el("wifiModal")) {
+
+    el("wifiModal")
+      .classList
+      .add("hidden");
+
+  }
+
+  pendingLocalUrl = "";
+
+}
+
+
+if (el("continueLocalBtn")) {
+
+  el("continueLocalBtn")
+    .addEventListener(
+      "click",
+      function () {
+
+        const url =
+          pendingLocalUrl;
+
+        if (!url) {
+          closeWifiModal();
+          return;
+        }
+
+        pendingLocalUrl = "";
+
+        el("wifiModal")
+          ?.classList
+          .add("hidden");
+
+        openPage(url);
+
+      }
+    );
+
+}
+
+
+if (
+  el("closeWifiModal") &&
+  el("wifiModal")
+) {
+
+  el("closeWifiModal")
+    .addEventListener(
+      "click",
+      closeWifiModal
+    );
+
+}
+
+
+if (el("wifiModal")) {
+
+  el("wifiModal")
+    .addEventListener(
+      "click",
+      function (event) {
+
+        if (
+          event.target ===
+          el("wifiModal")
+        ) {
+
+          closeWifiModal();
+
+        }
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   DRINKSKORT
+   ========================================================= */
 
 if (el("drinksBtn")) {
 
@@ -218,8 +386,8 @@ if (el("drinksBtn")) {
       "click",
       function () {
 
-        openPage(
-          CONFIG.drinksUrl
+        showWifiModal(
+          buildDrinksUrl()
         );
 
       }
@@ -228,7 +396,9 @@ if (el("drinksBtn")) {
 }
 
 
-/* JUKEBOX */
+/* =========================================================
+   JUKEBOX
+   ========================================================= */
 
 if (el("jukeboxBtn")) {
 
@@ -237,32 +407,8 @@ if (el("jukeboxBtn")) {
       "click",
       function () {
 
-        const url =
-          CONFIG.jukeboxUrl +
-          "?id=" +
-          encodeURIComponent(pubId) +
-          "&v=12";
-
-
-        openPage(url);
-
-      }
-    );
-
-}
-
-
-/* PIZZA */
-
-if (el("pizzaBtn")) {
-
-  el("pizzaBtn")
-    .addEventListener(
-      "click",
-      function () {
-
-        openPage(
-          CONFIG.pizzaUrl
+        showWifiModal(
+          buildJukeboxUrl()
         );
 
       }
@@ -271,7 +417,30 @@ if (el("pizzaBtn")) {
 }
 
 
-/* KLIPPEKORT */
+/* =========================================================
+   PIZZA
+   ========================================================= */
+
+if (el("pizzaBtn")) {
+
+  el("pizzaBtn")
+    .addEventListener(
+      "click",
+      function () {
+
+        showWifiModal(
+          buildPizzaUrl()
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   KLIPPEKORT
+   ========================================================= */
 
 if (el("cardBtn")) {
 
@@ -280,14 +449,9 @@ if (el("cardBtn")) {
       "click",
       function () {
 
-        const url =
-          CONFIG.clipsUrl +
-          "?id=" +
-          encodeURIComponent(pubId) +
-          "&v=12";
-
-
-        openPage(url);
+        showWifiModal(
+          buildClipsUrl()
+        );
 
       }
     );
@@ -295,7 +459,9 @@ if (el("cardBtn")) {
 }
 
 
-/* PUB-ID POPUP */
+/* =========================================================
+   PUB-ID POPUP
+   ========================================================= */
 
 if (
   el("showIdBtn") &&
@@ -361,7 +527,9 @@ if (el("idModal")) {
 }
 
 
-/* KOPIER WIFI-KODE */
+/* =========================================================
+   KOPIER WIFI-KODE
+   ========================================================= */
 
 if (el("copyWifi")) {
 
@@ -414,7 +582,9 @@ if (el("copyWifi")) {
 }
 
 
-/* SPROG */
+/* =========================================================
+   SPROG
+   ========================================================= */
 
 function applyLanguage(language) {
 
@@ -461,7 +631,11 @@ function applyLanguage(language) {
     footer: "footerText",
 
     idTitle: "idModalTitle",
-    idHint: "idHint"
+    idHint: "idHint",
+
+    wifiModalTitle: "wifiModalTitle",
+    wifiModalText: "wifiModalText",
+    wifiContinue: "continueLocalBtn"
 
   };
 
@@ -489,8 +663,10 @@ function applyLanguage(language) {
 
 
   if (el("language")) {
+
     el("language").value =
       language;
+
   }
 
 }
