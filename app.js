@@ -5,6 +5,7 @@ const CONFIG = {
   jukeboxUrl: "http://192.168.0.50:5055/",
   pizzaUrl: "http://192.168.0.50:8091/pizza",
   clipsUrl: "http://192.168.0.50:8080/klippekort.html",
+  gamesUrl: "http://192.168.0.50:8080/mobilspil/",
 
   wifiName: "pubben gæst",
   wifiPassword: "pubben9982"
@@ -29,6 +30,9 @@ const TEXT = {
 
     cardTitle: "Klippekort",
     cardText: "Se saldo og brug klip",
+
+    gamesTitle: "Mobilspil",
+    gamesText: "Spin lykkehjulet",
 
     wifiHelp: "De lokale funktioner kræver pubbens Wi-Fi",
     password: "Kode",
@@ -67,6 +71,9 @@ const TEXT = {
     cardTitle: "Punch card",
     cardText: "See balance and use punches",
 
+    gamesTitle: "Mobile games",
+    gamesText: "Spin the lucky wheel",
+
     wifiHelp: "Local features require the pub Wi-Fi",
     password: "Password",
     copy: "Copy password",
@@ -104,6 +111,9 @@ const TEXT = {
     cardTitle: "Stempelkarte",
     cardText: "Guthaben ansehen und Stempel verwenden",
 
+    gamesTitle: "Mobile Spiele",
+    gamesText: "Drehen Sie das Glücksrad",
+
     wifiHelp: "Lokale Funktionen benötigen das Pub-WLAN",
     password: "Passwort",
     copy: "Passwort kopieren",
@@ -140,6 +150,9 @@ const TEXT = {
 
     cardTitle: "Klippekort",
     cardText: "Se saldo og bruk klipp",
+
+    gamesTitle: "Mobilspill",
+    gamesText: "Spinn lykkehjulet",
 
     wifiHelp: "Lokale funksjoner krever pubens Wi-Fi",
     password: "Passord",
@@ -250,6 +263,16 @@ function buildClipsUrl() {
     "?id=" +
     encodeURIComponent(pubId) +
     "&v=15"
+  );
+}
+
+
+function buildGamesUrl() {
+  return (
+    CONFIG.gamesUrl +
+    "?id=" +
+    encodeURIComponent(pubId) +
+    "&v=1"
   );
 }
 
@@ -409,6 +432,22 @@ if (el("cardBtn")) {
 
 
 /* =========================================================
+   MOBILSPIL
+   ========================================================= */
+
+if (el("gamesBtn")) {
+
+  el("gamesBtn")
+    .addEventListener(
+      "click",
+      function () {
+        showWifiModal(buildGamesUrl());
+      }
+    );
+}
+
+
+/* =========================================================
    PUB-ID POPUP
    ========================================================= */
 
@@ -541,6 +580,9 @@ function applyLanguage(language) {
 
     cardTitle: "cardTitle",
     cardText: "cardText",
+
+    gamesTitle: "gamesTitle",
+    gamesText: "gamesText",
 
     wifiHelp: "wifiHelp",
     password: "passwordLabel",
