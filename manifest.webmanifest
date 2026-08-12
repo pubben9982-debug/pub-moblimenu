@@ -1,0 +1,19 @@
+{
+  "name": "Central Irish Pub",
+  "short_name": "Central Pub",
+  "description": "Mobilmenu til Central Irish Pub i Aalbaek",
+  "lang": "da",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0c1710",
+  "theme_color": "#0c1710",
+  "icons": [
+    {
+      "src": "pub-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
