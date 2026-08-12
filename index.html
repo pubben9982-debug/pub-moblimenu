@@ -2,379 +2,131 @@
 <html lang="da">
 <head>
   <meta charset="utf-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1,viewport-fit=cover"
-  >
-
-  <meta
-    name="theme-color"
-    content="#0c1710"
-  >
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0c1710">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Central Irish Pub">
 
   <title>Central Irish Pub</title>
 
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
+  <link rel="manifest" href="manifest.webmanifest?v=1">
+  <link rel="icon" href="pub-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="pub-icon.svg">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 
 <body>
-
   <main class="shell">
-
     <div class="topbar">
-
       <div>
-        <div class="eyebrow">
-          CENTRAL IRISH PUB · ÅLBÆK
-        </div>
-
-        <h1 id="title">
-          Hvad har du lyst til?
-        </h1>
+        <div class="eyebrow">CENTRAL IRISH PUB · ÅLBÆK</div>
+        <h1 id="title">Hvad har du lyst til?</h1>
       </div>
 
-
-      <select
-        id="language"
-        aria-label="Sprog"
-      >
-        <option value="da">
-          Dansk
-        </option>
-
-        <option value="en">
-          English
-        </option>
-
-        <option value="de">
-          Deutsch
-        </option>
-
-        <option value="no">
-          Norsk
-        </option>
+      <select id="language" aria-label="Sprog">
+        <option value="da">Dansk</option>
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="no">Norsk</option>
       </select>
-
     </div>
-
-
-    <!-- PUB-ID -->
 
     <section class="welcome-card">
-
       <div>
-
-        <div
-          class="small-label"
-          id="deviceLabel"
-        >
-          Dit Pub-ID
-        </div>
-
-        <div
-          class="device-id"
-          id="deviceId"
-        >
-          ----
-        </div>
-
+        <div class="small-label" id="deviceLabel">Dit Pub-ID</div>
+        <div class="device-id" id="deviceId">----</div>
       </div>
-
-
-      <button
-        class="ghost"
-        id="showIdBtn"
-        type="button"
-      >
-        Vis ID
-      </button>
-
+      <button class="ghost" id="showIdBtn" type="button">Vis ID</button>
     </section>
 
-
-    <!-- MENU -->
+    <section class="shortcut-card" id="shortcutCard">
+      <div>
+        <div class="small-label">ÅBN HURTIGT NÆSTE GANG</div>
+        <h2>Gem pubben på hjemmeskærmen</h2>
+        <p>Så behøver du ikke scanne QR-koden igen, hvis du lukker browseren.</p>
+      </div>
+      <button class="shortcut-btn" id="installShortcutBtn" type="button">📲 LAV GENVEJ</button>
+    </section>
 
     <section class="menu-grid">
-
-      <button
-        class="menu-card drinks"
-        id="drinksBtn"
-        type="button"
-      >
-
-        <span class="icon">
-          🍹
-        </span>
-
-        <strong id="drinksTitle">
-          Drinkskort
-        </strong>
-
-        <span id="drinksText">
-          Se drinks, øl og priser
-        </span>
-
+      <button class="menu-card drinks" id="drinksBtn" type="button">
+        <span class="icon">🍹</span>
+        <strong id="drinksTitle">Drinkskort</strong>
+        <span id="drinksText">Se drinks, øl og priser</span>
       </button>
 
-
-      <button
-        class="menu-card jukebox"
-        id="jukeboxBtn"
-        type="button"
-      >
-
-        <span class="icon">
-          🎵
-        </span>
-
-        <strong id="jukeboxTitle">
-          Jukebox
-        </strong>
-
-        <span id="jukeboxText">
-          Ønsk musik fra din telefon
-        </span>
-
+      <button class="menu-card jukebox" id="jukeboxBtn" type="button">
+        <span class="icon">🎵</span>
+        <strong id="jukeboxTitle">Jukebox</strong>
+        <span id="jukeboxText">Ønsk musik fra din telefon</span>
       </button>
 
-
-      <button
-        class="menu-card games"
-        id="gamesBtn"
-        type="button"
-      >
-
-        <span class="icon">
-          🎡
-        </span>
-
-        <strong id="gamesTitle">
-          Mobilspil
-        </strong>
-
-        <span id="gamesText">
-          Spin lykkehjulet
-        </span>
-
+      <button class="menu-card games" id="gamesBtn" type="button">
+        <span class="icon">🎡</span>
+        <strong id="gamesTitle">Mobilspil</strong>
+        <span id="gamesText">Spin lykkehjulet</span>
       </button>
 
-
-      <button
-        class="menu-card pizza"
-        id="pizzaBtn"
-        type="button"
-      >
-
-        <span class="icon">
-          🍕
-        </span>
-
-        <strong id="pizzaTitle">
-          Pizza
-        </strong>
-
-        <span id="pizzaText">
-          Se pizza-menu
-        </span>
-
+      <button class="menu-card pizza" id="pizzaBtn" type="button">
+        <span class="icon">🍕</span>
+        <strong id="pizzaTitle">Pizza</strong>
+        <span id="pizzaText">Se pizza-menu</span>
       </button>
 
-
-      <button
-        class="menu-card card"
-        id="cardBtn"
-        type="button"
-      >
-
-        <span class="icon">
-          🎟️
-        </span>
-
-        <strong id="cardTitle">
-          Klippekort
-        </strong>
-
-        <span id="cardText">
-          Se saldo og brug klip
-        </span>
-
+      <button class="menu-card card" id="cardBtn" type="button">
+        <span class="icon">🎟️</span>
+        <strong id="cardTitle">Klippekort</strong>
+        <span id="cardText">Se saldo og brug klip</span>
       </button>
-
     </section>
-
-
-    <!-- WIFI INFO -->
 
     <section class="wifi-card">
-
       <div>
-
-        <div
-          class="small-label"
-          id="wifiHelp"
-        >
-          De lokale funktioner kræver pubbens Wi-Fi
-        </div>
-
-        <h2>
-          pubben gæst
-        </h2>
-
-        <p>
-          <span id="passwordLabel">
-            Kode
-          </span>:
-
-          <strong>
-            pubben9982
-          </strong>
-        </p>
-
+        <div class="small-label" id="wifiHelp">De lokale funktioner kræver pubbens Wi-Fi</div>
+        <h2>pubben gæst</h2>
+        <p><span id="passwordLabel">Kode</span>: <strong>pubben9982</strong></p>
       </div>
-
-
-      <button
-        id="copyWifi"
-        class="copy-btn"
-        type="button"
-      >
-        Kopiér kode
-      </button>
-
+      <button id="copyWifi" class="copy-btn" type="button">Kopiér kode</button>
     </section>
 
-
-    <footer id="footerText">
-      Mobilmenuen kan også åbnes uden pubbens Wi-Fi
-    </footer>
-
+    <footer id="footerText">Mobilmenuen kan også åbnes uden pubbens Wi-Fi</footer>
   </main>
 
-
-  <!-- =====================================================
-       WIFI POPUP
-       ===================================================== -->
-
-  <div
-    id="wifiModal"
-    class="modal hidden"
-  >
-
+  <div id="wifiModal" class="modal hidden">
     <div class="modal-card">
-
-      <button
-        id="closeWifiModal"
-        class="close"
-        type="button"
-        aria-label="Luk"
-      >
-        ×
-      </button>
-
-
-      <h2 id="wifiModalTitle">
-        Er du på pubbens Wi-Fi?
-      </h2>
-
-
-      <p id="wifiModalText">
-        Denne funktion virker kun på pubbens lokale netværk.
-      </p>
-
-
+      <button id="closeWifiModal" class="close" type="button" aria-label="Luk">×</button>
+      <h2 id="wifiModalTitle">Er du på pubbens Wi-Fi?</h2>
+      <p id="wifiModalText">Denne funktion virker kun på pubbens lokale netværk.</p>
       <ol>
-
-        <li id="wifiStep1">
-          Åbn Wi-Fi på telefonen
-        </li>
-
-        <li id="wifiStep2">
-          Vælg pubben gæst
-        </li>
-
-        <li id="wifiStep3">
-          Brug koden pubben9982
-        </li>
-
+        <li id="wifiStep1">Åbn Wi-Fi på telefonen</li>
+        <li id="wifiStep2">Vælg pubben gæst</li>
+        <li id="wifiStep3">Brug koden pubben9982</li>
       </ol>
-
-
-      <button
-        id="continueLocalBtn"
-        class="primary"
-        type="button"
-      >
-        JEG ER PÅ WI-FI – FORTSÆT
-      </button>
-
-
-      <p
-        id="wifiModalHint"
-        class="hint"
-      >
-        Hvis siden ikke åbner bagefter,
-        er telefonen sandsynligvis ikke på pubbens netværk.
-      </p>
-
+      <button id="continueLocalBtn" class="primary" type="button">JEG ER PÅ WI-FI – FORTSÆT</button>
+      <p id="wifiModalHint" class="hint">Hvis siden ikke åbner bagefter, er telefonen sandsynligvis ikke på pubbens netværk.</p>
     </div>
-
   </div>
 
-
-  <!-- =====================================================
-       PUB-ID POPUP
-       ===================================================== -->
-
-  <div
-    id="idModal"
-    class="modal hidden"
-  >
-
+  <div id="idModal" class="modal hidden">
     <div class="modal-card compact">
-
-      <button
-        id="closeIdModal"
-        class="close"
-        type="button"
-        aria-label="Luk"
-      >
-        ×
-      </button>
-
-
-      <h2 id="idModalTitle">
-        Dit Pub-ID
-      </h2>
-
-
-      <div
-        class="big-id"
-        id="bigDeviceId"
-      >
-        ----
-      </div>
-
-
-      <p
-        id="idHint"
-        class="hint"
-      >
-        Dette ID bruges til din fælles saldo,
-        Jukebox, Drinkskort og Klippekort.
-      </p>
-
+      <button id="closeIdModal" class="close" type="button" aria-label="Luk">×</button>
+      <h2 id="idModalTitle">Dit Pub-ID</h2>
+      <div class="big-id" id="bigDeviceId">----</div>
+      <p id="idHint" class="hint">Dette ID bruges til din fælles saldo, Jukebox, Drinkskort og Klippekort.</p>
     </div>
-
   </div>
 
-
-  <!-- v=16 tvinger telefonen til at hente den nye JavaScript-fil -->
+  <div id="installModal" class="modal hidden">
+    <div class="modal-card">
+      <button id="closeInstallModal" class="close" type="button" aria-label="Luk">×</button>
+      <h2>Gem pubben på hjemmeskærmen</h2>
+      <div id="installInstructions"></div>
+      <button id="installOkBtn" class="primary" type="button">OK</button>
+    </div>
+  </div>
 
   <script src="app.js?v=17"></script>
-
+  <script src="install.js?v=1"></script>
 </body>
 </html>
