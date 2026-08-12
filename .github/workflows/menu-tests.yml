@@ -1,0 +1,44 @@
+name: Mobilmenu tests
+
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Hent kode
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: JavaScript syntaks
+        run: |
+          node --check app.js
+          node --check install.js
+          node --check sw.js
+
+      - name: Manifest JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8'))"
+
+      - name: PWA-filer og links
+        shell: bash
+        run: |
+          set -e
+          test -f index.html
+          test -f manifest.webmanifest
+          test -f install.js
+          test -f sw.js
+          test -f pub-icon.svg
+          grep -q 'rel="manifest"' index.html
+          grep -q 'installShortcutBtn' index.html
+          grep -q 'install.js?v=1' index.html

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Central Irish Pub">
+  <rect width="512" height="512" rx="104" fill="#0c1710"/>
+  <circle cx="256" cy="256" r="182" fill="#173d27" stroke="#f2c66d" stroke-width="18"/>
+  <path d="M177 154h128v174c0 48-30 82-64 82s-64-34-64-82V154z" fill="#f4ead0"/>
+  <path d="M195 187h92v117c0 34-21 58-46 58s-46-24-46-58V187z" fill="#c8832b"/>
+  <path d="M305 190h30c31 0 54 25 54 58s-23 58-54 58h-30" fill="none" stroke="#f4ead0" stroke-width="26" stroke-linecap="round"/>
+  <path d="M168 154h146" stroke="#f4ead0" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="226" cy="233" r="12" fill="#fff4d4" opacity=".8"/>
+  <circle cx="263" cy="266" r="9" fill="#fff4d4" opacity=".75"/>
+  <circle cx="236" cy="299" r="7" fill="#fff4d4" opacity=".7"/>
+</svg>
