@@ -25,5 +25,11 @@ rep(
     "player boards inactive guard",
 )
 
+rep(
+    '''              <strong>⚠️ Regler før Banko startes</strong><br>\n              Denne version er til test. Slå ikke betaling eller præmier til, før den konkrete Banko-model og de nødvendige tilladelser er afklaret. Bartenderen er ansvarlig for kun at starte Banko efter pubbens gældende regler og instruktioner.''',
+    '''              <strong>⚠️ Regler før Banko startes</strong>\n              <ul style="text-align:left;margin:9px 0 0;padding-left:22px;line-height:1.5">\n                <li><strong>TEST KUN:</strong> Ingen betaling, ID-kredit/klip eller præmier med økonomisk værdi.</li>\n                <li>Hvis et Banko-spil senere kombinerer indskud, tilfældighed og gevinstchance, kræver det som udgangspunkt tilladelse fra Spillemyndigheden.</li>\n                <li>Vores model bruger telefonen som spilleplade. Den konkrete juridiske klassifikation skal afklares, før økonomi eller gevinster kobles på.</li>\n                <li>Er du i tvivl: start kun gratis testspil og spørg den ansvarlige.</li>\n              </ul>''',
+    "visible bartender rules",
+)
+
 path.write_text(text, encoding="utf-8")
-print(f"Banko inactive-player patch applied: {path}")
+print(f"Banko inactive-player/rules patch applied: {path}")
