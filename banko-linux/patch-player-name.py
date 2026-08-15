@@ -16,7 +16,7 @@ def rep(old, new, label):
 
 rep(
     '''            <div id="joinBox">\n              <input id="nameInput" inputmode="numeric" placeholder="Pub-ID" maxlength="4" />\n              <button id="joinBtn">TILMELD</button>\n            </div>''',
-    '''            <div id="joinBox">\n              <div class="muted" style="margin-bottom:8px">Dit Pub-ID er allerede hentet fra mobilmenuen.</div>\n              <input id="nameInput" autocomplete="name" placeholder="Dit navn" maxlength="30" />\n              <button id="joinBtn">TILMELD</button>\n            </div>''',
+    '''            <div id="joinBox">\n              <input id="nameInput" autocomplete="name" placeholder="Dit navn" maxlength="30" />\n              <button id="joinBtn">TILMELD</button>\n            </div>''',
     "name-only join form",
 )
 
@@ -45,4 +45,4 @@ rep(
 )
 
 path.write_text(text, encoding="utf-8")
-print(f"Banko name/Pub-ID patch applied: {path}")
+print(f"Banko name-only patch applied: {path}")
