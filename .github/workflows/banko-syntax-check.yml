@@ -28,3 +28,16 @@ jobs:
           python3 banko-linux/patch-player-inactive.py /tmp/pubbanko-check/server.js
           python3 banko-linux/patch-player-name.py /tmp/pubbanko-check/server.js
           node --check /tmp/pubbanko-check/server.js
+      - name: Show player and board flow markers
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('/tmp/pubbanko-check/server.js').read_text(encoding='utf-8')
+          for needle in ('socket.on("player:join"', 'socket.on("player:boards"', 'socket.on("host:setBoardCount"', 'function showWaitingMode', 'boardCount'):
+              print('\n===', needle, '===')
+              pos = text.find(needle)
+              if pos < 0:
+                  print('NOT FOUND')
+                  continue
+              print(text[max(0, pos-900):pos+2200])
+          PY
