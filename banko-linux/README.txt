@@ -1,25 +1,28 @@
 PUBBANKO UNLIMITED - LINUX TESTVERSION
 
-Seneste pakkede version ligger i:
-  banko-linux/pubbanko_linux_latest.zip
-
-Start den nemt med:
+Start den med:
   chmod +x setup.sh
   ./setup.sh
+
+setup.sh bruger run.sh, som kun bygger runtime igen naar Banko-pakken eller integrationspatchen er aendret.
 
 Denne version indeholder bl.a.:
 - klassiske 90-tals Banko-plader
 - bartender/host-side
-- auto-træk hvert 10. eller 20. sekund
+- Banko AKTIV / IKKE AKTIV styret af bartenderen
+- Pub-ID paa spillertelefonen i stedet for frit spillernavn
+- beskyttelse af host-funktioner med bartender-PIN
+- status-endpoint /api/status til mobilmenu/POS
+- auto-traek hvert 10. eller 20. sekund
 - serverstyret BANKO-kontrol
-- tydelig fuldskærmsbesked på spillertelefonerne, når nogen trykker BANKO
-- systemet viser først at BANKO bliver kontrolleret
+- tydelig fuldskaermbesked paa spillertelefonerne, naar nogen trykker BANKO
+- systemet viser foerst at BANKO bliver kontrolleret
 - ved forkert BANKO vises "DER VAR IKKE BANKO"
-- derefter tæller spillertelefonerne ned fra 10 sekunder
-- når nedtællingen er færdig, trækkes næste tal automatisk
-- hvis auto-træk var i gang, fortsætter det bagefter med samme interval
-- ved gyldig BANKO stoppes trækningen og spillerne bedes vente på bartenderen
+- derefter taeller spillertelefonerne ned fra 10 sekunder
+- naar nedtaellingen er faerdig, traekkes naeste tal automatisk
+- hvis auto-traek var i gang, fortsaetter det bagefter med samme interval
+- ved gyldig BANKO stoppes traekningen og spillerne bedes vente paa bartenderen
 
 VIGTIGT:
-Dette er en testversion. Betaling, klip og præmier skal ikke aktiveres, før den konkrete model og nødvendige tilladelser er afklaret.
+Dette er en testversion. Betaling, klip og praemier skal ikke aktiveres, foer den konkrete model og noedvendige tilladelser er afklaret.
 Se BARTENDER_REGLER.md.
