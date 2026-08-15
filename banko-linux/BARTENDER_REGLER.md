@@ -13,6 +13,7 @@ Dette er en kort driftsadvarsel til Banko-testen. Den er ikke en erstatning for 
 5. Landbaseret Banko må afvikles dagligt mellem kl. 07.00 og 24.00, og der skal være bemanding til stede i hele åbningstiden.
 6. Vindernumre skal trækkes ét ad gangen. Trækningen skal ske ved mulig deltageroverværelse eller ved brug af en certificeret tilfældighedsgenerator.
 7. **Vigtigt for vores mobilversion:** Spillemyndighedens vejledning for landbaseret Banko siger, at der skal bruges fysiske spilleplader, og at spillerne løbende skal kunne foretage manuel markering/dupning. Vores telefon-plader må derfor ikke betragtes som automatisk godkendt landbaseret Banko. Den konkrete model skal afklares, før der kobles betaling eller gevinster på.
+8. Spilleren kan i testversionen vælge 1-6 plader på telefonen. Dette er kun en gratis bestilling til bartenderen; der må ikke trækkes penge, klip eller Pub-ID-kredit.
 
 ## Officielle kilder
 
@@ -22,4 +23,4 @@ Dette er en kort driftsadvarsel til Banko-testen. Den er ikke en erstatning for 
 
 ## Produktregel
 
-Betaling, automatisk fratræk af kredit/klip og automatisk tildeling af præmier skal holdes adskilt fra Banko-motoren, indtil den juridiske model er afklaret.
+Betaling, automatisk fratræk af kredit/klip og automatisk tildeling af præmier skal holdes adskilt fra Banko-motoren, indtil den juridiske model er afklaret. Pladevalget må gerne testes som gratis flow, men må ikke kalde eller debitere Pub-ID-kredit.
