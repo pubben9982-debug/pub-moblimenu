@@ -19,6 +19,7 @@ jobs:
           python3 -m py_compile banko-linux/patch-integration.py
           python3 -m py_compile banko-linux/patch-player-inactive.py
           python3 -m py_compile banko-linux/patch-player-name.py
+          python3 -m py_compile banko-linux/patch-player-board-shop.py
       - name: Build and syntax-check Banko server
         run: |
           rm -rf /tmp/pubbanko-check
@@ -27,27 +28,15 @@ jobs:
           python3 banko-linux/patch-integration.py /tmp/pubbanko-check/server.js
           python3 banko-linux/patch-player-inactive.py /tmp/pubbanko-check/server.js
           python3 banko-linux/patch-player-name.py /tmp/pubbanko-check/server.js
+          python3 banko-linux/patch-player-board-shop.py /tmp/pubbanko-check/server.js
           node --check /tmp/pubbanko-check/server.js
-      - name: Show player and board flow markers
+      - name: Verify player board flow
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          text = Path('/tmp/pubbanko-check/server.js').read_text(encoding='utf-8')
-          needles = (
-              'socket.on("player:join"',
-              'socket.on("player:boards"',
-              'socket.on("host:setBoardCount"',
-              'function showWaitingMode',
-              'function renderPlayerAdmin',
-              '<div id="playerLanding"',
-              '<div id="waitingBox"',
-              'MAX_BOARDS_PER_PLAYER',
-          )
-          for needle in needles:
-              print('\n===', needle, '===')
-              pos = text.find(needle)
-              if pos < 0:
-                  print('NOT FOUND')
-                  continue
-              print(text[max(0, pos-1200):pos+3500])
-          PY
+          grep -q 'id="boardShopBox"' /tmp/pubbanko-check/server.js
+          grep -q 'socket.on("player:requestBoards"' /tmp/pubbanko-check/server.js
+          grep -q 'requestedBoardCount' /tmp/pubbanko-check/server.js
+          grep -q 'TEST:</strong> Pris 0 kr.' /tmp/pubbanko-check/server.js
+          if grep -q 'player:requestBoards.*jukebox\|player:requestBoards.*credit' /tmp/pubbanko-check/server.js; then
+            echo "FEJL: Test-flow maa ikke traekke kredit"
+            exit 1
+          fi
