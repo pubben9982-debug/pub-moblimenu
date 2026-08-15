@@ -1,0 +1,14 @@
+{
+  "name": "pubbanko-unlimited",
+  "version": "2.0.0",
+  "description": "Pubbanko uden fast begransning pa spillere og med hoj pladegraense",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}
