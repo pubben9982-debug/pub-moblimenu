@@ -4,13 +4,17 @@ Start den med:
   chmod +x setup.sh
   ./setup.sh
 
-setup.sh bruger run.sh, som kun bygger runtime igen naar Banko-pakken eller integrationspatchen er aendret.
+setup.sh bruger run.sh, som kun bygger runtime igen naar Banko-pakken eller integrationspatchene er aendret.
 
 Denne version indeholder bl.a.:
 - klassiske 90-tals Banko-plader
 - bartender/host-side
 - Banko AKTIV / IKKE AKTIV styret af bartenderen
-- Pub-ID paa spillertelefonen i stedet for frit spillernavn
+- Pub-ID foelger automatisk med fra mobilmenuen
+- spilleren skriver kun et visningsnavn
+- efter tilmelding vaelger spilleren 1-6 plader paa telefonen
+- spillerens pladeoenske sendes til bartenderen, som godkender eller retter antal plader
+- test-flowet traekker IKKE penge, klip eller Pub-ID-kredit
 - beskyttelse af host-funktioner med bartender-PIN
 - status-endpoint /api/status til mobilmenu/POS
 - auto-traek hvert 10. eller 20. sekund
@@ -24,5 +28,5 @@ Denne version indeholder bl.a.:
 - ved gyldig BANKO stoppes traekningen og spillerne bedes vente paa bartenderen
 
 VIGTIGT:
-Dette er en testversion. Betaling, klip og praemier skal ikke aktiveres, foer den konkrete model og noedvendige tilladelser er afklaret.
+Dette er en testversion. Betaling, klip, Pub-ID-kredit og praemier med oekonomisk vaerdi skal ikke aktiveres, foer den konkrete model og noedvendige tilladelser er afklaret.
 Se BARTENDER_REGLER.md.
