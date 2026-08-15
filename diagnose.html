@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Mobiltest – Central Irish Pub</title>
+  <style>
+    body{margin:0;background:#0c1710;color:#fff;font-family:Arial,sans-serif;padding:20px}
+    .card{max-width:640px;margin:0 auto;background:#17241b;border:1px solid #ffffff22;border-radius:16px;padding:18px}
+    h1{margin-top:0}.ok{color:#7ee787}.bad{color:#ff7b72}.line{padding:9px 0;border-bottom:1px solid #ffffff1a}.small{font-size:.86rem;word-break:break-word;color:#d6e4d9}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Mobiltest</h1>
+    <p>Denne side tester kun telefonens browser.</p>
+    <div class="line">JavaScript: <strong id="js" class="bad">IKKE STARTET</strong></div>
+    <div class="line">localStorage: <strong id="ls">ikke testet</strong></div>
+    <div class="line">sessionStorage: <strong id="ss">ikke testet</strong></div>
+    <div class="line">Cookie: <strong id="ck">ikke testet</strong></div>
+    <div class="line">Pub-ID test: <strong id="pid">----</strong></div>
+    <div class="line small">Browser: <span id="ua">ukendt</span></div>
+    <noscript><p class="bad"><strong>JavaScript er slået fra eller blokeret i denne browser.</strong></p></noscript>
+  </div>
+  <script>
+  (function(){
+    var e=function(id){return document.getElementById(id);};
+    var set=function(id,text,ok){var n=e(id);if(!n)return;n.innerHTML=text;n.className=ok?'ok':'bad';};
+    set('js','KØRER',true);
+    try{localStorage.setItem('cip_diag','1');set('ls',localStorage.getItem('cip_diag')==='1'?'OK':'FEJL',localStorage.getItem('cip_diag')==='1');}catch(x){set('ls','BLOKERET',false);}
+    try{sessionStorage.setItem('cip_diag','1');set('ss',sessionStorage.getItem('cip_diag')==='1'?'OK':'FEJL',sessionStorage.getItem('cip_diag')==='1');}catch(x){set('ss','BLOKERET',false);}
+    try{document.cookie='cip_diag=1; Max-Age=60; Path=/; SameSite=Lax; Secure';set('ck',String(document.cookie).indexOf('cip_diag=1')>=0?'OK':'BLOKERET',String(document.cookie).indexOf('cip_diag=1')>=0);}catch(x){set('ck','BLOKERET',false);}
+    var n=Math.floor(Math.random()*10000);set('pid',('0000'+n).slice(-4),true);
+    e('ua').innerHTML=(navigator.userAgent||'ukendt').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }());
+  </script>
+</body>
+</html>
