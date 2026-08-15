@@ -22,25 +22,25 @@ rep(
 
 rep(
     '''        function joinWithPubId() {\n          const code = String(els.nameInput.value || "").replace(/\\D/g, "").slice(0, 4);\n          els.nameInput.value = code;\n          if (!/^\\d{4}$/.test(code)) return;\n          const name = "Pub-ID " + code;\n          localStorage.setItem("pubbanko_name", name);\n          localStorage.setItem("pubbanko_pub_id", code);\n          socket.emit("player:join", { name, sessionId: currentSessionId });\n          showWaitingMode();\n        }\n\n        els.nameInput?.addEventListener("input", () => {\n          els.nameInput.value = els.nameInput.value.replace(/\\D/g, "").slice(0, 4);\n        });\n        els.joinBtn?.addEventListener("click", joinWithPubId);''',
-    '''        function joinWithName() {\n          const name = String(els.nameInput.value || "").trim().slice(0, 30);\n          if (!pubIdFromUrl || !name) return;\n          els.nameInput.value = name;\n          localStorage.setItem("pubbanko_name", name);\n          localStorage.setItem("pubbanko_pub_id", pubIdFromUrl);\n          socket.emit("player:join", { name, sessionId: currentSessionId });\n          showWaitingMode();\n        }\n\n        els.joinBtn?.addEventListener("click", joinWithName);\n        els.nameInput?.addEventListener("keydown", (event) => {\n          if (event.key === "Enter") joinWithName();\n        });''',
+    '''        function joinWithName() {\n          const name = String(els.nameInput.value || "").trim().slice(0, 30);\n          if (!pubIdFromUrl || !name) return;\n          els.nameInput.value = name;\n          sessionStorage.setItem("pubbanko_name", name);\n          sessionStorage.setItem("pubbanko_pub_id", pubIdFromUrl);\n          socket.emit("player:join", { name, sessionId: currentSessionId });\n          showWaitingMode();\n        }\n\n        els.joinBtn?.addEventListener("click", joinWithName);\n        els.nameInput?.addEventListener("keydown", (event) => {\n          if (event.key === "Enter") joinWithName();\n        });''',
     "name-only join handler",
 )
 
 rep(
     '''        socket.on("connect", () => {\n          if (isHost) return;\n          const savedName = localStorage.getItem("pubbanko_name");\n          if (savedName) socket.emit("player:resume", { sessionId: currentSessionId });\n          else if (pubIdFromUrl) {\n            els.nameInput.value = pubIdFromUrl;\n            joinWithPubId();\n          }\n        });''',
-    '''        socket.on("connect", () => {\n          if (isHost) return;\n          const savedName = localStorage.getItem("pubbanko_name");\n          const savedPubId = localStorage.getItem("pubbanko_pub_id");\n          if (savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n            socket.emit("player:resume", { sessionId: currentSessionId });\n          }\n        });''',
+    '''        socket.on("connect", () => {\n          if (isHost) return;\n          const savedName = sessionStorage.getItem("pubbanko_name");\n          const savedPubId = sessionStorage.getItem("pubbanko_pub_id");\n          if (savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n            socket.emit("player:resume", { sessionId: currentSessionId });\n          }\n        });''',
     "resume only same Pub-ID",
 )
 
 rep(
     '''              const savedName = localStorage.getItem("pubbanko_name");\n              if (savedName) {\n                els.playerLanding.classList.add("hidden");\n                els.mainGrid.classList.remove("hidden");\n              }''',
-    '''              const savedName = localStorage.getItem("pubbanko_name");\n              const savedPubId = localStorage.getItem("pubbanko_pub_id");\n              if (savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n                els.playerLanding.classList.add("hidden");\n                els.mainGrid.classList.remove("hidden");\n              }''',
+    '''              const savedName = sessionStorage.getItem("pubbanko_name");\n              const savedPubId = sessionStorage.getItem("pubbanko_pub_id");\n              if (savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n                els.playerLanding.classList.add("hidden");\n                els.mainGrid.classList.remove("hidden");\n              }''',
     "render only same Pub-ID",
 )
 
 rep(
     '''        const savedName = localStorage.getItem("pubbanko_name");\n        const savedPubId = localStorage.getItem("pubbanko_pub_id");\n        if (!isHost && /^\\d{4}$/.test(pubIdFromUrl || savedPubId || "")) {\n          els.nameInput.value = pubIdFromUrl || savedPubId;\n        } else if (savedName && !isHost) {\n          els.nameInput.value = savedName.replace(/^Pub-ID\\s+/, "");\n        }''',
-    '''        const savedName = localStorage.getItem("pubbanko_name");\n        const savedPubId = localStorage.getItem("pubbanko_pub_id");\n        if (!isHost && savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n          els.nameInput.value = savedName;\n        } else if (!isHost) {\n          els.nameInput.value = "";\n        }''',
+    '''        const savedName = sessionStorage.getItem("pubbanko_name");\n        const savedPubId = sessionStorage.getItem("pubbanko_pub_id");\n        if (!isHost && savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n          els.nameInput.value = savedName;\n        } else if (!isHost) {\n          els.nameInput.value = "";\n        }''',
     "prefill saved name only",
 )
 
