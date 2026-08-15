@@ -27,7 +27,7 @@ rep(
 )
 
 rep(
-    '''        socket.on("connect", () => {\n          if (isHost) return;\n          const savedName = localStorage.getItem("pubbanko_name");\n          if (savedName) socket.emit("player:resume", { sessionId: currentSessionId });\n          else if (pubIdFromUrl) {\n            els.nameInput.value = pubIdFromUrl;\n            joinWithPubId();\n          }\n        });''',
+    '''        socket.on("connect", () => {\n          if (isHost) return;\n          const savedName = localStorage.getItem("pubbanko_name");\n          const savedPubId = localStorage.getItem("pubbanko_pub_id");\n\n          if (pubIdFromUrl) {\n            els.nameInput.value = pubIdFromUrl;\n            if (savedName && savedPubId === pubIdFromUrl) {\n              socket.emit("player:resume", { sessionId: currentSessionId });\n            } else {\n              localStorage.removeItem("pubbanko_name");\n              localStorage.setItem("pubbanko_pub_id", pubIdFromUrl);\n              joinWithPubId();\n            }\n            return;\n          }\n\n          if (savedName) socket.emit("player:resume", { sessionId: currentSessionId });\n        });''',
     '''        socket.on("connect", () => {\n          if (isHost) return;\n          const savedName = sessionStorage.getItem("pubbanko_name");\n          const savedPubId = sessionStorage.getItem("pubbanko_pub_id");\n          if (savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n            socket.emit("player:resume", { sessionId: currentSessionId });\n          }\n        });''',
     "resume only same Pub-ID",
 )
