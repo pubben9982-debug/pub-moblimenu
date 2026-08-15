@@ -22,13 +22,13 @@ if [ ! -f pubbanko_linux_latest.zip ]; then
   echo "FEJL: pubbanko_linux_latest.zip mangler. Koer git pull."
   exit 1
 fi
-if [ ! -f patch-integration.py ]; then
-  echo "FEJL: patch-integration.py mangler. Koer git pull."
+if [ ! -f patch-integration.py ] || [ ! -f patch-player-inactive.py ]; then
+  echo "FEJL: Banko-integrationspatch mangler. Koer git pull."
   exit 1
 fi
 
 SOURCE_HASH="$(sha256sum pubbanko_linux_latest.zip | awk '{print $1}')"
-PATCH_HASH="$(sha256sum patch-integration.py | awk '{print $1}')"
+PATCH_HASH="$(cat patch-integration.py patch-player-inactive.py | sha256sum | awk '{print $1}')"
 BUILD_STAMP="${SOURCE_HASH}:${PATCH_HASH}"
 CURRENT_STAMP=""
 [ -f runtime/.build-stamp ] && CURRENT_STAMP="$(cat runtime/.build-stamp)"
@@ -39,6 +39,7 @@ if [ ! -f runtime/server.js ] || [ "$CURRENT_STAMP" != "$BUILD_STAMP" ]; then
   mkdir -p runtime
   unzip -oq pubbanko_linux_latest.zip -d runtime
   python3 patch-integration.py runtime/server.js
+  python3 patch-player-inactive.py runtime/server.js
   node --check runtime/server.js
   (
     cd runtime
