@@ -1,0 +1,28 @@
+name: Banko syntax check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  banko-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check shell scripts
+        run: |
+          bash -n banko-linux/setup.sh
+          bash -n banko-linux/run.sh
+      - name: Check integration patches
+        run: |
+          python3 -m py_compile banko-linux/patch-integration.py
+          python3 -m py_compile banko-linux/patch-player-inactive.py
+      - name: Build and syntax-check Banko server
+        run: |
+          rm -rf /tmp/pubbanko-check
+          mkdir -p /tmp/pubbanko-check
+          unzip -oq banko-linux/pubbanko_linux_latest.zip -d /tmp/pubbanko-check
+          python3 banko-linux/patch-integration.py /tmp/pubbanko-check/server.js
+          python3 banko-linux/patch-player-inactive.py /tmp/pubbanko-check/server.js
+          node --check /tmp/pubbanko-check/server.js
