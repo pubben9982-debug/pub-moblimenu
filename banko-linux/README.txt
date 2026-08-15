@@ -1,33 +1,25 @@
-PUBBANKO UNLIMITED
+PUBBANKO UNLIMITED - LINUX TESTVERSION
 
-NYT I DENNE VERSION
-- Ingen fast begrænsning på antal spillere
-- Inputfeltet for antal plader har ikke længere max-grænse i host-viewet
-- Serveren accepterer nu meget høje antal plader pr. spiller
-- Unikke plader pr. runde er bevaret
-- Reconnect, host-kontrol og præmieberegner er bevaret
+Seneste pakkede version ligger i:
+  banko-linux/pubbanko_linux_latest.zip
 
-VIGTIGT
-- Der er ingen praktisk grænse på antal spillere i koden
-- Antal plader pr. spiller er hævet kraftigt
-- Meget høje tal kan stadig gøre telefoner og pc langsomme, fordi alle plader skal vises og synkroniseres
+Start den nemt med:
+  chmod +x setup.sh
+  ./setup.sh
 
-NYT - LINUX + AUTO-TRÆK
-- Linux-start via setup.sh
-- Værten kan vælge auto-træk hvert 10. eller 20. sekund
-- Auto-træk kan startes og stoppes under spillet
-- Intervallet kan skiftes mens auto-træk kører
-- Nulstil spil stopper altid auto-træk, så en ny runde ikke starter ved et uheld
-- Auto-træk stopper automatisk, når alle 90 numre er trukket
+Denne version indeholder bl.a.:
+- klassiske 90-tals Banko-plader
+- bartender/host-side
+- auto-træk hvert 10. eller 20. sekund
+- serverstyret BANKO-kontrol
+- tydelig fuldskærmsbesked på spillertelefonerne, når nogen trykker BANKO
+- systemet viser først at BANKO bliver kontrolleret
+- ved forkert BANKO vises "DER VAR IKKE BANKO"
+- derefter tæller spillertelefonerne ned fra 10 sekunder
+- når nedtællingen er færdig, trækkes næste tal automatisk
+- hvis auto-træk var i gang, fortsætter det bagefter med samme interval
+- ved gyldig BANKO stoppes trækningen og spillerne bedes vente på bartenderen
 
-JURIDISK SIKKERHED I DENNE TESTVERSION
-- Bartendersiden viser en tydelig regel/advarselsboks før spilkontrollerne
-- Versionen er markeret som TESTVERSION
-- Den må ikke bruges til betalt Banko eller gevinster, før den konkrete model og nødvendige tilladelser er afklaret
-- De gældende regler for landbaseret Banko kræver bl.a. fysiske spilleplader og manuel dupning; derfor er mobilpladerne ikke automatisk omfattet som lovligt landbaseret Banko
-- Se BARTENDER_REGLER.md for kilder og den korte bartender-tjekliste
-
-INSTALLATION
-- Kør: chmod +x setup.sh
-- Kør: ./setup.sh
-- setup.sh samler automatisk server.js fra kildefragmenterne og installerer npm-pakkerne.
+VIGTIGT:
+Dette er en testversion. Betaling, klip og præmier skal ikke aktiveres, før den konkrete model og nødvendige tilladelser er afklaret.
+Se BARTENDER_REGLER.md.
