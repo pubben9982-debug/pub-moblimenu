@@ -75,7 +75,28 @@ rep(
     "auto draw seconds input",
 )
 
-# When a false BANKO is rejected, show the last called number in the full-screen notice.
+# Record numbers a player marked even though they have not been drawn yet.
+rep(
+    '''  const fullBoard = boardResults.some(r => r.fullBoard);\n\n  return {''',
+    '''  const fullBoard = boardResults.some(r => r.fullBoard);\n  const drawnSet = new Set(state.drawn);\n  const incorrectMarkedNumbers = [...new Set(\n    player.boards.flatMap((board) => board.flat())\n      .filter((cell) => cell && cell.value !== null && cell.marked && !drawnSet.has(cell.value))\n      .map((cell) => cell.value)\n  )].sort((a, b) => a - b);\n\n  return {''',
+    "claim incorrect marked numbers",
+)
+
+rep(
+    '''    boardResults,\n    anyRow,''',
+    '''    boardResults,\n    incorrectMarkedNumbers,\n    anyRow,''',
+    "claim exposes incorrect marked numbers",
+)
+
+# Carry claimant identity and incorrect marks into the existing false-BANKO pause.
+rep(
+    '''    state.claimPause = {\n      status: "invalid",\n      name: claim.name,\n      startedAt: Date.now(),\n      endsAt,\n    };''',
+    '''    state.claimPause = {\n      status: "invalid",\n      name: claim.name,\n      sessionId: claim.sessionId,\n      incorrectMarkedNumbers: claim.incorrectMarkedNumbers || [],\n      startedAt: Date.now(),\n      endsAt,\n    };''',
+    "false bingo claimant details",
+)
+
+# When a false BANKO is rejected, show the last called number. The claimant also
+# gets told exactly which manually marked numbers have not been drawn yet.
 rep(
     '''        function renderBingoNotice(claimPause) {''',
     '''        function renderBingoNotice(claimPause, lastNumber) {''',
@@ -84,8 +105,8 @@ rep(
 
 rep(
     '''            els.bingoNoticeText.textContent = "Systemet har kontrolleret pladerne. Spillet fortsætter automatisk.";''',
-    '''            els.bingoNoticeText.textContent = "Systemet har kontrolleret pladerne. Sidste nummer var " + (lastNumber || "-") + ". Spillet fortsætter automatisk.";''',
-    "false bingo last number text",
+    '''            const incorrect = Array.isArray(claimPause.incorrectMarkedNumbers) ? claimPause.incorrectMarkedNumbers : [];\n            const isClaimant = claimPause.sessionId && claimPause.sessionId === currentSessionId;\n            if (isClaimant && incorrect.length) {\n              const numbers = incorrect.join(", ");\n              const correction = incorrect.length === 1\n                ? "FJERN MARKERING: " + numbers + " – nummeret er ikke trukket. "\n                : "FJERN MARKERINGER: " + numbers + " – numrene er ikke trukket. ";\n              els.bingoNoticeText.textContent = correction + "Sidste nummer var " + (lastNumber || "-") + ". Spillet fortsætter automatisk.";\n            } else {\n              els.bingoNoticeText.textContent = "Systemet har kontrolleret pladerne. Sidste nummer var " + (lastNumber || "-") + ". Spillet fortsætter automatisk.";\n            }''',
+    "false bingo claimant correction",
 )
 
 rep(
