@@ -16,33 +16,33 @@ def rep(old, new, label):
 
 rep(
     '''            <div id="joinBox">\n              <input id="nameInput" inputmode="numeric" placeholder="Pub-ID" maxlength="4" />\n              <button id="joinBtn">TILMELD</button>\n            </div>''',
-    '''            <div id="joinBox">\n              <input id="nameInput" autocomplete="name" placeholder="Dit navn" maxlength="30" />\n              <button id="joinBtn">TILMELD</button>\n            </div>''',
-    "name-only join form",
+    '''            <div id="joinBox" style="display:none !important">\n              <input id="nameInput" autocomplete="off" tabindex="-1" aria-hidden="true" />\n              <button id="joinBtn" type="button" tabindex="-1" aria-hidden="true">TILMELD</button>\n            </div>''',
+    "hidden automatic join form",
 )
 
 rep(
     '''        function joinWithPubId() {\n          const code = String(els.nameInput.value || "").replace(/\\D/g, "").slice(0, 4);\n          els.nameInput.value = code;\n          if (!/^\\d{4}$/.test(code)) return;\n          const name = "Pub-ID " + code;\n          localStorage.setItem("pubbanko_name", name);\n          localStorage.setItem("pubbanko_pub_id", code);\n          socket.emit("player:join", { name, sessionId: currentSessionId });\n          showWaitingMode();\n        }\n\n        els.nameInput?.addEventListener("input", () => {\n          els.nameInput.value = els.nameInput.value.replace(/\\D/g, "").slice(0, 4);\n        });\n        els.joinBtn?.addEventListener("click", joinWithPubId);''',
-    '''        function joinWithName() {\n          const name = String(els.nameInput.value || "").trim().slice(0, 30);\n          if (!pubIdFromUrl || !name) return;\n          els.nameInput.value = name;\n          sessionStorage.setItem("pubbanko_name", name);\n          sessionStorage.setItem("pubbanko_pub_id", pubIdFromUrl);\n          socket.emit("player:join", { name, sessionId: currentSessionId });\n          showWaitingMode();\n        }\n\n        els.joinBtn?.addEventListener("click", joinWithName);\n        els.nameInput?.addEventListener("keydown", (event) => {\n          if (event.key === "Enter") joinWithName();\n        });''',
-    "name-only join handler",
+    '''        function joinWithName() {\n          if (!pubIdFromUrl) return;\n          const name = "Pub-ID " + pubIdFromUrl;\n          els.nameInput.value = name;\n          sessionStorage.setItem("pubbanko_name", name);\n          sessionStorage.setItem("pubbanko_pub_id", pubIdFromUrl);\n          socket.emit("player:join", { name, sessionId: currentSessionId });\n          showWaitingMode();\n        }\n\n        els.joinBtn?.addEventListener("click", joinWithName);\n        els.nameInput?.addEventListener("keydown", (event) => {\n          if (event.key === "Enter") joinWithName();\n        });''',
+    "automatic Pub-ID join handler",
 )
 
 rep(
     '''        socket.on("connect", () => {\n          if (isHost) return;\n          const savedName = localStorage.getItem("pubbanko_name");\n          const savedPubId = localStorage.getItem("pubbanko_pub_id");\n\n          if (pubIdFromUrl) {\n            els.nameInput.value = pubIdFromUrl;\n            if (savedName && savedPubId === pubIdFromUrl) {\n              socket.emit("player:resume", { sessionId: currentSessionId });\n            } else {\n              localStorage.removeItem("pubbanko_name");\n              localStorage.setItem("pubbanko_pub_id", pubIdFromUrl);\n              joinWithPubId();\n            }\n            return;\n          }\n\n          if (savedName) socket.emit("player:resume", { sessionId: currentSessionId });\n        });''',
-    '''        socket.on("connect", () => {\n          if (isHost) return;\n          const savedName = sessionStorage.getItem("pubbanko_name");\n          const savedPubId = sessionStorage.getItem("pubbanko_pub_id");\n          if (savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n            socket.emit("player:resume", { sessionId: currentSessionId });\n          }\n        });''',
-    "resume only same Pub-ID",
+    '''        socket.on("connect", () => {\n          if (isHost || !pubIdFromUrl) return;\n          joinWithName();\n        });''',
+    "automatic join on connect",
 )
 
 rep(
     '''              const savedName = localStorage.getItem("pubbanko_name");\n              if (savedName) {\n                els.playerLanding.classList.add("hidden");\n                els.mainGrid.classList.remove("hidden");\n              }''',
-    '''              const savedName = sessionStorage.getItem("pubbanko_name");\n              const savedPubId = sessionStorage.getItem("pubbanko_pub_id");\n              if (savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n                els.playerLanding.classList.add("hidden");\n                els.mainGrid.classList.remove("hidden");\n              }''',
-    "render only same Pub-ID",
+    '''              if (pubIdFromUrl) {\n                els.playerLanding.classList.add("hidden");\n                els.mainGrid.classList.remove("hidden");\n              }''',
+    "render automatic Pub-ID player",
 )
 
 rep(
     '''        const savedName = localStorage.getItem("pubbanko_name");\n        const savedPubId = localStorage.getItem("pubbanko_pub_id");\n        if (!isHost && /^\\d{4}$/.test(pubIdFromUrl || savedPubId || "")) {\n          els.nameInput.value = pubIdFromUrl || savedPubId;\n        } else if (savedName && !isHost) {\n          els.nameInput.value = savedName.replace(/^Pub-ID\\s+/, "");\n        }''',
-    '''        const savedName = sessionStorage.getItem("pubbanko_name");\n        const savedPubId = sessionStorage.getItem("pubbanko_pub_id");\n        if (!isHost && savedName && pubIdFromUrl && savedPubId === pubIdFromUrl) {\n          els.nameInput.value = savedName;\n        } else if (!isHost) {\n          els.nameInput.value = "";\n        }''',
-    "prefill saved name only",
+    '''        if (!isHost && pubIdFromUrl) {\n          els.nameInput.value = "Pub-ID " + pubIdFromUrl;\n        }''',
+    "prepare automatic Pub-ID name",
 )
 
 path.write_text(text, encoding="utf-8")
-print(f"Banko name-only patch applied: {path}")
+print(f"Banko automatic Pub-ID join patch applied: {path}")
