@@ -75,5 +75,24 @@ rep(
     "auto draw seconds input",
 )
 
+# When a false BANKO is rejected, show the last called number in the full-screen notice.
+rep(
+    '''        function renderBingoNotice(claimPause) {''',
+    '''        function renderBingoNotice(claimPause, lastNumber) {''',
+    "bingo notice receives last number",
+)
+
+rep(
+    '''            els.bingoNoticeText.textContent = "Systemet har kontrolleret pladerne. Spillet fortsætter automatisk.";''',
+    '''            els.bingoNoticeText.textContent = "Systemet har kontrolleret pladerne. Sidste nummer var " + (lastNumber || "-") + ". Spillet fortsætter automatisk.";''',
+    "false bingo last number text",
+)
+
+rep(
+    '''          renderBingoNotice(claimPause);''',
+    '''          renderBingoNotice(claimPause, lastNumber);''',
+    "pass last number to bingo notice",
+)
+
 path.write_text(text, encoding="utf-8")
 print(f"Banko flexible controls patch applied: {path}")
