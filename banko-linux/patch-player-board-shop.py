@@ -50,11 +50,11 @@ rep(
     "private requested board count",
 )
 
-# Mobile board-selection styling.
+# Mobile board-selection and result-notice styling.
 rep(
     '''        .login-box { width:100%; max-width:420px; margin:0 auto; }''',
-    '''        .login-box { width:100%; max-width:420px; margin:0 auto; }\n        .board-shop { width:100%; max-width:520px; margin:0 auto; text-align:center; }\n        .board-choice-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px 0; }\n        .board-choice { background:rgba(255,255,255,0.12); color:white; border:2px solid transparent; font-size:22px; font-weight:800; }\n        .board-choice.selected { border-color:var(--accent); background:rgba(245,158,11,0.22); }\n        .board-shop-note { margin-top:14px; font-size:14px; line-height:1.45; }''',
-    "board shop styles",
+    '''        .login-box { width:100%; max-width:420px; margin:0 auto; }\n        .board-shop { width:100%; max-width:520px; margin:0 auto; text-align:center; }\n        .board-choice-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px 0; }\n        .board-choice { background:rgba(255,255,255,0.12); color:white; border:2px solid transparent; font-size:22px; font-weight:800; }\n        .board-choice.selected { border-color:var(--accent); background:rgba(245,158,11,0.22); }\n        .board-shop-note { margin-top:14px; font-size:14px; line-height:1.45; }\n        #bingoNotice { overflow-y:auto !important; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; padding:16px; }\n        #bingoNoticeCard { box-sizing:border-box; width:min(100%,520px); max-height:calc(100vh - 32px); max-height:calc(100dvh - 32px); overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }''',
+    "board shop and mobile result styles",
 )
 
 # Insert the board-selection step before the existing waiting screen.
