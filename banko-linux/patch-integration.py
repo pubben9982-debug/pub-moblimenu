@@ -87,7 +87,7 @@ rep(
 
 rep(
     '''        const socket = io({ reconnection: true, reconnectionAttempts: Infinity, reconnectionDelay: 500, reconnectionDelayMax: 3000 });\n        const params = new URLSearchParams(window.location.search);\n        const isHost = params.get("host") === "1";''',
-    '''        const params = new URLSearchParams(window.location.search);\n        const isHost = params.get("host") === "1";\n        const hostPin = params.get("pin") || "";\n        const pubIdFromUrl = /^\\d{4}$/.test(params.get("id") || "") ? params.get("id") : "";\n        const socket = io({\n          reconnection: true,\n          reconnectionAttempts: Infinity,\n          reconnectionDelay: 500,\n          reconnectionDelayMax: 3000,\n          query: { host: isHost ? "1" : "0", pin: isHost ? hostPin : "" }\n        });''',
+    '''        const params = new URLSearchParams(window.location.search);\n        const isHost = params.get("host") === "1";\n        const hostPin = params.get("pin") || "";\n        const pubIdFromUrl = /^\\\\d{4}$/.test(params.get("id") || "") ? params.get("id") : "";\n        const socket = io({\n          reconnection: true,\n          reconnectionAttempts: Infinity,\n          reconnectionDelay: 500,\n          reconnectionDelayMax: 3000,\n          query: { host: isHost ? "1" : "0", pin: isHost ? hostPin : "" }\n        });''',
     "client socket auth",
 )
 
