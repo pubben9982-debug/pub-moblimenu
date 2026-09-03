@@ -1,14 +1,30 @@
 "use strict";
 
-const CONFIG = {
-  drinksUrl: "http://192.168.0.50:8080/drinkskort/",
-  jukeboxUrl: "http://192.168.0.50:5055/",
-  pizzaUrl: "http://192.168.0.50:8091/pizza",
-  clipsUrl: "http://192.168.0.50:8080/klippekort.html",
-  gamesUrl: "http://192.168.0.50:8080/mobilspil/",
+const LOCAL_CONFIG =
+  window.PUBMENU_CONFIG &&
+  typeof window.PUBMENU_CONFIG === "object"
+    ? window.PUBMENU_CONFIG
+    : {};
 
-  wifiName: "pubben gæst",
-  wifiPassword: "pubben9982"
+
+const CONFIG = {
+  drinksUrl: String(LOCAL_CONFIG.drinksUrl || ""),
+  jukeboxUrl: String(LOCAL_CONFIG.jukeboxUrl || ""),
+  pizzaUrl: String(LOCAL_CONFIG.pizzaUrl || ""),
+  clipsUrl: String(LOCAL_CONFIG.clipsUrl || ""),
+  gamesUrl: String(LOCAL_CONFIG.gamesUrl || ""),
+  prizesUrl: String(LOCAL_CONFIG.prizesUrl || ""),
+  giftcardPrizesEnabled:
+    LOCAL_CONFIG.giftcardPrizesEnabled === true,
+
+  wifiName: String(
+    LOCAL_CONFIG.wifiName ||
+    "Pubbens gæstenetværk"
+  ),
+  wifiPassword: String(
+    LOCAL_CONFIG.wifiPassword ||
+    ""
+  )
 };
 
 
@@ -34,6 +50,9 @@ const TEXT = {
     gamesTitle: "Mobilspil",
     gamesText: "Spin lykkehjulet",
 
+    prizesTitle: "Mine gevinster",
+    prizesText: "Se om dit gavekort er klar",
+
     wifiHelp: "De lokale funktioner kræver pubbens Wi-Fi",
     password: "Kode",
     copy: "Kopiér kode",
@@ -42,13 +61,13 @@ const TEXT = {
     footer: "Mobilmenuen kan også åbnes uden pubbens Wi-Fi",
 
     idTitle: "Dit Pub-ID",
-    idHint: "Dette ID bruges til din fælles saldo, Jukebox, Drinkskort og Klippekort.",
+    idHint: "Dette ID bruges til din fælles saldo, Jukebox, Drinkskort, Klippekort og Banko-gevinster.",
 
     wifiModalTitle: "Er du på pubbens Wi-Fi?",
     wifiModalText: "Denne funktion virker kun på pubbens lokale netværk.",
     wifiStep1: "Åbn Wi-Fi på telefonen",
-    wifiStep2: "Vælg pubben gæst",
-    wifiStep3: "Brug koden pubben9982",
+    wifiStep2: "Vælg {wifiName}",
+    wifiStep3: "Brug koden {wifiPassword}",
     wifiContinue: "JEG ER PÅ WI-FI – FORTSÆT",
     wifiHint: "Hvis siden ikke åbner bagefter, er telefonen sandsynligvis ikke på pubbens netværk."
   },
@@ -74,6 +93,9 @@ const TEXT = {
     gamesTitle: "Mobile games",
     gamesText: "Spin the lucky wheel",
 
+    prizesTitle: "My prizes",
+    prizesText: "See if your gift card is ready",
+
     wifiHelp: "Local features require the pub Wi-Fi",
     password: "Password",
     copy: "Copy password",
@@ -82,13 +104,13 @@ const TEXT = {
     footer: "The mobile menu also works without the pub Wi-Fi",
 
     idTitle: "Your Pub ID",
-    idHint: "This ID is used for your shared balance, Jukebox, Drinks menu and punch card.",
+    idHint: "This ID is used for your shared balance, Jukebox, Drinks menu, punch card and Bingo prizes.",
 
     wifiModalTitle: "Are you on the pub Wi-Fi?",
     wifiModalText: "This feature only works on the pub's local network.",
     wifiStep1: "Open Wi-Fi on your phone",
-    wifiStep2: "Choose pubben gæst",
-    wifiStep3: "Use the password pubben9982",
+    wifiStep2: "Choose {wifiName}",
+    wifiStep3: "Use the password {wifiPassword}",
     wifiContinue: "I AM ON WI-FI – CONTINUE",
     wifiHint: "If the page does not open afterwards, your phone is probably not connected to the pub network."
   },
@@ -114,6 +136,9 @@ const TEXT = {
     gamesTitle: "Mobile Spiele",
     gamesText: "Drehen Sie das Glücksrad",
 
+    prizesTitle: "Meine Gewinne",
+    prizesText: "Prüfen, ob die Geschenkkarte bereit ist",
+
     wifiHelp: "Lokale Funktionen benötigen das Pub-WLAN",
     password: "Passwort",
     copy: "Passwort kopieren",
@@ -122,13 +147,13 @@ const TEXT = {
     footer: "Die Mobilkarte funktioniert auch ohne Pub-WLAN",
 
     idTitle: "Ihre Pub-ID",
-    idHint: "Diese ID wird für Guthaben, Jukebox, Getränkekarte und Stempelkarte verwendet.",
+    idHint: "Diese ID wird für Guthaben, Jukebox, Getränkekarte, Stempelkarte und Bingo-Gewinne verwendet.",
 
     wifiModalTitle: "Sind Sie mit dem Pub-WLAN verbunden?",
     wifiModalText: "Diese Funktion funktioniert nur im lokalen Netzwerk des Pubs.",
     wifiStep1: "Öffnen Sie das WLAN auf Ihrem Telefon",
-    wifiStep2: "Wählen Sie pubben gæst",
-    wifiStep3: "Verwenden Sie das Passwort pubben9982",
+    wifiStep2: "Wählen Sie {wifiName}",
+    wifiStep3: "Verwenden Sie das Passwort {wifiPassword}",
     wifiContinue: "ICH BIN IM WLAN – WEITER",
     wifiHint: "Wenn die Seite danach nicht geöffnet wird, ist Ihr Telefon wahrscheinlich nicht mit dem Pub-Netzwerk verbunden."
   },
@@ -154,6 +179,9 @@ const TEXT = {
     gamesTitle: "Mobilspill",
     gamesText: "Spinn lykkehjulet",
 
+    prizesTitle: "Mine gevinster",
+    prizesText: "Se om gavekortet er klart",
+
     wifiHelp: "Lokale funksjoner krever pubens Wi-Fi",
     password: "Passord",
     copy: "Kopier passord",
@@ -162,13 +190,13 @@ const TEXT = {
     footer: "Mobilmenyen fungerer også uten pubens Wi-Fi",
 
     idTitle: "Din Pub-ID",
-    idHint: "Denne ID-en brukes til saldo, Jukebox, drinkmeny og klippekort.",
+    idHint: "Denne ID-en brukes til saldo, Jukebox, drinkmeny, klippekort og Bingo-gevinster.",
 
     wifiModalTitle: "Er du på pubens Wi-Fi?",
     wifiModalText: "Denne funksjonen virker bare på pubens lokale nettverk.",
     wifiStep1: "Åpne Wi-Fi på telefonen",
-    wifiStep2: "Velg pubben gæst",
-    wifiStep3: "Bruk passordet pubben9982",
+    wifiStep2: "Velg {wifiName}",
+    wifiStep3: "Bruk passordet {wifiPassword}",
     wifiContinue: "JEG ER PÅ WI-FI – FORTSETT",
     wifiHint: "Hvis siden ikke åpnes etterpå, er telefonen sannsynligvis ikke koblet til pubens nettverk."
   }
@@ -223,8 +251,20 @@ if (el("bigDeviceId")) {
 }
 
 
+if (el("prizesBtn") && CONFIG.giftcardPrizesEnabled) {
+  el("prizesBtn").hidden = false;
+}
+
+
 function openPage(url) {
-  window.location.assign(url);
+  const target = String(url || "").trim();
+
+  if (!target) {
+    window.alert("Den lokale adresse er ikke sat endnu.");
+    return;
+  }
+
+  window.location.assign(target);
 }
 
 
@@ -232,48 +272,55 @@ function openPage(url) {
    LOKALE LINKS
    ========================================================= */
 
-function buildDrinksUrl() {
+function buildPubIdUrl(url, version) {
+  const base = String(url || "").trim();
+
+  if (!base) {
+    return "";
+  }
+
+  const separator =
+    base.indexOf("?") === -1
+      ? "?"
+      : "&";
+
   return (
-    CONFIG.drinksUrl +
-    "?id=" +
+    base +
+    separator +
+    "id=" +
     encodeURIComponent(pubId) +
-    "&v=15"
+    (version ? "&v=" + encodeURIComponent(version) : "")
   );
+}
+
+
+function buildDrinksUrl() {
+  return buildPubIdUrl(CONFIG.drinksUrl, "15");
 }
 
 
 function buildJukeboxUrl() {
-  return (
-    CONFIG.jukeboxUrl +
-    "?id=" +
-    encodeURIComponent(pubId) +
-    "&v=15"
-  );
+  return buildPubIdUrl(CONFIG.jukeboxUrl, "15");
 }
 
 
 function buildPizzaUrl() {
-  return CONFIG.pizzaUrl;
+  return String(CONFIG.pizzaUrl || "");
 }
 
 
 function buildClipsUrl() {
-  return (
-    CONFIG.clipsUrl +
-    "?id=" +
-    encodeURIComponent(pubId) +
-    "&v=15"
-  );
+  return buildPubIdUrl(CONFIG.clipsUrl, "15");
 }
 
 
 function buildGamesUrl() {
-  return (
-    CONFIG.gamesUrl +
-    "?id=" +
-    encodeURIComponent(pubId) +
-    "&v=1"
-  );
+  return buildPubIdUrl(CONFIG.gamesUrl, "1");
+}
+
+
+function buildPrizesUrl() {
+  return buildPubIdUrl(CONFIG.prizesUrl, "");
 }
 
 
@@ -448,6 +495,22 @@ if (el("gamesBtn")) {
 
 
 /* =========================================================
+   MINE GEVINSTER
+   ========================================================= */
+
+if (el("prizesBtn")) {
+
+  el("prizesBtn")
+    .addEventListener(
+      "click",
+      function () {
+        showWifiModal(buildPrizesUrl());
+      }
+    );
+}
+
+
+/* =========================================================
    PUB-ID POPUP
    ========================================================= */
 
@@ -549,6 +612,16 @@ if (el("copyWifi")) {
    SPROG
    ========================================================= */
 
+function formatConfiguredText(value) {
+
+  return String(value)
+    .split("{wifiName}")
+    .join(CONFIG.wifiName)
+    .split("{wifiPassword}")
+    .join(CONFIG.wifiPassword || "—");
+}
+
+
 function applyLanguage(language) {
 
   const t =
@@ -584,6 +657,9 @@ function applyLanguage(language) {
     gamesTitle: "gamesTitle",
     gamesText: "gamesText",
 
+    prizesTitle: "prizesTitle",
+    prizesText: "prizesText",
+
     wifiHelp: "wifiHelp",
     password: "passwordLabel",
     copy: "copyWifi",
@@ -614,9 +690,21 @@ function applyLanguage(language) {
       t[textKey] !== undefined
     ) {
       element.textContent =
-        t[textKey];
+        formatConfiguredText(t[textKey]);
     }
   }
+
+  if (el("wifiNameValue")) {
+    el("wifiNameValue").textContent =
+      CONFIG.wifiName;
+  }
+
+
+  if (el("wifiPasswordValue")) {
+    el("wifiPasswordValue").textContent =
+      CONFIG.wifiPassword || "—";
+  }
+
 
   if (el("language")) {
     el("language").value =

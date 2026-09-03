@@ -1,14 +1,21 @@
 "use strict";
 
 
-const CONFIG = {
-  drinksUrl: "http://192.168.0.50:8080/drinkskort/",
-  jukeboxUrl: "http://192.168.0.50:5055/",
-  pizzaUrl: "http://192.168.0.50:8091/pizza",
-  clipsUrl: "http://192.168.0.50:8080/klippekort.html",
+const LOCAL_CONFIG =
+  window.PUBMENU_CONFIG &&
+  typeof window.PUBMENU_CONFIG === "object"
+    ? window.PUBMENU_CONFIG
+    : {};
 
-  wifiName: "pubben gæst",
-  wifiPassword: "pubben9982"
+
+const CONFIG = {
+  drinksUrl: String(LOCAL_CONFIG.drinksUrl || ""),
+  jukeboxUrl: String(LOCAL_CONFIG.jukeboxUrl || ""),
+  pizzaUrl: String(LOCAL_CONFIG.pizzaUrl || ""),
+  clipsUrl: String(LOCAL_CONFIG.clipsUrl || ""),
+
+  wifiName: String(LOCAL_CONFIG.wifiName || "Pubbens gæstenetværk"),
+  wifiPassword: String(LOCAL_CONFIG.wifiPassword || "")
 };
 
 

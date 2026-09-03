@@ -27,17 +27,18 @@
       <button class="menu-card drinks" id="drinksBtn" type="button"><span class="icon">🍹</span><strong id="drinksTitle">Drinkskort</strong><span id="drinksText">Se drinks, øl og priser</span></button>
       <button class="menu-card jukebox" id="jukeboxBtn" type="button"><span class="icon">🎵</span><strong id="jukeboxTitle">Jukebox</strong><span id="jukeboxText">Ønsk musik fra din telefon</span></button>
       <button class="menu-card games" id="gamesBtn" type="button"><span class="icon">🎡</span><strong id="gamesTitle">Mobilspil</strong><span id="gamesText">Spin lykkehjulet</span></button>
+      <button class="menu-card prizes" id="prizesBtn" type="button" hidden><span class="icon">🎁</span><strong id="prizesTitle">Mine gevinster</strong><span id="prizesText">Se om dit gavekort er klar</span></button>
       <button class="menu-card pizza" id="pizzaBtn" type="button"><span class="icon">🍕</span><strong id="pizzaTitle">Pizza</strong><span id="pizzaText">Se pizza-menu</span></button>
       <button class="menu-card card" id="cardBtn" type="button"><span class="icon">🎟️</span><strong id="cardTitle">Klippekort</strong><span id="cardText">Se saldo og brug klip</span></button>
     </section>
-    <section class="wifi-card"><div><div class="small-label" id="wifiHelp">De lokale funktioner kræver pubbens Wi-Fi</div><h2>pubben gæst</h2><p><span id="passwordLabel">Kode</span>: <strong>pubben9982</strong></p></div><button id="copyWifi" class="copy-btn" type="button">Kopiér kode</button></section>
+    <section class="wifi-card"><div><div class="small-label" id="wifiHelp">De lokale funktioner kræver pubbens Wi-Fi</div><h2 id="wifiNameValue">Pubbens gæstenetværk</h2><p><span id="passwordLabel">Kode</span>: <strong id="wifiPasswordValue">—</strong></p></div><button id="copyWifi" class="copy-btn" type="button">Kopiér kode</button></section>
     <footer><div id="footerText">Mobilmenuen kan også åbnes uden pubbens Wi-Fi</div><div style="margin-top:12px"><a href="https://findsmiley.dk/662523" target="_blank" rel="noopener noreferrer" style="color:#f2c66d;font-weight:800;text-decoration:underline;text-underline-offset:3px">😊 Fødevarekontrol · Pubben ApS</a></div></footer>
   </main>
 
-  <div id="wifiModal" class="modal hidden"><div class="modal-card"><button id="closeWifiModal" class="close" type="button" aria-label="Luk">×</button><h2 id="wifiModalTitle">Er du på pubbens Wi-Fi?</h2><p id="wifiModalText">Denne funktion virker kun på pubbens lokale netværk.</p><ol><li id="wifiStep1">Åbn Wi-Fi på telefonen</li><li id="wifiStep2">Vælg pubben gæst</li><li id="wifiStep3">Brug koden pubben9982</li></ol><button id="continueLocalBtn" class="primary" type="button">JEG ER PÅ WI-FI – FORTSÆT</button><p id="wifiModalHint" class="hint">Hvis siden ikke åbner bagefter, er telefonen sandsynligvis ikke på pubbens netværk.</p></div></div>
-  <div id="idModal" class="modal hidden"><div class="modal-card compact"><button id="closeIdModal" class="close" type="button" aria-label="Luk">×</button><h2 id="idModalTitle">Dit Pub-ID</h2><div class="big-id" id="bigDeviceId">----</div><p id="idHint" class="hint">Dette ID bruges til din fælles saldo, Jukebox, Drinkskort og Klippekort.</p></div></div>
+  <div id="wifiModal" class="modal hidden"><div class="modal-card"><button id="closeWifiModal" class="close" type="button" aria-label="Luk">×</button><h2 id="wifiModalTitle">Er du på pubbens Wi-Fi?</h2><p id="wifiModalText">Denne funktion virker kun på pubbens lokale netværk.</p><ol><li id="wifiStep1">Åbn Wi-Fi på telefonen</li><li id="wifiStep2">Vælg Pubbens gæstenetværk</li><li id="wifiStep3">Brug koden —</li></ol><button id="continueLocalBtn" class="primary" type="button">JEG ER PÅ WI-FI – FORTSÆT</button><p id="wifiModalHint" class="hint">Hvis siden ikke åbner bagefter, er telefonen sandsynligvis ikke på pubbens netværk.</p></div></div>
+  <div id="idModal" class="modal hidden"><div class="modal-card compact"><button id="closeIdModal" class="close" type="button" aria-label="Luk">×</button><h2 id="idModalTitle">Dit Pub-ID</h2><div class="big-id" id="bigDeviceId">----</div><p id="idHint" class="hint">Dette ID bruges til din fælles saldo, Jukebox, Drinkskort, Klippekort og Banko-gevinster.</p></div></div>
 
-  <script src="app.js?v=17"></script>
-  <script src="failsafe.js?v=2"></script>
+  <script src="config.local.js" onerror="this.remove()"></script>\n  <script src="app.js?v=18"></script>
+  <script src="failsafe.js?v=3"></script>
 </body>
 </html>

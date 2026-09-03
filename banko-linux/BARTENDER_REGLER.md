@@ -24,3 +24,9 @@ Dette er en kort driftsadvarsel til Banko-testen. Den er ikke en erstatning for 
 ## Produktregel
 
 Betaling, automatisk fratræk af kredit/klip og automatisk tildeling af præmier skal holdes adskilt fra Banko-motoren, indtil den juridiske model er afklaret. Pladevalget må gerne testes som gratis flow, men må ikke kalde eller debitere Pub-ID-kredit.
+
+## Forberedt gavekortflow
+
+Koden indeholder et testflow til fysiske gavekort, men det er slået fra som standard. Det må ikke åbnes til gevinster med økonomisk værdi, før den konkrete Banko-model er afklaret.
+
+Når det senere må aktiveres, gemmer flowet kun Pub-ID, gavekortbeløb, valgt butik, status og en hash af telefonens Banko-nøgle. Der gemmes ikke gæstenavn eller rå telefonnøgle. Status er: afventer butiksvalg, bestilt, hentet og udleveret.
