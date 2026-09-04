@@ -24,6 +24,8 @@ jobs:
           python3 -m py_compile banko-linux/patch-giftcard-prizes.py
           node --check banko-linux/giftcard-prizes.js
           node --check banko-linux/giftcard-prizes-client.js
+          node --check banko-linux/banko-budget-forecast.js
+          node --check banko-linux/test-banko-budget-forecast.mjs
       - name: Build and syntax-check Banko server
         run: |
           rm -rf /tmp/pubbanko-check
@@ -43,6 +45,9 @@ jobs:
         run: |
           node banko-linux/test-giftcard-prizes.mjs
           node banko-linux/test-giftcard-routes.mjs
+      - name: Test Banko sales forecast
+        run: |
+          node banko-linux/test-banko-budget-forecast.mjs
       - name: Verify player board flow
         run: |
           grep -q 'id="boardShopBox"' /tmp/pubbanko-check/server.js
