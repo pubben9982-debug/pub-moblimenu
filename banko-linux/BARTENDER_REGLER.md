@@ -30,9 +30,13 @@ Dette er en kort driftsadvarsel til Banko-testen. Den er ikke en erstatning for 
 - Den enkelte beværtning skal reelt være arrangør: modtage spillernes betaling, fastsætte og udlevere gevinster samt føre sin egen salgslog.
 - Leverandøren fakturerer beværtningen pr. anvendt plade eller som en systemydelse og modtager ikke betaling direkte fra spillerne.
 - Hver selvstændig arrangør holder sin egen samlede salgssum under 15.000 kr. i den løbende 12-månedersperiode. Hvis samme virksomhed/CVR driver flere steder, behandles de forsigtigt som én arrangør med én samlet grænse, indtil andet er skriftligt afklaret.
-- Eksempel: Betaler spilleren 2 kr. pr. plade, tæller alle 2 kr. med, selv om 1 kr. betales videre til systemleverandøren. Højst 7.499 plader giver 14.998 kr. og holder sig under grænsen.
+- Salgssummen er hele det beløb, spilleren betaler for pladen/deltagelsen; den beregnes ikke ud fra arrangørens fortjeneste efter udgifter.
+- Eksempel A: Betaler spilleren 1,25 kr. pr. plade, hvor arrangøren efterfølgende bruger 1 kr. til leverandøren og beholder 0,25 kr., tæller alle 1,25 kr. med i arrangørens salgssum.
+- Eksempel B: Betaler spilleren kun 0,25 kr. for deltagelsen, mens beværtningen betaler leverandørens faktura på 1 kr. af sin øvrige omsætning, er spillerens betaling kun 0,25 kr. i pladesalg. Leverandørfakturaen er en særskilt udgift for beværtningen og giver dermed et underskud på 0,75 kr. på selve pladen.
+- Leverandøren kan tjene pr. anvendt plade på tværs af mange selvstændige arrangører uden selv at få én fælles grænse på 15.000 kr., så længe leverandøren reelt kun leverer plader/system og ikke modtager spillerbetaling eller afholder spillene.
 - Der skal senere bygges tæller og advarsler pr. arrangør samt stop for yderligere betalt deltagelse, før grænsen nås. Gratis banko kan kun bruges som reserve, hvis deltagelsen er reelt gratis og ikke betinget af et andet køb.
 - Før bred kommerciel udrulning bør Spillemyndigheden spørges specifikt, om elektroniske plader på deltagernes egne telefoner accepteres ved lokalt lotteri under § 3, stk. 3.
+- Modellen for Banko på Central Irish Pub behandles særskilt fra leverandørmodellen til andre beværtninger, fordi Pubben her både er knyttet til systemleverandøren og selv afholder spillet.
 
 ## Produktregel
 
