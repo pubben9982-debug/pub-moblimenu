@@ -182,7 +182,7 @@ function canAcceptSale({ analysis, boards, boardPriceOre }) {
   };
 }
 
-module.exports = {
+export {
   DEFAULT_LIMIT_ORE,
   DEFAULT_LOOKBACK_DAYS,
   analyzeBudget,
