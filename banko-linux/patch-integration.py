@@ -39,7 +39,7 @@ rep(
 
 rep(
     'io.on("connection", (socket) => {\n  socket.on("player:join", ({ name, sessionId }) => {',
-    'io.on("connection", (socket) => {\n  const authHost = String(socket.handshake.query.host || "") === "1";\n  const authPin = String(socket.handshake.query.pin || "");\n  socket.data.isHost = authHost && authPin === String(process.env.BARTENDER_PIN || "4738");\n\n  socket.on("player:join", ({ name, sessionId }) => {',
+    'io.on("connection", (socket) => {\n  const authHost = String(socket.handshake.query.host || "") === "1";\n  const authPin = String(socket.handshake.query.pin || "");\n  const configuredBartenderPin = String(process.env.BARTENDER_PIN || "");\n  socket.data.isHost = Boolean(configuredBartenderPin) && authHost && authPin === configuredBartenderPin;\n\n  socket.on("player:join", ({ name, sessionId }) => {',
     "socket host auth",
 )
 
@@ -69,7 +69,7 @@ rep(
 
 rep(
     'app.get("/", (_req, res) => res.send(html()));\napp.get("/health", (_req, res) => res.json({ ok: true, players: state.players.size, drawn: state.drawn.length }));',
-    '''app.get("/", (req, res) => {\n  if (String(req.query.host || "") === "1" && String(req.query.pin || "") !== String(process.env.BARTENDER_PIN || "4738")) {\n    return res.status(403).send("Forkert bartenderkode");\n  }\n  res.send(html());\n});\napp.get("/health", (_req, res) => res.json({ ok: true, active: state.bankoActive, players: state.players.size, drawn: state.drawn.length }));\napp.get("/api/status", (_req, res) => {\n  res.set("Access-Control-Allow-Origin", "*");\n  res.json({ ok: true, active: state.bankoActive, players: state.players.size, drawn: state.drawn.length, gameId: state.gameId });\n});''',
+    '''app.get("/", (req, res) => {\n  const configuredBartenderPin = String(process.env.BARTENDER_PIN || "");\n  if (String(req.query.host || "") === "1" && (!configuredBartenderPin || String(req.query.pin || "") !== configuredBartenderPin)) {\n    return res.status(403).send("Forkert bartenderkode");\n  }\n  res.send(html());\n});\napp.get("/health", (_req, res) => res.json({ ok: true, active: state.bankoActive, players: state.players.size, drawn: state.drawn.length }));\napp.get("/api/status", (_req, res) => {\n  res.set("Access-Control-Allow-Origin", "*");\n  res.json({ ok: true, active: state.bankoActive, players: state.players.size, drawn: state.drawn.length, gameId: state.gameId });\n});''',
     "routes and status",
 )
 

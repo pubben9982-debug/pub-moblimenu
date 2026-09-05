@@ -148,6 +148,10 @@ select{
   background:linear-gradient(145deg,#155c73,#198aaa);
 }
 
+.prizes{
+  background:linear-gradient(145deg,#7a5414,#b98722);
+}
+
 .pizza{
   background:linear-gradient(145deg,#8d2f22,#c84a2d);
 }

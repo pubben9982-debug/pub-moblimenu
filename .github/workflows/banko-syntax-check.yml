@@ -20,6 +20,12 @@ jobs:
           python3 -m py_compile banko-linux/patch-player-inactive.py
           python3 -m py_compile banko-linux/patch-player-name.py
           python3 -m py_compile banko-linux/patch-player-board-shop.py
+          python3 -m py_compile banko-linux/patch-flex-controls.py
+          python3 -m py_compile banko-linux/patch-giftcard-prizes.py
+          node --check banko-linux/giftcard-prizes.js
+          node --check banko-linux/giftcard-prizes-client.js
+          node --check banko-linux/banko-budget-forecast.js
+          node --check banko-linux/test-banko-budget-forecast.mjs
       - name: Build and syntax-check Banko server
         run: |
           rm -rf /tmp/pubbanko-check
@@ -29,13 +35,28 @@ jobs:
           python3 banko-linux/patch-player-inactive.py /tmp/pubbanko-check/server.js
           python3 banko-linux/patch-player-name.py /tmp/pubbanko-check/server.js
           python3 banko-linux/patch-player-board-shop.py /tmp/pubbanko-check/server.js
+          python3 banko-linux/patch-flex-controls.py /tmp/pubbanko-check/server.js
+          cp banko-linux/giftcard-prizes.js banko-linux/giftcard-prizes-client.js /tmp/pubbanko-check/
+          python3 banko-linux/patch-giftcard-prizes.py /tmp/pubbanko-check/server.js
           node --check /tmp/pubbanko-check/server.js
+          node --check /tmp/pubbanko-check/giftcard-prizes.js
+          node --check /tmp/pubbanko-check/giftcard-prizes-client.js
+      - name: Test anonymous physical giftcard workflow
+        run: |
+          node banko-linux/test-giftcard-prizes.mjs
+          node banko-linux/test-giftcard-routes.mjs
+      - name: Test Banko sales forecast
+        run: |
+          node banko-linux/test-banko-budget-forecast.mjs
       - name: Verify player board flow
         run: |
           grep -q 'id="boardShopBox"' /tmp/pubbanko-check/server.js
           grep -q 'socket.on("player:requestBoards"' /tmp/pubbanko-check/server.js
           grep -q 'requestedBoardCount' /tmp/pubbanko-check/server.js
           grep -q 'TEST:</strong> Pris 0 kr.' /tmp/pubbanko-check/server.js
+          grep -q 'registerGiftCardPrizeRoutes' /tmp/pubbanko-check/server.js
+          grep -q 'pubId: pubIdFromUrl' /tmp/pubbanko-check/server.js
+          grep -q 'GODKENDES AF BARTENDER' /tmp/pubbanko-check/giftcard-prizes-client.js
           if grep -q 'player:requestBoards.*jukebox\|player:requestBoards.*credit' /tmp/pubbanko-check/server.js; then
             echo "FEJL: Test-flow maa ikke traekke kredit"
             exit 1

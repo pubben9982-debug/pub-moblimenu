@@ -117,15 +117,34 @@
   setText(idNode, pubId);
   setText(el("bigDeviceId"), pubId);
 
+  var localConfig =
+    window.PUBMENU_CONFIG && typeof window.PUBMENU_CONFIG === "object"
+      ? window.PUBMENU_CONFIG
+      : {};
+
+  function buildPubIdUrl(url, version) {
+    var base = String(url || "");
+    if (!base) return "";
+    return base + (base.indexOf("?") === -1 ? "?" : "&") +
+      "id=" + encodeURIComponent(pubId) +
+      (version ? "&v=" + encodeURIComponent(version) : "");
+  }
+
   var urls = {
-    drinksBtn: "http://192.168.0.50:8080/drinkskort/?id=" + encodeURIComponent(pubId) + "&v=15",
-    jukeboxBtn: "http://192.168.0.50:5055/?id=" + encodeURIComponent(pubId) + "&v=15",
-    pizzaBtn: "http://192.168.0.50:8091/pizza",
-    cardBtn: "http://192.168.0.50:8080/klippekort.html?id=" + encodeURIComponent(pubId) + "&v=15",
-    gamesBtn: "http://192.168.0.50:8080/mobilspil/?id=" + encodeURIComponent(pubId) + "&v=1"
+    drinksBtn: buildPubIdUrl(localConfig.drinksUrl, "15"),
+    jukeboxBtn: buildPubIdUrl(localConfig.jukeboxUrl, "15"),
+    pizzaBtn: String(localConfig.pizzaUrl || ""),
+    cardBtn: buildPubIdUrl(localConfig.clipsUrl, "15"),
+    gamesBtn: buildPubIdUrl(localConfig.gamesUrl, "1"),
+    prizesBtn: buildPubIdUrl(localConfig.prizesUrl, "")
   };
 
   var pendingUrl = "";
+  var wifiPassword = String(
+    localConfig.wifiPassword || ""
+  );
+  setText(el("wifiNameValue"), String(localConfig.wifiName || "Pubbens gæstenetværk"));
+  setText(el("wifiPasswordValue"), wifiPassword || "—");
 
   function closeWifi() {
     addClass(el("wifiModal"), "hidden");
@@ -149,7 +168,12 @@
   }
 
   function bindMenu(buttonId, url) {
-    bindClick(el(buttonId), function () {
+    var button = el(buttonId);
+    if (!url) {
+      if (button) button.disabled = true;
+      return;
+    }
+    bindClick(button, function () {
       showWifi(url);
     });
   }
@@ -159,6 +183,7 @@
   bindMenu("pizzaBtn", urls.pizzaBtn);
   bindMenu("cardBtn", urls.cardBtn);
   bindMenu("gamesBtn", urls.gamesBtn);
+  bindMenu("prizesBtn", urls.prizesBtn);
 
   bindClick(el("continueLocalBtn"), function () {
     var url = pendingUrl;
@@ -193,7 +218,10 @@
 
   // Gammel Samsung-browser: kopi-knappen er bonus, ikke nødvendig for menuen.
   bindClick(el("copyWifi"), function () {
-    setText(el("copyWifi"), "Kode: pubben9982");
+    setText(
+      el("copyWifi"),
+      wifiPassword ? "Kode: " + wifiPassword : "Wi-Fi-kode mangler"
+    );
     window.setTimeout(function () {
       setText(el("copyWifi"), "Kopiér kode");
     }, 1800);

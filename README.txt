@@ -9,9 +9,10 @@ Funktioner i denne version:
 - Fast firecifret enheds-ID gemt i browseren
 - Menu til drinkskort, jukebox, mobilspil og klippekort
 - Wi-Fi-guide før lokale funktioner åbnes
-- Lokale adresser er foreløbig sat til:
-  Jukebox: http://192.168.0.50:5055/
-  Mobilspil: http://192.168.0.50:8080/
+- Lokale adresser og Wi-Fi-oplysninger læses fra config.local.js
 
-Adresser og Wi-Fi-oplysninger kan ændres øverst i app.js under CONFIG.
+Kopiér
+config.local.example.js til config.local.js og udfyld værdien. Den lokale fil
+er ignoreret af Git, så adresser og adgangsoplysninger ikke bliver
+offentliggjort på GitHub.
 Klippekortet er kun en visuel pladsholder i V1. Der er endnu ingen sky-database eller rigtig saldo.
