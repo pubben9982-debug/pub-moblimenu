@@ -142,7 +142,7 @@
       var data = await request("/api/giftcard-prizes/mine", { pubId: pubId, deviceToken: deviceToken });
       var prizes = data.prizes || [];
       panel.classList.toggle("hidden", !prizes.length && window.location.pathname !== "/prizes");
-      panel.innerHTML = "<h2>Mine gevinster</h2>" +
+      panel.innerHTML = "<h2>Mine gevinster</h2><p><strong>GRATIS PRØVE:</strong> Du gennemfører gavekortvalget som i den færdige udgave, men dagens præmie er én gratis øl på Central Irish Pub.</p>" +
         (prizes.length ? prizes.map(renderPlayerPrize).join("") : "<p>Der er ingen gavekortgevinster på denne telefon.</p>");
       panel.querySelectorAll("[data-gift-store]").forEach(function (button) {
         button.addEventListener("click", async function () {
@@ -222,10 +222,10 @@
       var claim = data.eligibleClaim;
       var prizes = data.prizes || [];
       var create = claim
-        ? '<div class="gift-prize-host-create"><label>Godkendt vinder<br><strong>Pub-ID ' + escapeHtml(claim.pubId) + '</strong></label><label>Gavekortets værdi<input id="giftPrizeAmount" type="number" inputmode="numeric" min="1" max="5000" step="1" value="300"></label></div><button type="button" id="giftPrizeCreate">OPRET GAVEKORTGEVINST</button>'
+        ? '<div class="gift-prize-host-create"><label>Godkendt vinder<br><strong>Pub-ID ' + escapeHtml(claim.pubId) + '</strong></label><label>Gavekortets værdi<input id="giftPrizeAmount" type="number" inputmode="numeric" min="1" max="5000" step="1" value="25"></label></div><button type="button" id="giftPrizeCreate">OPRET GAVEKORTGEVINST</button>'
         : "<p>Efter en gyldig BANKO-melding kan gavekortet oprettes her.</p>";
       var text = orderText(prizes);
-      panel.innerHTML = "<h2>Fysiske gavekort</h2>" + create +
+      panel.innerHTML = "<h2>Fysiske gavekort</h2><p><strong>GRATIS PRØVE:</strong> Opret som et gavekort på 25 kr. Vinderen vælger butik og gennemfører hele flowet, men udlever én gratis øl i stedet for at købe gavekortet.</p>" + create +
         "<h3>Indkøbsliste</h3><div class=\"gift-prize-order\" id=\"giftPrizeOrderText\">" + escapeHtml(text) + "</div>" +
         '<button type="button" class="secondary" id="giftPrizeCopy">KOPIÉR LISTEN</button>' +
         "<h3 style=\"margin-top:18px\">Alle gevinster</h3>" +
