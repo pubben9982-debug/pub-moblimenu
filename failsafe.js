@@ -153,6 +153,7 @@
 
   function showWifi(url) {
     pendingUrl = url;
+    if (el("continueLocalBtn")) el("continueLocalBtn").setAttribute("href", url);
     if (el("wifiModal")) {
       removeClass(el("wifiModal"), "hidden");
     } else {
@@ -185,7 +186,7 @@
   bindMenu("gamesBtn", urls.gamesBtn);
   bindMenu("prizesBtn", urls.prizesBtn);
 
-  bindClick(el("continueLocalBtn"), function () {
+  if (String(el("continueLocalBtn").tagName || "").toUpperCase() !== "A") bindClick(el("continueLocalBtn"), function () {
     var url = pendingUrl;
     if (!url) {
       closeWifi();
