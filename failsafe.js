@@ -131,11 +131,11 @@
   }
 
   var urls = {
-    drinksBtn: buildPubIdUrl(localConfig.drinksUrl, "15"),
-    jukeboxBtn: buildPubIdUrl(localConfig.jukeboxUrl, "15"),
-    pizzaBtn: String(localConfig.pizzaUrl || ""),
-    cardBtn: buildPubIdUrl(localConfig.clipsUrl, "15"),
-    gamesBtn: buildPubIdUrl(localConfig.gamesUrl, "1"),
+    drinksBtn: buildPubIdUrl(localConfig.drinksUrl || "http://192.168.0.50:8080/drinkskort/", "15"),
+    jukeboxBtn: buildPubIdUrl(localConfig.jukeboxUrl || "http://192.168.0.50:5055/", "15"),
+    pizzaBtn: String(localConfig.pizzaUrl || "http://192.168.0.50:8091/pizza"),
+    cardBtn: buildPubIdUrl(localConfig.clipsUrl || "http://192.168.0.50:8080/klippekort.html", "15"),
+    gamesBtn: buildPubIdUrl(localConfig.gamesUrl || "http://192.168.0.50:8080/mobilspil/", "1"),
     prizesBtn: buildPubIdUrl(localConfig.prizesUrl, "")
   };
 
