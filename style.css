@@ -235,6 +235,10 @@ footer{
   font-weight:900;
   font-size:17px;
   cursor:pointer;
+  display:block;
+  box-sizing:border-box;
+  text-align:center;
+  text-decoration:none;
 }
 
 .hint{
