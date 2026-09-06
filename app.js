@@ -335,6 +335,10 @@ function showWifiModal(url) {
 
   pendingLocalUrl = String(url || "");
 
+  if (el("continueLocalBtn")) {
+    el("continueLocalBtn").setAttribute("href", pendingLocalUrl);
+  }
+
   if (!el("wifiModal")) {
     openPage(pendingLocalUrl);
     return;
@@ -358,7 +362,10 @@ function closeWifiModal() {
 }
 
 
-if (el("continueLocalBtn")) {
+if (
+  el("continueLocalBtn") &&
+  el("continueLocalBtn").tagName !== "A"
+) {
 
   el("continueLocalBtn")
     .addEventListener(
