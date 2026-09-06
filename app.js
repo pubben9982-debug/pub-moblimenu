@@ -264,7 +264,7 @@ function openPage(url) {
     return;
   }
 
-  window.location.assign(target);
+  window.location.href = target;
 }
 
 
