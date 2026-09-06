@@ -8,11 +8,11 @@ const LOCAL_CONFIG =
 
 
 const CONFIG = {
-  drinksUrl: String(LOCAL_CONFIG.drinksUrl || ""),
-  jukeboxUrl: String(LOCAL_CONFIG.jukeboxUrl || ""),
-  pizzaUrl: String(LOCAL_CONFIG.pizzaUrl || ""),
-  clipsUrl: String(LOCAL_CONFIG.clipsUrl || ""),
-  gamesUrl: String(LOCAL_CONFIG.gamesUrl || ""),
+  drinksUrl: String(LOCAL_CONFIG.drinksUrl || "http://192.168.0.50:8080/drinkskort/"),
+  jukeboxUrl: String(LOCAL_CONFIG.jukeboxUrl || "http://192.168.0.50:5055/"),
+  pizzaUrl: String(LOCAL_CONFIG.pizzaUrl || "http://192.168.0.50:8091/pizza"),
+  clipsUrl: String(LOCAL_CONFIG.clipsUrl || "http://192.168.0.50:8080/klippekort.html"),
+  gamesUrl: String(LOCAL_CONFIG.gamesUrl || "http://192.168.0.50:8080/mobilspil/"),
   prizesUrl: String(LOCAL_CONFIG.prizesUrl || ""),
   giftcardPrizesEnabled:
     LOCAL_CONFIG.giftcardPrizesEnabled === true,
