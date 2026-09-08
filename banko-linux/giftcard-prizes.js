@@ -61,24 +61,76 @@ function hashDeviceToken(token) {
   return crypto.createHash("sha256").update(token, "utf8").digest("hex");
 }
 
+function cleanStoreId(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]/g, "")
+    .slice(0, 40);
+}
+
+function storeIdFromName(value) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 40);
+}
+
 function safeStores(raw) {
-  const values = Array.isArray(raw?.stores) ? raw.stores : [];
+  const hasExplicitList = Array.isArray(raw?.stores);
+  const values = hasExplicitList ? raw.stores : DEFAULT_STORES;
   const stores = [];
   const used = new Set();
 
   for (const value of values) {
-    const id = String(value?.id || "")
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9_-]/g, "")
-      .slice(0, 40);
+    const id = cleanStoreId(value?.id);
     const name = String(value?.name || "").trim().slice(0, 80);
     if (!id || !name || used.has(id)) continue;
     used.add(id);
     stores.push({ id, name });
   }
 
-  return stores.length ? stores : DEFAULT_STORES.map((item) => ({ ...item }));
+  return stores;
+}
+
+function storesForSave(rawStores) {
+  if (!Array.isArray(rawStores)) {
+    throw new GiftCardPrizeError("Butikslisten mangler");
+  }
+  if (rawStores.length > 50) {
+    throw new GiftCardPrizeError("Der kan højst være 50 gavekortbutikker");
+  }
+
+  const stores = [];
+  const usedIds = new Set();
+  const usedNames = new Set();
+
+  for (let index = 0; index < rawStores.length; index += 1) {
+    const value = rawStores[index] || {};
+    const name = String(value.name || "").trim().slice(0, 80);
+    if (!name) continue;
+
+    const nameKey = name.toLocaleLowerCase("da-DK");
+    if (usedNames.has(nameKey)) {
+      throw new GiftCardPrizeError("Den samme butik står på listen mere end én gang");
+    }
+    usedNames.add(nameKey);
+
+    let id = cleanStoreId(value.id) || storeIdFromName(name) || `butik-${index + 1}`;
+    const baseId = id.slice(0, 34) || `butik-${index + 1}`;
+    let suffix = 2;
+    while (usedIds.has(id)) {
+      id = `${baseId}-${suffix}`.slice(0, 40);
+      suffix += 1;
+    }
+    usedIds.add(id);
+    stores.push({ id, name });
+  }
+
+  return stores;
 }
 
 function publicPrize(prize) {
@@ -123,6 +175,21 @@ export class GiftCardPrizeStore {
     return {
       enabled: this.enabled,
       stores: safeStores(raw),
+    };
+  }
+
+  setStores(rawStores) {
+    const stores = storesForSave(rawStores);
+    ensureParent(this.configFile);
+    const tmp = this.configFile + ".tmp";
+    fs.writeFileSync(tmp, JSON.stringify({ stores }, null, 2), {
+      encoding: "utf8",
+      mode: 0o600,
+    });
+    fs.renameSync(tmp, this.configFile);
+    return {
+      enabled: this.enabled,
+      stores,
     };
   }
 
@@ -376,13 +443,26 @@ export function registerGiftCardPrizeRoutes(app, {
       if (!pinIsValid(req.body?.pin)) {
         throw new GiftCardPrizeError("Forkert bartenderkode", 403);
       }
+      const config = store.getConfig();
       res.set("Cache-Control", "no-store");
       res.json({
         ok: true,
-        config: store.getConfig(),
+        config,
         eligibleClaim: publicClaim(getLastClaim()),
-        prizes: store.getConfig().enabled ? store.listForHost() : [],
+        prizes: config.enabled ? store.listForHost() : [],
       });
+    } catch (error) {
+      errorResponse(res, error);
+    }
+  });
+
+  app.post("/api/giftcard-prizes/host/stores", (req, res) => {
+    try {
+      if (!pinIsValid(req.body?.pin)) {
+        throw new GiftCardPrizeError("Forkert bartenderkode", 403);
+      }
+      res.set("Cache-Control", "no-store");
+      res.json({ ok: true, config: store.setStores(req.body?.stores) });
     } catch (error) {
       errorResponse(res, error);
     }
