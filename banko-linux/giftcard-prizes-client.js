@@ -8,6 +8,7 @@
   var deviceToken = "";
   var config = { enabled: false, stores: [] };
   var refreshTimer = null;
+  var storesDirty = false;
 
   try {
     deviceToken = localStorage.getItem("pubbanko_giftcard_device_token") || "";
@@ -54,14 +55,22 @@
       ".gift-prize-meta span{background:#ece7d8;border-radius:999px;padding:6px 9px;font-size:13px;font-weight:800}",
       ".gift-prize-panel button{margin:6px 0 0;background:#176b45;color:white}",
       ".gift-prize-panel button.secondary{background:#46584f;color:white}",
+      ".gift-prize-panel button.danger{background:#8b302b;color:white}",
       ".gift-prize-panel button:disabled{opacity:.55;cursor:not-allowed}",
       ".gift-prize-error{color:#8b1e1e;font-weight:800}",
       ".gift-prize-success{color:#126436;font-weight:900}",
       ".gift-prize-order{white-space:pre-wrap;background:#15251e;color:#fff;border-radius:12px;padding:12px;line-height:1.5}",
       ".gift-prize-host-create{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}",
       ".gift-prize-host-create input{margin:0;background:white;border:1px solid #a99f80;color:#111}",
+      ".gift-store-admin{margin:16px 0;padding:15px;border:2px solid #d7cda9;border-radius:16px;background:#fff}",
+      ".gift-store-admin>p{margin:0 0 10px;color:#546158}",
+      ".gift-store-rows{display:grid;gap:8px}",
+      ".gift-store-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}",
+      ".gift-store-row input{width:100%;margin:0;padding:11px 12px;background:#fff;border:1px solid #a99f80;border-radius:10px;color:#111}",
+      ".gift-store-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}",
+      ".gift-store-status{min-height:22px;margin:8px 0 0!important;font-weight:800}",
       "body.gift-prizes-page #playerLanding,body.gift-prizes-page #mainGrid,body.gift-prizes-page #bingoNotice{display:none!important}",
-      "@media(max-width:640px){.gift-prize-host-create{grid-template-columns:1fr}.gift-prize-panel{padding:14px}}",
+      "@media(max-width:640px){.gift-prize-host-create{grid-template-columns:1fr}.gift-prize-panel{padding:14px}.gift-store-row{grid-template-columns:1fr}.gift-store-row button{width:100%}}",
     ].join("");
     document.head.appendChild(style);
   }
@@ -92,8 +101,19 @@
     return panel;
   }
 
+  async function refreshPublicConfig() {
+    try {
+      var response = await request("/api/giftcard-prizes/config");
+      config = response;
+    } catch (_error) {}
+  }
+
   function storeButtons(prize) {
-    return (config.stores || []).map(function (store) {
+    var stores = config.stores || [];
+    if (!stores.length) {
+      return '<p class="gift-prize-error">Der er ingen gavekortbutikker at vælge lige nu. Spørg bartenderen.</p>';
+    }
+    return stores.map(function (store) {
       return '<button type="button" data-gift-store="' + escapeHtml(store.id) + '" data-gift-prize="' + escapeHtml(prize.id) + '">' +
         "VÆLG " + escapeHtml(store.name).toUpperCase() + "</button>";
     }).join("");
@@ -125,6 +145,7 @@
 
   async function loadPlayerPrizes() {
     var panel = ensurePlayerPanel();
+    await refreshPublicConfig();
     if (!config.enabled) {
       if (window.location.pathname === "/prizes") {
         panel.innerHTML = "<h2>Mine gevinster</h2><p>Gavekortfunktionen er ikke åbnet endnu.</p>";
@@ -200,6 +221,85 @@
     }).join("\n\n");
   }
 
+  function storeRowHtml(store) {
+    return '<div class="gift-store-row" data-store-id="' + escapeHtml(store && store.id ? store.id : "") + '">' +
+      '<input type="text" maxlength="80" data-gift-store-name placeholder="Butikkens navn" value="' + escapeHtml(store && store.name ? store.name : "") + '">' +
+      '<button type="button" class="danger" data-gift-store-remove>FJERN</button>' +
+      "</div>";
+  }
+
+  function storeEditorHtml(stores) {
+    var rows = (stores || []).map(storeRowHtml).join("");
+    return '<section class="gift-store-admin"><h3>Butikker til gavekort</h3>' +
+      '<p>Kun butikker på denne liste kan vælges til nye gevinster. Fjernes en butik, bevares den på allerede oprettede gevinster.</p>' +
+      '<div class="gift-store-rows" id="giftStoreRows">' + rows + "</div>" +
+      '<div class="gift-store-actions"><button type="button" class="secondary" id="giftStoreAdd">+ TILFØJ BUTIK</button>' +
+      '<button type="button" id="giftStoreSave">GEM BUTIKKER</button></div>' +
+      '<p class="gift-store-status" id="giftStoreStatus">' + ((stores || []).length ? "" : "Ingen butikker er tilgængelige for nye gevinster.") + "</p></section>";
+  }
+
+  function bindStoreRows(panel) {
+    panel.querySelectorAll("[data-gift-store-name]").forEach(function (input) {
+      input.addEventListener("input", function () { storesDirty = true; });
+    });
+    panel.querySelectorAll("[data-gift-store-remove]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var row = button.closest(".gift-store-row");
+        if (row) row.remove();
+        storesDirty = true;
+        var status = document.getElementById("giftStoreStatus");
+        if (status) status.textContent = "Husk at trykke GEM BUTIKKER.";
+      });
+    });
+  }
+
+  function bindStoreEditor(panel) {
+    bindStoreRows(panel);
+    var addButton = document.getElementById("giftStoreAdd");
+    if (addButton) addButton.addEventListener("click", function () {
+      var rows = document.getElementById("giftStoreRows");
+      if (!rows) return;
+      var holder = document.createElement("div");
+      holder.innerHTML = storeRowHtml({ id: "", name: "" });
+      var row = holder.firstElementChild;
+      rows.appendChild(row);
+      storesDirty = true;
+      bindStoreRows(row);
+      var input = row.querySelector("[data-gift-store-name]");
+      if (input) input.focus();
+      var status = document.getElementById("giftStoreStatus");
+      if (status) status.textContent = "Skriv navnet og tryk GEM BUTIKKER.";
+    });
+
+    var saveButton = document.getElementById("giftStoreSave");
+    if (saveButton) saveButton.addEventListener("click", async function () {
+      var rows = Array.from(document.querySelectorAll("#giftStoreRows .gift-store-row"));
+      var stores = rows.map(function (row) {
+        var input = row.querySelector("[data-gift-store-name]");
+        return {
+          id: row.dataset.storeId || "",
+          name: input ? input.value.trim() : "",
+        };
+      }).filter(function (store) { return store.name; });
+      saveButton.disabled = true;
+      var status = document.getElementById("giftStoreStatus");
+      try {
+        var data = await request("/api/giftcard-prizes/host/stores", {
+          pin: hostPin,
+          stores: stores,
+        });
+        config = data.config || config;
+        storesDirty = false;
+        if (status) status.textContent = stores.length ? "Butikslisten er gemt." : "Listen er gemt uden butikker.";
+        await loadHostPrizes();
+      } catch (error) {
+        if (status) status.textContent = error.message;
+        else alert(error.message);
+        saveButton.disabled = false;
+      }
+    });
+  }
+
   function renderHostPrize(prize) {
     var action = prize.status === "ordered"
       ? '<button type="button" data-gift-collected="' + escapeHtml(prize.id) + '">JEG HAR HENTET KORTET</button>'
@@ -211,12 +311,15 @@
   }
 
   async function loadHostPrizes() {
+    if (storesDirty) return;
     var panel = ensureHostPanel();
     try {
       var data = await request("/api/giftcard-prizes/host/list", { pin: hostPin });
       config = data.config || config;
+      var editor = storeEditorHtml(config.stores || []);
       if (!config.enabled) {
-        panel.innerHTML = "<h2>Fysiske gavekort</h2><p><strong>TESTFUNKTION LÅST.</strong> Koden er forberedt, men kan først åbnes, når Banko-modellen er juridisk afklaret.</p>";
+        panel.innerHTML = "<h2>Fysiske gavekort</h2><p><strong>TESTFUNKTION LÅST.</strong> Gavekortflowet er ikke aktiveret, men du kan godt gøre butiklisten klar her.</p>" + editor;
+        bindStoreEditor(panel);
         return;
       }
       var claim = data.eligibleClaim;
@@ -225,11 +328,13 @@
         ? '<div class="gift-prize-host-create"><label>Godkendt vinder<br><strong>Pub-ID ' + escapeHtml(claim.pubId) + '</strong></label><label>Gavekortets værdi<input id="giftPrizeAmount" type="number" inputmode="numeric" min="1" max="5000" step="1" value="25"></label></div><button type="button" id="giftPrizeCreate">OPRET GAVEKORTGEVINST</button>'
         : "<p>Efter en gyldig BANKO-melding kan gavekortet oprettes her.</p>";
       var text = orderText(prizes);
-      panel.innerHTML = "<h2>Fysiske gavekort</h2><p><strong>GRATIS PRØVE:</strong> Opret som et gavekort på 25 kr. Vinderen vælger butik og gennemfører hele flowet, men udlever én gratis øl i stedet for at købe gavekortet.</p>" + create +
+      panel.innerHTML = "<h2>Fysiske gavekort</h2><p><strong>GRATIS PRØVE:</strong> Opret som et gavekort på 25 kr. Vinderen vælger butik og gennemfører hele flowet, men udlever én gratis øl i stedet for at købe gavekortet.</p>" + editor + create +
         "<h3>Indkøbsliste</h3><div class=\"gift-prize-order\" id=\"giftPrizeOrderText\">" + escapeHtml(text) + "</div>" +
         '<button type="button" class="secondary" id="giftPrizeCopy">KOPIÉR LISTEN</button>' +
         "<h3 style=\"margin-top:18px\">Alle gevinster</h3>" +
         (prizes.length ? prizes.map(renderHostPrize).join("") : "<p>Ingen gavekortgevinster endnu.</p>");
+
+      bindStoreEditor(panel);
 
       var createButton = document.getElementById("giftPrizeCreate");
       if (createButton) createButton.addEventListener("click", async function () {
@@ -279,14 +384,13 @@
   async function start() {
     installStyles();
     if (window.location.pathname === "/prizes") document.body.classList.add("gift-prizes-page");
-    try {
-      var response = await request("/api/giftcard-prizes/config");
-      config = response;
-    } catch (_error) {}
+    await refreshPublicConfig();
 
     if (isHost) {
       await loadHostPrizes();
-      refreshTimer = window.setInterval(loadHostPrizes, 5000);
+      refreshTimer = window.setInterval(function () {
+        if (!storesDirty) loadHostPrizes();
+      }, 5000);
     } else {
       await loadPlayerPrizes();
       refreshTimer = window.setInterval(loadPlayerPrizes, 5000);

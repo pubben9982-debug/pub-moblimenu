@@ -42,6 +42,13 @@ assert.throws(
   (error) => error instanceof GiftCardPrizeError && error.statusCode === 423,
 );
 
+const preparedWhileLocked = lockedStore.setStores([
+  { id: "spar", name: "Spar" },
+  { id: "slagter", name: "Slagteren" },
+]);
+assert.equal(preparedWhileLocked.enabled, false, "Butikslisten skal kunne gøres klar uden at aktivere gavekortpiloten");
+assert.equal(preparedWhileLocked.stores.length, 2);
+
 const store = new GiftCardPrizeStore({ dataFile, configFile, auditFile, enabled: true, clock });
 const created = store.createPrize({
   pubId: "5087",
@@ -96,6 +103,25 @@ const ordered = store.chooseStore({
 assert.equal(ordered.status, "ordered");
 assert.equal(ordered.storeName, "Spar");
 
+const changedStores = store.setStores([
+  { id: "spar", name: "Spar Ålbæk" },
+  { name: "Boghandel" },
+]);
+assert.equal(changedStores.stores.length, 2);
+assert.equal(changedStores.stores[0].name, "Spar Ålbæk");
+assert.ok(changedStores.stores[1].id, "En ny butik skal få et stabilt id");
+assert.equal(store.listForHost()[0].storeName, "Spar", "Omdøbning må ikke omskrive historiske gevinster");
+
+const removedStores = store.setStores([
+  changedStores.stores[1],
+]);
+assert.equal(removedStores.stores.some((item) => item.id === "spar"), false);
+assert.equal(store.listForHost()[0].storeName, "Spar", "Fjernet butik skal stadig stå på en ældre gevinst");
+
+const emptyStores = store.setStores([]);
+assert.deepEqual(emptyStores.stores, []);
+assert.deepEqual(store.getConfig().stores, [], "En bevidst tom butiksliste må ikke genindsætte standardbutikken");
+
 assert.throws(
   () => store.redeem({
     prizeId: created.prize.id,
@@ -136,6 +162,7 @@ assert.throws(
 
 const persisted = new GiftCardPrizeStore({ dataFile, configFile, auditFile, enabled: true, clock });
 assert.equal(persisted.listForHost()[0].status, "redeemed");
+assert.deepEqual(persisted.getConfig().stores, [], "Tom butiksliste skal overleve genstart");
 
 const rawData = fs.readFileSync(dataFile, "utf8");
 assert.equal(rawData.includes("winner_phone_token_123"), false, "Telefonens hemmelige nøgle må ikke gemmes råt");
