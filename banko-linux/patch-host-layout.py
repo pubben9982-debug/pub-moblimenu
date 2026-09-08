@@ -27,6 +27,9 @@ new = '''        function showHostMode() {
         }'''
 
 count = text.count(old)
+if count == 0 and text.count(new) == 1:
+    print(f"Banko host layout patch already applied: {path}")
+    raise SystemExit(0)
 if count != 1:
     raise SystemExit(f"Patch fejl (host layout): forventede 1 match, fandt {count}")
 
