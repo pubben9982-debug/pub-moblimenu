@@ -1,0 +1,10 @@
+{
+  "name": "Naturjagten",
+  "short_name": "Naturjagt",
+  "description": "Find, fotografer og lær om dansk natur.",
+  "lang": "da-DK",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#eef5ee",
+  "theme_color": "#17351f"
+}

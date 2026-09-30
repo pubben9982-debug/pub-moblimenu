@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#17351f">
+  <title>Naturjagten</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">PROTOTYPE V0.2</div>
+      <h1>🌿 Naturjagten</h1>
+      <p>Find den virkelige natur. Tag et billede. Saml arter. Leg videre.</p>
+    </div>
+    <button id="resetBtn" class="ghost small" type="button">Nulstil demo</button>
+  </header>
+
+  <main>
+    <section class="hero card">
+      <div>
+        <span class="pill">Leg • motion • læring</span>
+        <h2>Pokémon-idéen — bare med dansk natur</h2>
+        <p>Ingen dyr skal fanges. Du fotograferer dem, lærer noget om dem og bygger din egen samling.</p>
+      </div>
+      <div class="scorebox">
+        <strong id="points">0</strong>
+        <span>point</span>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="Hovedmenu">
+      <button class="tab active" data-view="hunt">📷 Jagt</button>
+      <button class="tab" data-view="collection">🧺 Samling</button>
+      <button class="tab" data-view="duel">⚔️ Artsduel</button>
+      <button class="tab" data-view="board">🏆 Tavle</button>
+    </nav>
+
+    <section id="hunt" class="view active">
+      <div class="card">
+        <h2>1. Find noget i naturen</h2>
+        <p>Tag kun et billede. Lad dyr, planter og svampe blive hvor de er.</p>
+        <label class="camera-button">
+          <input id="photoInput" type="file" accept="image/*" capture="environment">
+          📷 Tag / vælg foto
+        </label>
+
+        <div id="photoStage" class="photo-stage hidden">
+          <img id="preview" alt="Dit naturfund">
+          <div class="identify-panel">
+            <h3>2. Lad test-AI kigge</h3>
+
+            <div id="aiStatus" class="ai-status waiting">
+              <strong>🤖 Klar til at kigge på billedet</strong>
+              <span>Den første test genkender kun brede naturtyper — ikke sikre arter.</span>
+            </div>
+
+            <button id="saveAiFindingBtn" class="secondary hidden" type="button">Gem som AI-testfund (+2 point)</button>
+
+            <h3 class="manual-title">3. Kender du arten?</h3>
+            <p class="demo-note">Hvis du selv ved hvad du har fundet, kan du vælge en demo-art. Rigtig arts-AI kommer senere.</p>
+            <select id="speciesSelect" aria-label="Vælg art">
+              <option value="">Vælg demo-art…</option>
+            </select>
+            <button id="saveFindingBtn" class="primary" type="button">Gem fund</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Sådan får du point</h2>
+        <div class="point-grid">
+          <div><strong>2</strong><span>AI-testfund</span></div>
+          <div><strong>10</strong><span>almindelig art</span></div>
+          <div><strong>25</strong><span>mindre almindelig</span></div>
+          <div><strong>50+</strong><span>sjældnere fund</span></div>
+        </div>
+        <p class="muted">De 2 testpoint betyder kun: “AI'en synes billedet ligner natur”. Det er ikke en artsbestemmelse.</p>
+      </div>
+
+      <div id="findingResult" class="card result hidden" aria-live="polite"></div>
+    </section>
+
+    <section id="collection" class="view">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>Din samling</h2>
+            <p><span id="uniqueCount">0</span> forskellige demo-arter fundet.</p>
+          </div>
+        </div>
+        <div id="collectionGrid" class="species-grid"></div>
+      </div>
+    </section>
+
+    <section id="duel" class="view">
+      <div class="card">
+        <h2>Artsduel</h2>
+        <p>Vælg to arter du har fundet. De “kæmper” på rigtige egenskaber — ikke ved at skade hinanden.</p>
+        <div class="duel-selects">
+          <select id="duelA" aria-label="Første art"></select>
+          <span>VS</span>
+          <select id="duelB" aria-label="Anden art"></select>
+        </div>
+        <button id="duelBtn" class="primary" type="button">Start naturduel</button>
+        <div id="duelArena" class="duel-arena empty">
+          <p>Find mindst to arter for at låse en duel op.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="board" class="view">
+      <div class="card">
+        <h2>🏆 Naturjægere</h2>
+        <p class="demo-note">Demo-tavle. En rigtig version kræver børnesikker konto, samtykke og privatlivsdesign.</p>
+        <ol id="leaderboard" class="leaderboard"></ol>
+      </div>
+      <div class="card">
+        <h2>To måder at vinde på</h2>
+        <div class="award-grid">
+          <article>
+            <div class="award-icon">🌱</div>
+            <h3>Flest arter</h3>
+            <p>Belønner at komme ud igen og igen og opdage forskellig natur.</p>
+          </article>
+          <article>
+            <div class="award-icon">🔎</div>
+            <h3>Unikt fund</h3>
+            <p>Et valideret fund ingen andre deltagere har registreret i perioden.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Naturjagten v0.2</strong>
+    <span>Foto først. Test-AI nu. Rigtig artsgenkendelse senere.</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js"></script>
+  <script src="species.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
