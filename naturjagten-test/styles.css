@@ -97,6 +97,9 @@ main { max-width: 980px; margin: 0 auto; padding: 12px 18px 42px; }
 .ai-status.no-match { background: #fff6e3; border-color: #ead8aa; }
 
 select { width: 100%; min-height: 50px; border-radius: 14px; padding: 0 12px; border: 1px solid var(--line); background: white; color: var(--ink); }
+.finding-kind { margin-top: 8px; }
+.forest-card { background: linear-gradient(135deg, #f7fcf7, #e4f1e5); }
+.evidence-badge { display: inline-flex; margin: 7px 0 0 6px; font-size: .72rem; font-weight: 900; padding: 5px 8px; border-radius: 999px; background: #eef2ff; color: #354a7a; }
 .primary,
 .secondary {
   width: 100%;
