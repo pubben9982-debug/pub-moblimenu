@@ -11,7 +11,7 @@
 <body>
   <header class="topbar">
     <div>
-      <div class="eyebrow">PROTOTYPE V0.2</div>
+      <div class="eyebrow">PROTOTYPE V0.3</div>
       <h1>🌿 Naturjagten</h1>
       <p>Find den virkelige natur. Tag et billede. Saml arter. Leg videre.</p>
     </div>
@@ -59,14 +59,25 @@
 
             <button id="saveAiFindingBtn" class="secondary hidden" type="button">Gem som AI-testfund (+2 point)</button>
 
-            <h3 class="manual-title">3. Kender du arten?</h3>
+            <h3 class="manual-title">3. Kender du arten eller sporet?</h3>
             <p class="demo-note">Hvis du selv ved hvad du har fundet, kan du vælge en demo-art. Rigtig arts-AI kommer senere.</p>
             <select id="speciesSelect" aria-label="Vælg art">
               <option value="">Vælg demo-art…</option>
             </select>
+            <select id="findingKind" aria-label="Vælg type fund" class="finding-kind">
+              <option value="direct">📷 Jeg fotograferede selve arten</option>
+              <option value="track">🐾 Jeg fotograferede et spor efter dyret</option>
+            </select>
             <button id="saveFindingBtn" class="primary" type="button">Gem fund</button>
           </div>
         </div>
+      </div>
+
+      <div class="card forest-card">
+        <span class="pill">🌲 Skovjagt</span>
+        <h2>Du behøver ikke se dyret</h2>
+        <p>Nogle dyr er sky eller nataktive. Et tydeligt spor kan derfor låse kortet op som <strong>“spor fundet”</strong>. Det kan fx være et poteaftryk eller et tydeligt bo/hul, når sporet senere kan valideres.</p>
+        <p class="muted">Pointen er at lære at læse naturen — ikke at opsøge, følge efter eller forstyrre dyret.</p>
       </div>
 
       <div class="card">
@@ -75,7 +86,7 @@
           <div><strong>2</strong><span>AI-testfund</span></div>
           <div><strong>10</strong><span>almindelig art</span></div>
           <div><strong>25</strong><span>mindre almindelig</span></div>
-          <div><strong>50+</strong><span>sjældnere fund</span></div>
+          <div><strong>🐾</strong><span>spor kan låse kort op</span></div>
         </div>
         <p class="muted">De 2 testpoint betyder kun: “AI'en synes billedet ligner natur”. Det er ikke en artsbestemmelse.</p>
       </div>
@@ -88,7 +99,7 @@
         <div class="section-head">
           <div>
             <h2>Din samling</h2>
-            <p><span id="uniqueCount">0</span> forskellige demo-arter fundet.</p>
+            <p><span id="uniqueCount">0</span> forskellige demo-arter eller sikre spor fundet.</p>
           </div>
         </div>
         <div id="collectionGrid" class="species-grid"></div>
@@ -136,8 +147,8 @@
   </main>
 
   <footer>
-    <strong>Naturjagten v0.2</strong>
-    <span>Foto først. Test-AI nu. Rigtig artsgenkendelse senere.</span>
+    <strong>Naturjagten v0.3</strong>
+    <span>Foto først. Spor tæller. Rigtig artsgenkendelse senere.</span>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
