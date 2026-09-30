@@ -11,6 +11,7 @@
   var uniqueCountEl = document.getElementById("uniqueCount");
   var collectionGrid = document.getElementById("collectionGrid");
   var speciesSelect = document.getElementById("speciesSelect");
+  var findingKind = document.getElementById("findingKind");
   var photoInput = document.getElementById("photoInput");
   var preview = document.getElementById("preview");
   var photoStage = document.getElementById("photoStage");
@@ -59,7 +60,7 @@
     species.forEach(function (item) {
       var option = document.createElement("option");
       option.value = item.id;
-      option.textContent = item.emoji + " " + item.name + " · " + item.rarity + (item.points ? " · " + item.points + " point" : "");
+      option.textContent = item.emoji + " " + item.name + " · " + item.rarity + (item.points ? " · " + item.points + " point" : "") + (item.supportsTrack ? " · 🐾 spor muligt" : "");
       speciesSelect.appendChild(option);
     });
   }
@@ -103,7 +104,7 @@
     saveFindingBtn.addEventListener("click", function () {
       var id = speciesSelect.value;
       if (!id || !pendingPhoto) return;
-      recordFinding(id, pendingPhoto, pendingAi && pendingAi.bonus ? pendingAi.bonus : 0);
+      recordFinding(id, pendingPhoto, pendingAi && pendingAi.bonus ? pendingAi.bonus : 0, findingKind.value);
     });
   }
 
@@ -264,21 +265,66 @@
     finishPhotoFlow();
   }
 
-  function recordFinding(id, photo, aiBonus) {
+  function recordFinding(id, photo, aiBonus, kind) {
     var item = findSpecies(id);
     if (!item) return;
 
-    var alreadyFound = state.findings.some(function (finding) { return finding.speciesId === id; });
+    kind = kind === "track" ? "track" : "direct";
+
+    if (kind === "track" && !item.supportsTrack) {
+      findingResult.innerHTML =
+        "<h2>🐾 Spor er ikke sat op for denne demo-art endnu</h2>" +
+        "<p>Vælg enten “selve arten” eller prøv et dyr markeret med <strong>🐾 spor muligt</strong>.</p>";
+      findingResult.classList.remove("hidden");
+      return;
+    }
+
+    if (id === "unknown" && kind === "track") {
+      findingResult.innerHTML =
+        "<h2>🔎 Ukendt spor</h2>" +
+        "<p>I en rigtig version skal et ukendt spor først valideres, før det kan låse et dyrekort op.</p>";
+      findingResult.classList.remove("hidden");
+      return;
+    }
+
+    var prior = state.findings.filter(function (finding) {
+      return finding.speciesId === id && !finding.testOnly;
+    });
+    var alreadyDirect = prior.some(function (finding) { return (finding.kind || "direct") === "direct"; });
+    var alreadyTrack = prior.some(function (finding) { return finding.kind === "track"; });
+
     var hash = simpleHash(photo);
     var duplicate = state.findings.some(function (finding) { return finding.photoHash === hash; });
     var bonus = duplicate ? 0 : Number(aiBonus || 0);
-    var speciesPoints = id === "unknown" ? 0 : (alreadyFound ? 1 : item.points);
+    var speciesPoints = 0;
+    var unlockText = "";
+
+    if (id !== "unknown") {
+      if (kind === "track") {
+        speciesPoints = (alreadyTrack || alreadyDirect) ? 1 : Number(item.trackPoints || Math.max(2, Math.round(item.points * 0.4)));
+        unlockText = alreadyTrack || alreadyDirect
+          ? "Du fandt endnu et spor."
+          : "Sporet låste kortet op som “spor fundet”.";
+      } else if (alreadyDirect) {
+        speciesPoints = 1;
+        unlockText = "Du fotograferede arten igen.";
+      } else if (alreadyTrack) {
+        var trackBase = Number(item.trackPoints || Math.max(2, Math.round(item.points * 0.4)));
+        speciesPoints = Math.max(1, item.points - trackBase);
+        unlockText = "Kortet blev opgraderet fra “spor fundet” til “set/fotograferet”.";
+      } else {
+        speciesPoints = item.points;
+        unlockText = "Du låste arten op med et direkte foto.";
+      }
+    }
+
     var gained = speciesPoints + bonus;
 
     state.points += gained;
     state.findings.unshift({
       id: Date.now(),
       speciesId: id,
+      kind: kind,
       at: new Date().toISOString(),
       photo: photo,
       photoHash: hash,
@@ -292,14 +338,16 @@
     renderAll();
 
     var parts = [];
-    if (speciesPoints) parts.push(speciesPoints + " artspoint");
+    if (speciesPoints) parts.push(speciesPoints + (kind === "track" ? " sporpoint" : " artspoint"));
     if (bonus) parts.push(bonus + " AI-testpoint");
 
     findingResult.innerHTML =
-      "<h2>" + item.emoji + " " + escapeHtml(item.name) + "</h2>" +
-      "<p><strong>" + (alreadyFound ? "Fundet igen!" : "Nyt fund!") + "</strong> " +
-      (gained ? "+" + gained + " point" + (parts.length ? " (" + parts.join(" + ") + ")" : "") + "." : "Ingen point endnu.") + "</p>" +
-      "<p>" + escapeHtml(item.fact) + "</p>" +
+      "<h2>" + (kind === "track" ? "🐾 " : "") + item.emoji + " " + escapeHtml(item.name) + "</h2>" +
+      "<p><strong>" + escapeHtml(unlockText || "Fund gemt.") + "</strong> " +
+      (gained ? "+" + gained + " point" + (parts.length ? " (" + parts.join(" + ") + ")" : "") + "." : "") + "</p>" +
+      (kind === "track" && item.trackHint
+        ? "<p><strong>Det lærer du:</strong> " + escapeHtml(item.trackHint) + "</p>"
+        : "<p>" + escapeHtml(item.fact) + "</p>") +
       (item.safety ? "<p class='warning'>⚠️ " + escapeHtml(item.safety) + "</p>" : "");
 
     finishPhotoFlow();
@@ -308,6 +356,7 @@
   function finishPhotoFlow() {
     findingResult.classList.remove("hidden");
     speciesSelect.value = "";
+    findingKind.value = "direct";
     photoInput.value = "";
     pendingPhoto = "";
     pendingAi = null;
@@ -359,13 +408,26 @@
       var item = findSpecies(finding.speciesId);
       if (!item) return;
 
+      var allForSpecies = state.findings.filter(function (entry) {
+        return entry.speciesId === finding.speciesId && !entry.testOnly;
+      });
+      var hasDirect = allForSpecies.some(function (entry) { return (entry.kind || "direct") === "direct"; });
+      var hasTrack = allForSpecies.some(function (entry) { return entry.kind === "track"; });
+      var evidenceLabel = hasDirect && hasTrack
+        ? "✅ Set + spor"
+        : (hasDirect ? "📷 Set/fotograferet" : "🐾 Spor fundet");
+      var bestPhoto = allForSpecies.find(function (entry) {
+        return hasDirect ? (entry.kind || "direct") === "direct" : entry.kind === "track";
+      }) || finding;
+
       cards.push(
         "<article class='species-card'>" +
-        (finding.photo ? "<img src='" + finding.photo + "' alt='' style='width:100%;height:105px;object-fit:cover;border-radius:12px'>" : "<div class='species-emoji'>" + item.emoji + "</div>") +
+        (bestPhoto.photo ? "<img src='" + bestPhoto.photo + "' alt='' style='width:100%;height:105px;object-fit:cover;border-radius:12px'>" : "<div class='species-emoji'>" + item.emoji + "</div>") +
         "<h3>" + escapeHtml(item.name) + "</h3>" +
         "<div class='latin'>" + escapeHtml(item.latin) + "</div>" +
         "<span class='rarity'>" + escapeHtml(item.rarity) + (item.points ? " · " + item.points + " pt" : "") + "</span>" +
-        "<p class='fact'>" + escapeHtml(item.fact) + "</p>" +
+        "<span class='evidence-badge'>" + evidenceLabel + "</span>" +
+        "<p class='fact'>" + escapeHtml(hasDirect ? item.fact : (item.trackHint || item.fact)) + "</p>" +
         (item.safety ? "<p class='warning'>⚠️ " + escapeHtml(item.safety) + "</p>" : "") +
         "</article>"
       );
