@@ -1,4 +1,4 @@
-const CACHE = "naturjagten-v0-2";
+const CACHE = "naturjagten-v0-3";
 const FILES = ["./", "index.html", "styles.css", "species.js", "app.js", "manifest.webmanifest"];
 
 self.addEventListener("install", event => {
