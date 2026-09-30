@@ -74,6 +74,9 @@ window.NATUR_SPECIES = [
     points: 25,
     fact: "Rådyr er hurtige og opmærksomme. Et godt foto tages på afstand uden at følge efter dyret.",
     safety: "Hold afstand. Følg ikke efter dyret.",
+    supportsTrack: true,
+    trackPoints: 10,
+    trackHint: "Et tydeligt klovaftryk kan være et spor efter et hjortedyr. I en rigtig version skal sporet valideres.",
     stats: { forsvar: 3, bevaegelse: 5, tilpasning: 4, skjul: 4 }
   },
   {
@@ -85,7 +88,24 @@ window.NATUR_SPECIES = [
     points: 25,
     fact: "Egern er fremragende klatrere og bruger halen til balance og varme.",
     safety: "",
+    supportsTrack: true,
+    trackPoints: 10,
+    trackHint: "Gnavede kogler og andre tydelige ædespor kan fortælle, at et egern har været forbi. Sporet skal senere kunne valideres.",
     stats: { forsvar: 2, bevaegelse: 5, tilpasning: 4, skjul: 4 }
+  },
+  {
+    id: "badger",
+    name: "Grævling",
+    latin: "Meles meles",
+    emoji: "🦡",
+    rarity: "Svær at se",
+    points: 40,
+    fact: "Grævlingen er nataktiv og sky. Derfor opdager man ofte tegn på den, før man ser selve dyret.",
+    safety: "Hold afstand til bo og dyr. Gå ikke tæt på en grav for at få et billede.",
+    supportsTrack: true,
+    trackPoints: 16,
+    trackHint: "Poteaftryk, faste stier eller tydelige tegn omkring et bo kan være spor. I en rigtig version skal sporet valideres.",
+    stats: { forsvar: 4, bevaegelse: 3, tilpasning: 5, skjul: 5 }
   },
   {
     id: "nettle",
