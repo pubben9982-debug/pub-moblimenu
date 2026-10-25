@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Din bon</title>
+<style>
+  :root{--ink:#16261b;--muted:#5f6d63;--line:#d9e0db;--bg:#0c1710;--gold:#f2c66d}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#1a3825 0,var(--bg) 60%);
+    font-family:Inter,Arial,sans-serif;color:var(--ink);padding:24px 16px 40px}
+  .bon{width:min(420px,100%);margin:0 auto;background:#fff;border-radius:14px;padding:26px 22px 30px;
+    box-shadow:0 18px 40px #0007;font-variant-numeric:tabular-nums}
+  .top{text-align:center}
+  .navn{font-size:22px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}
+  .muted{color:var(--muted);font-size:14px;line-height:1.5}
+  .meta{display:flex;justify-content:space-between;margin:18px 0 10px;font-size:14px;color:var(--muted)}
+  hr{border:0;border-top:1px dashed var(--line);margin:12px 0}
+  .linje{display:flex;justify-content:space-between;gap:12px;font-size:15px;line-height:1.6}
+  .linje span:first-child{overflow-wrap:anywhere}
+  .linje span:last-child{white-space:nowrap}
+  .total{font-size:20px;font-weight:900}
+  .bund{text-align:center;margin-top:20px}
+  .tak{margin-top:14px;font-weight:700}
+  .knapper{width:min(420px,100%);margin:18px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .knapper button{border:0;border-radius:12px;padding:14px;font:inherit;font-weight:900;background:var(--gold);color:#2e2104}
+  .note{width:min(420px,100%);margin:14px auto 0;color:#b8c8bc;font-size:13px;text-align:center;line-height:1.5}
+  .fejl{text-align:center;padding:30px 10px}
+  @media print{body{background:#fff;padding:0}.bon{box-shadow:none}.knapper,.note{display:none}}
+</style>
+</head>
+<body>
+<main class="bon" id="bon"><p class="fejl">Henter bon…</p></main>
+<div class="knapper" id="knapper" hidden>
+  <button type="button" id="gem">💾 Gem / print</button>
+  <button type="button" id="del">📤 Del</button>
+</div>
+<p class="note">Bonen gemmes ikke nogen steder. Den findes kun i dette link – gem linket eller tag et skærmbillede, hvis du vil beholde den.</p>
+<script>
+// Bonen ligger i linket efter "#": base64url-kodet JSON lavet af kassen.
+// Den del af et link sendes aldrig til serveren.
+(function(){
+  var bon=document.getElementById('bon');
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function kr(v){return Number(v||0).toFixed(2).replace('.',',');}
+  function linje(a,b,cls){return '<div class="linje'+(cls?' '+cls:'')+'"><span>'+esc(a)+'</span><span>'+esc(b)+'</span></div>';}
+  var data;
+  try{
+    var b64=location.hash.slice(1).replace(/-/g,'+').replace(/_/g,'/');
+    while(b64.length%4)b64+='=';
+    data=JSON.parse(decodeURIComponent(escape(atob(b64))));
+    if(!data||data.v!==1)throw new Error('format');
+  }catch(e){
+    bon.innerHTML='<p class="fejl">Bonen kunne ikke læses.<br>Scan QR-koden i kassen igen.</p>';
+    return;
+  }
+  var h='<div class="top"><p class="navn">'+esc(data.n)+'</p><div class="muted">';
+  (data.a||[]).forEach(function(l){h+=esc(l)+'<br>';});
+  if(data.t)h+='Tlf. '+esc(data.t);
+  h+='</div></div>';
+  h+='<div class="meta"><span>'+esc(data.d)+' kl. '+esc(data.k)+'</span><span>'+(data.b?'Bon '+esc(data.b):'')+'</span></div><hr>';
+  (data.i||[]).forEach(function(it){h+=linje(it[0]+' x '+it[1],kr(it[0]*it[2]));});
+  h+='<hr>'+linje('TOTAL',kr(data.T)+' kr','total')+'<hr>';
+  h+=linje('Heraf moms 25%',kr(data.T/5))+linje('Beløb uden moms',kr(data.T*0.8))+'<hr>';
+  (data.p||[]).forEach(function(p){h+=linje('Betalt '+p[0],kr(p[1]));});
+  if(data.r)h+=linje('Modtaget kontant',kr(data.r))+linje('Byttepenge',kr(data.r-data.T));
+  if(data.x)h+=linje('Hævet på kort',kr(data.x))+linje('Udbetalt kontant',kr(data.x));
+  h+='<div class="bund muted">';
+  if(data.L)h+=esc(data.L)+'<br>';
+  if(data.c)h+='CVR-nr. '+esc(data.c)+'<br>';
+  if(data.e)h+=esc(data.e)+'<br>';
+  if(data.w)h+=esc(data.w)+'<br>';
+  h+='<div class="tak">'+esc(data.f||'Tak for besøget!')+'</div></div>';
+  bon.innerHTML=h;
+  document.title='Bon'+(data.b?' '+data.b:'')+' – '+data.n;
+  document.getElementById('knapper').hidden=false;
+  document.getElementById('gem').onclick=function(){window.print();};
+  var del=document.getElementById('del');
+  if(navigator.share){del.onclick=function(){navigator.share({title:document.title,url:location.href}).catch(function(){});};}
+  else{del.textContent='📋 Kopiér link';del.onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(location.href).then(function(){del.textContent='✓ Link kopieret';});};}
+})();
+</script>
+</body>
+</html>
